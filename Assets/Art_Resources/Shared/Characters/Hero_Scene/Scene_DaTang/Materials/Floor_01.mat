@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Floor_01
+  m_Shader: {fileID: 4800000, guid: 5f2c5585069f0e5458b93810824104e4, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 1991
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 9ec0e047f76b0a542b54962a2ced06f6, type: 3}
+        m_Scale: {x: 82.53, y: 30.5}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTex:
+        m_Texture: {fileID: 2800000, guid: 1882a4276df84f141812d5f7d8c17a9f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BloomIntensity: 0
+    - _ReflectLV: 0.553
+    - _SP: 0.97
+    m_Colors:
+    - _ReflectColor: {r: 0.7205882, g: 0.80344826, b: 1, a: 0}
+    - _ShadowColor: {r: 0.42522705, g: 0.44958457, b: 0.47794116, a: 0.284}
+  m_BuildTextureStacks: []

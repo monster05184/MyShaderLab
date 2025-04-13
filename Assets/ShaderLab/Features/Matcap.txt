@@ -1,0 +1,11 @@
+
+half2 MatCapUV (in float3 N,in float3 viewPos)
+{
+    float3 viewNorm = mul((float3x3)UNITY_MATRIX_V, N);
+    //viewPos = 
+    float3 viewDir = normalize(viewPos);
+    float3 viewCross = cross(viewDir, viewNorm);
+    viewNorm = float3(-viewCross.y, viewCross.x, 0.0);
+    float2 matCapUV = viewNorm.xy * 0.5 + 0.5;
+    return matCapUV; 
+}

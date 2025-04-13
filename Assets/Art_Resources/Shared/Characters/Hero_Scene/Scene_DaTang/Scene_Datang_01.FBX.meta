@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: 46bbb8c1ff284cc4e9b27e45c0082d44
+timeCreated: 1539155816
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: floor_01
+    100004: floor_02
+    100006: floor_03
+    100008: floor_04
+    100010: fog_002
+    100012: fog_01__1_
+    100014: fog_01__2_
+    100016: grass
+    100018: grass_01
+    100020: grass_02
+    100022: grass_03
+    100024: house_01
+    100026: house_02
+    100028: house_03
+    100030: moon_01
+    100032: moon_glow
+    100034: shitou_014
+    100036: shitou_016
+    100038: sky001
+    100040: vision_003
+    100042: vision_004
+    100044: wall_01
+    100046: yun_002
+    100048: floor_01_2UV
+    100050: floor_02_2UV
+    100052: floor_03_2UV
+    100054: floor_04_2UV
+    400000: //RootNode
+    400002: floor_01
+    400004: floor_02
+    400006: floor_03
+    400008: floor_04
+    400010: fog_002
+    400012: fog_01__1_
+    400014: fog_01__2_
+    400016: grass
+    400018: grass_01
+    400020: grass_02
+    400022: grass_03
+    400024: house_01
+    400026: house_02
+    400028: house_03
+    400030: moon_01
+    400032: moon_glow
+    400034: shitou_014
+    400036: shitou_016
+    400038: sky001
+    400040: vision_003
+    400042: vision_004
+    400044: wall_01
+    400046: yun_002
+    400048: floor_01_2UV
+    400050: floor_02_2UV
+    400052: floor_03_2UV
+    400054: floor_04_2UV
+    2300000: floor_01
+    2300002: floor_02
+    2300004: floor_03
+    2300006: floor_04
+    2300008: fog_002
+    2300010: fog_01__1_
+    2300012: fog_01__2_
+    2300014: grass
+    2300016: grass_01
+    2300018: grass_02
+    2300020: grass_03
+    2300022: house_01
+    2300024: house_02
+    2300026: house_03
+    2300028: moon_01
+    2300030: moon_glow
+    2300032: shitou_014
+    2300034: shitou_016
+    2300036: sky001
+    2300038: vision_003
+    2300040: vision_004
+    2300042: wall_01
+    2300044: yun_002
+    2300046: floor_01_2UV
+    2300048: floor_02_2UV
+    2300050: floor_03_2UV
+    2300052: floor_04_2UV
+    3300000: floor_01
+    3300002: floor_02
+    3300004: floor_03
+    3300006: floor_04
+    3300008: fog_002
+    3300010: fog_01__1_
+    3300012: fog_01__2_
+    3300014: grass
+    3300016: grass_01
+    3300018: grass_02
+    3300020: grass_03
+    3300022: house_01
+    3300024: house_02
+    3300026: house_03
+    3300028: moon_01
+    3300030: moon_glow
+    3300032: shitou_014
+    3300034: shitou_016
+    3300036: sky001
+    3300038: vision_003
+    3300040: vision_004
+    3300042: wall_01
+    3300044: yun_002
+    3300046: floor_01_2UV
+    3300048: floor_02_2UV
+    3300050: floor_03_2UV
+    3300052: floor_04_2UV
+    4300000: floor_03
+    4300002: floor_01
+    4300004: floor_02
+    4300006: floor_04
+    4300008: fog_002
+    4300010: grass_01
+    4300012: grass_02
+    4300014: house_02
+    4300016: moon_01
+    4300018: moon_glow
+    4300020: shitou_014
+    4300022: shitou_016
+    4300024: sky001
+    4300026: vision_004
+    4300028: vision_003
+    4300030: wall_01
+    4300032: yun_002
+    4300034: fog_01__1_
+    4300036: fog_01__2_
+    4300038: grass
+    4300040: house_01
+    4300042: house_03
+    4300044: grass_03
+    4300046: floor_01_2UV
+    4300048: floor_03_2UV
+    4300050: floor_02_2UV
+    4300052: floor_04_2UV
+  materials:
+    importMaterials: 0
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 2
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 2
+    tangentImportMode: 2
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
