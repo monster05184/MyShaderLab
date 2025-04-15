@@ -7,20 +7,21 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Transmission 1
-  m_Shader: {fileID: 4800000, guid: 2ee9438b63f902c4e8f53a3ed3e09257, type: 3}
+  m_Name: Transmission
+  m_Shader: {fileID: 4800000, guid: f1dcdbdd7897fc140a631497b2c85b33, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
   - _RIMSPACEMODE_NONE
-  - _UVMODE_OUTLINE_UVONE
   - _VISIBILITY_ON
+  m_InvalidKeywords:
+  - _UVMODE_OUTLINE_UVONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -64,24 +65,12 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9f218a2a340a3d94985507c412d7bbed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _OutlineTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: 1e742b791a5733546ad17a9a6598e584, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParamsTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RampTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c0899193f99ad214b8def2632e7999e8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RefractionMap_MatCap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c0899193f99ad214b8def2632e7999e8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RumLightMaskTex:
@@ -89,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ThicknessMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2603068bf97a5f9458d618b87d52dcf1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -97,40 +86,30 @@ Material:
     - _AlphaAll: 1
     - _AlphaTest: 0
     - _Anisotropy: 0
-    - _BackDetailNormalMapScale: 0.5
+    - _BackDetailNormalMapScale: 2
     - _BlendMode: 0
     - _Cull: 2
-    - _DetailNormalScale: 0.5
+    - _DetailNormalScale: 1
     - _Dissolve: 0
     - _DissolveON: 0
     - _DstBlend: 0
     - _ETA: 1
     - _EdgeWidth: 0.1
     - _EnableDissolve: 0
-    - _EnableRampTex: 0
-    - _F0: 0.818
+    - _F0: 0.901
     - _GIBakerMode: 10
-    - _Has_Outlinetex: 0
-    - _LitOffset: 0
     - _MetallicMultiplier: 1
     - _MotionSpeed: 0
-    - _NormalFlatten: 0.311
-    - _NormalRemapStrength: 0.5
+    - _NormalFlatten: 0.14
+    - _NormalRemapStrength: 2
     - _OcclusionScale: 1
-    - _ParallaxHeight: 1.54
-    - _ParallaxRange: 0.3
-    - _RampSmooth: 0.5
-    - _RampThreshold: 0.5
+    - _ParallaxHeight: 0.26
+    - _ParallaxRange: 0.1
     - _RimLightSmooth: 0.5
-    - _RimSmooth: 0.5
     - _RimSpaceMode: 0
-    - _RimThreshold: 0.5
     - _RoughnessMultiplier: 1
-    - _Scale: 0.25
-    - _ScaleDepth: 0.1
-    - _Scale_Refraction: 0.0553
+    - _Scale_Refraction: 0.554
     - _ShadowStrength: 1
-    - _Smooth: 1
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8
@@ -140,7 +119,6 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
-    - _UVMode_OutLine: 0
     - _Visibility: 1
     - _ZTestMode: 4
     - _ZWrite: 1
@@ -152,17 +130,14 @@ Material:
     - _DissolveTexUVG: {r: 1, g: 1, b: 0, a: 0}
     - _DissolveTexUVR: {r: 1, g: 1, b: 0, a: 0}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EnvColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+    - _EnvColor: {r: 0.5283019, g: 0.23258571, b: 0.29282227, a: 1}
     - _LightDir: {r: 0, g: 1, b: 0, a: 0}
     - _LightPos: {r: 0, g: 1, b: 0, a: 0}
-    - _MatcapEnvColor: {r: 0.6320754, g: 0.58139014, b: 0.6090286, a: 1}
-    - _MatcapRefractionColor: {r: 0.333, g: 0.526, b: 0.688, a: 1}
-    - _OutlineCol: {r: 0, g: 0, b: 0, a: 1}
-    - _ParallaxColor: {r: 0.5566038, g: 0.21353978, b: 0.37660673, a: 0.49019608}
-    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MatcapEnvColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MatcapRefractionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ParallaxColor: {r: 0.65207076, g: 0.6603774, b: 0.65812767, a: 0.6784314}
     - _RimLightColor: {r: 1, g: 1, b: 1, a: 0}
     - _SelfGI: {r: 1, g: 1, b: 1, a: 1}
-    - _SpColor: {r: 1.4980392, g: 0.60298425, b: 0.60298425, a: 0.3254902}
-    - _TransColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-    - _sssColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpColor: {r: 9.08241, g: 9.08241, b: 9.08241, a: 0.4392157}
+    - _TransColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
   m_BuildTextureStacks: []

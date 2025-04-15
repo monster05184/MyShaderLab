@@ -103,17 +103,23 @@ void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
     
 }
 
+half3 decodeRGBM(half4 rgbm)
+{
+    half3 color = rgbm.xyz * (rgbm.w * kRGBMRange);
+    color *= color;
+    return color;
+}
 
 
 half3 _EnvColor;
 
 half3 getPrefilterRefractionLD(samplerCUBE envmap, half envmapMipCount, float roughness)
 {
-    _EnvColor = 1;
+    
     // Calculate the reflection vector
     half motionFlatten =(1-saturate(_NormalFlatten+0.2*(cos(_Time.x*_MotionSpeed)*0.5+0.5)));
     half3 L = normalize(_LocalData.refDir + _LocalData.backNormal * motionFlatten);
-    half3 refractCol = texCUBElod(envmap, half4(L, 1))*_EnvColor*_EnvColor;
+    half3 refractCol = decodeRGBM(texCUBElod(envmap, half4(L, 1)))*_EnvColor*_EnvColor;
     return refractCol;
 }
 
@@ -136,12 +142,11 @@ half3 Refraction(CustomSurfaceData sd)
 }
 
 half3 Reflection(CustomSurfaceData sd, PBRData pd)
-
 {
     float2 matcapUV = MatCapUV(pd.N, pd.V);
-    half3 envCol = tex2D(_MatcapEnvMap, matcapUV);
-    half3 specCol = tex2D(_CapTex, matcapUV);
-    half3 matcapCol = specCol * _SpColor.rgb * sd.diffuse + envCol * _EnvColor.rgb * sd.diffuse;
+    half3 envCol = tex2D(_MatcapEnvMap, matcapUV) * _MatcapEnvColor * sd.diffuse;
+    half3 specCol = tex2D(_CapTex, matcapUV) * _SpColor * sd.diffuse;
+    half3 matcapCol = specCol * pd.lightCol + envCol * sd.diffuse * pd.lightCol;
     return matcapCol;
 }
 
