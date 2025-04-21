@@ -1,4 +1,4 @@
-Shader "PBRTemplate"
+﻿Shader "PBRTemplate"
 {
     Properties
     {
@@ -43,7 +43,6 @@ Shader "PBRTemplate"
         
         Pass
         {
-            Name "Forward"
             Tags
             {
                 "LightMode" = "UniversalForward"
@@ -57,7 +56,7 @@ Shader "PBRTemplate"
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "PBRTemplate.hlsl"
+            #include "NPRHair.hlsl"
 
 
 

@@ -32,6 +32,15 @@
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
         
+        //Outline 
+        [Toggle] _SmoothNormal("Smooth Normal", Float) = 0
+        _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
+        _OutlineWidth("Outline Width", Range(0, 1)) = 0.1
+        
+        //SDF
+        [Toggle] _SDF("sdf 面部阴影", float) = 0
+        _SDFTex("SDF 图", 2D) = "white"
+        
         
 
     }
@@ -45,8 +54,10 @@
         }
         LOD 100
         
+
         Pass
         {
+            Name "Forward"
             Tags
             {
                 "LightMode" = "UniversalForward"
@@ -57,17 +68,37 @@
             #pragma fragment frag_pbr
             // make fog work
             #pragma multi_compile_fog
+            #pragma shader_feature _ _SDF_ON
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "NPRCharacter.hlsl"
 
+            ENDHLSL
+        }
 
-
-
-
+        Pass
+        {
+            Name "Outline"
+            Tags
+            {
+                "LightMode" = "UniversalForward"
+            }
+            Cull Back
+            HLSLPROGRAM
+            
+            #pragma vertex vert_outline
+            #pragma fragment frag_outline
+            // make fog work
+            #define _OUTLINE 1
+            #pragma shader_feature _SMOOTHNORMAL_ON
+            
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "..\..\NPR\Outline.hlsl"
 
             ENDHLSL
+            
         }
 
         Pass
