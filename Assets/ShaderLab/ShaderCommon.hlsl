@@ -9,10 +9,11 @@ half3 GetNormalTS(float2 uv)
 
 sampler2D _AlbedoMap;
 float4 _AlbedoMap_ST;
+half4 _AlbedoColor;
 half4 GetAlbedo(float2 uv)
 {
     float2 albedoUV = uv * _AlbedoMap_ST.xy + _AlbedoMap_ST.zw;
-    return tex2D(_AlbedoMap, albedoUV);
+    return tex2D(_AlbedoMap, albedoUV) * _AlbedoColor;
 }
 
 sampler2D _MaterialParamsMap;

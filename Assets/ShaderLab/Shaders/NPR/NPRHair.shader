@@ -1,4 +1,4 @@
-﻿Shader "PBRTemplate"
+﻿Shader "NPRHair"
 {
     Properties
     {
@@ -27,6 +27,10 @@
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        
+        _SpecColor("高光颜色", Color) = (0.6, 0.6, 0.6, 1)
+        
+        
         
         
 

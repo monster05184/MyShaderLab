@@ -21,7 +21,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
-    sd.diffuse = albedo;
+    sd.diffuse = albedo * (1 - metallic);
     sd.emissive = GetEmissive(i.uv);
     sd.normalTS = normalTS;
     sd.opacity = albedo.a;
@@ -36,7 +36,8 @@ void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
 {
     half3 light = half3(0, 0, 0);
-    half3 brdf = CookTorranceBRDF(pd, sd);
-    light = brdf * pd.lightCol;
+    half3 specBrdf = CookTorranceBRDF(pd, sd);
+    half3 diffBrdf = diffuseBRDF(sd.diffuse);
+    light = (specBrdf + diffBrdf) * pd.lightCol;
     return light;
 }

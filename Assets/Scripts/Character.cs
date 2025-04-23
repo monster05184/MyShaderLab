@@ -8,9 +8,9 @@ public class Character : MonoBehaviour
 {
     [SerializeField]private Material[] faceMats;
     [SerializeField]private Light mainLight;
-    private Transform CharacterForward;
+    [SerializeField]private Transform CharacterForward;
 
-    void OnEnable()
+    void Awake()
     {
         if (faceMats == null)
         {
@@ -23,6 +23,11 @@ public class Character : MonoBehaviour
         GetFace();
     }
 
+    private void Update()
+    {
+        CalculateSDFDistance();
+    }
+
     private void GetFace()
     {
         //获取所有_SDF_ON关键字开启的材质
@@ -32,13 +37,21 @@ public class Character : MonoBehaviour
             .Distinct()  // 避免重复材质
             .ToArray();
     }
+    
 
     private void CalculateSDFDistance()
     {
         //计算光照在xz平面的分量
         if (mainLight == null || CharacterForward == null)
-            return;
-        
+            return ;
+        var lightXoZ = new Vector3(mainLight.transform.forward.x, 0, mainLight.transform.forward.z);
+        lightXoZ = lightXoZ.normalized;
+        var d = Vector3.Dot(lightXoZ, CharacterForward.forward);
+        foreach (var mat in faceMats)
+        {
+            mat.SetFloat("_SDFValue", d);
+        }
 
+        return ;
     }
 }

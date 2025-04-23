@@ -31,6 +31,8 @@
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        [Header(Light)]
+        _SpecColor("Spec Color", Color) = (0, 0, 0, 1)
         
         //Outline 
         [Toggle] _SmoothNormal("Smooth Normal", Float) = 0
@@ -40,7 +42,10 @@
         //SDF
         [Toggle] _SDF("sdf 面部阴影", float) = 0
         _SDFTex("SDF 图", 2D) = "white"
-        
+        _SDFValue("sdf的值", Float) = 0
+        _SDFSmooth("sdf 平滑度", Float) = 0
+
+        //_SpecColor("Spec Color", Color) = (0, 0, 0, 1)
         
 
     }
@@ -77,29 +82,33 @@
             ENDHLSL
         }
 
-        Pass
-        {
-            Name "Outline"
-            Tags
-            {
-                "LightMode" = "UniversalForward"
-            }
-            Cull Back
-            HLSLPROGRAM
-            
-            #pragma vertex vert_outline
-            #pragma fragment frag_outline
-            // make fog work
-            #define _OUTLINE 1
-            #pragma shader_feature _SMOOTHNORMAL_ON
-            
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "..\..\NPR\Outline.hlsl"
+//        Pass
+//        {
+//            Name "Outline"
+//            Tags
+//            {
+//                "LightMode" = "UniversalForward"
+//            }
+//            Cull Back
+//            ZWrite On
+//            ZTest LEqual
+//            HLSLPROGRAM
+//            
+//            #pragma vertex vert_outline
+//            #pragma fragment frag_outline
+//            // make fog work
+//            #define _OUTLINE 1
+//            #pragma shader_feature _SMOOTHNORMAL_ON
+//            
+//            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+//            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+//            #include "..\..\NPR\Outline.hlsl"
+//
+//            ENDHLSL
+//            
+//        }
 
-            ENDHLSL
-            
-        }
+
 
         Pass
         {
@@ -119,7 +128,8 @@
 
             // -------------------------------------
             // Shader Stages
-            #pragma vertex DepthOnlyVertex
+            #pragma vertex vert_outline
+            
             #pragma fragment DepthOnlyFragment
 
             // -------------------------------------
@@ -134,11 +144,14 @@
             // GPU Instancing
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+            #define _OUTLINE 1
 
+            
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+            #include  "..\..\NPR\Outline.hlsl"
             ENDHLSL
         }
 
@@ -176,11 +189,14 @@
             // GPU Instancing
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+            
+            #define _OUTLINE 1
 
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitDepthNormalsPass.hlsl"
+            #include  "..\..\NPR\Outline.hlsl"
             ENDHLSL
         }
 

@@ -1,4 +1,4 @@
-struct Attributes
+struct Attributes_Outline
 {
     float4 posOS : POSITION;
     float2 texcoord : TEXCOORD0;
@@ -9,7 +9,7 @@ struct Attributes
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-struct Varyings
+struct Varyings_Outline
 {
     float4 positionCS : SV_POSITION;
     float2 uv : TEXCOORD0;
@@ -21,7 +21,6 @@ struct Varyings
 
 float4 _OutlineColor;
 float _OutlineWidth;
-float _Cutoff = 0.1;
 
 sampler2D _AlbedoMap;
 float4 _AlbedoMap_ST;
@@ -46,9 +45,9 @@ float3 TransformTBN(float2 bakedNormal, float3x3 tbn)
     float3 normal = OctahedronToUnitVector(bakedNormal);
     return  (mul(normal, tbn));
 }
-Varyings vert_outline(Attributes input)
+Varyings_Outline vert_outline(Attributes_Outline input)
 {
-    Varyings output = (Varyings)0;
+    Varyings_Outline output = (Varyings_Outline)0;
     UNITY_SETUP_INSTANCE_ID(input);
     UNITY_TRANSFER_INSTANCE_ID(input, output);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
@@ -75,35 +74,20 @@ Varyings vert_outline(Attributes input)
             Set_OutlineWidth *= input.smoothedNormal.a;
         #endif
         //output.positionCS = PerspectiveRemove(output.positionCS, vertexInput.positionWS, input.posOS);
-        output.positionCS = TransformObjectToHClip(input.posOS);
+        output.positionCS = TransformObjectToHClip(input.posOS + normalOS * Set_OutlineWidth);
+        
         //output.positionCS = positionCS;
         
 
         output.color = input.color;
-        output.color.xyz = TransformObjectToHClip(input.posOS + normalOS * Set_OutlineWidth);
         output.uv = input.texcoord;
     #endif
     return output;
 }
 
-half4 frag_outline(Varyings input) : SV_Target
+half4 frag_outline(Varyings_Outline input) : SV_Target
 {
-    #if defined(_OUTLINE)
-        half4 outlineColor = 0;
-        outlineColor.rgb = _OutlineColor.rgb;
-        half4 albedoAlpha = GetAlbedo(input.uv);
-        outlineColor.a = albedoAlpha.a;
-        #if _OUTLINECOLORBLENDBASEMAP
-            outlineColor.rgb *= albedoAlpha.rgb * albedoAlpha.rgb;
-        #elif _OUTLINECOLORBLENDVERTEXCOLOR
-            outlineColor.rgb *= input.color.rgb;
-            outlineColor.a = input.color.a;
-        #endif
-        clip(outlineColor.a - _Cutoff);
-        return outlineColor;
-    #else
-        return 0;
-    #endif
+    return 1;
 
 }
 
