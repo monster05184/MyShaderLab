@@ -25,13 +25,17 @@
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
-        _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
-        _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1
+        _RoughnessMultiplier("Roughness Multiplier", Range(0, 2)) = 1
         
         _SpecColor("高光颜色", Color) = (0.6, 0.6, 0.6, 1)
         
-        
-        
+        //Anisotropic
+        [Header(Anisotropic)]
+        _AnisotropicMultiplier("各向异性程度", Range(0, 1)) = 0.8
+        _TangentShift("高光偏移", Float) = 1
+        _ShiftTex("高光偏移贴图", 2D) = "white"
+        _ShiftTexScale("高光偏移贴图缩放", Float) = 0.5
         
 
     }

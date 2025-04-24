@@ -7,6 +7,7 @@ sampler2D _SDFTex;
 float4 _SDFTex_ST;
 
 half _SDFValue;
+int _SDFSign;
 half _SDFSmooth;
 half3 _SpecColor;
 
@@ -39,16 +40,22 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 {
     float2 sdfuv = i.uv * _SDFTex_ST.xy + _SDFTex_ST.zw;
+    sdfuv.x = _SDFSign > 0 ? sdfuv.x : 1 - sdfuv.x;
     #ifdef _SDF_ON
-    _LocalData.sdf = tex2D(_SDFTex, sdfuv);
+    _LocalData.sdf.r = tex2D(_SDFTex, sdfuv).r;
+    sdfuv.x = (1 - sdfuv.x);
+    _LocalData.sdf.gb = tex2D(_SDFTex, sdfuv).gb;
     #endif
 }
-half SDF(half sdf, half d)
+half SDF(half3 sdf, half d)
 {
-    //Debug(sdf);
-    //d = frac(d);
-   // return sdf > d? 1 : 0;
-    return smoothstep( d - _SDFSmooth * 0.05,  d + _SDFSmooth * 0.05, sdf);
+    return smoothstep( d - _SDFSmooth * 0.05,  d + _SDFSmooth * 0.05, sdf.x);
+}
+half SDFHighLight(half3 sdf, half d)
+{
+    half lit1 = smoothstep( d - _SDFSmooth * 0.05,  d + _SDFSmooth * 0.05, 1 - sdf.y);
+    half lit2 = smoothstep( d - _SDFSmooth * 0.05,  d + _SDFSmooth * 0.05, sdf.z);
+    return saturate(lit2 - lit1);
 }
 
 
@@ -62,14 +69,20 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     
     float3 diffBRDF = diffuseBRDF(sd.diffuse);
     half3 specBRDF;
+    
     #ifdef  _SDF_ON
+    half d = (_SDFValue + 1) * 0.5;
     //return 1;
-    specBRDF = SDF(_LocalData.sdf.r, _SDFValue) * sd.diffuse;
+    half NoL = SDF(_LocalData.sdf, d);
+    half specLobe = SDFHighLight(_LocalData.sdf, d);
+    specBRDF = (specLobe * 2 + NoL) * sd.diffuse;
+    light = (specBRDF * _SpecColor + diffBRDF)  * pd.lightCol;
     #else
     specBRDF = CookTorranceBRDF(pd, sd);
+    light = (specBRDF * _SpecColor * pd.Nol + diffBRDF)  * pd.lightCol;
     #endif
     
-    light = (specBRDF * _SpecColor + diffBRDF)  * pd.lightCol;
+    
     
     
     return light;

@@ -47,9 +47,11 @@ public class Character : MonoBehaviour
         var lightXoZ = new Vector3(mainLight.transform.forward.x, 0, mainLight.transform.forward.z);
         lightXoZ = lightXoZ.normalized;
         var d = Vector3.Dot(lightXoZ, CharacterForward.forward);
+        var sign = Vector3.Dot(lightXoZ, CharacterForward.right) > 0 ? 1 : -1;
         foreach (var mat in faceMats)
         {
             mat.SetFloat("_SDFValue", d);
+            mat.SetInt("_SDFSign", sign);
         }
 
         return ;

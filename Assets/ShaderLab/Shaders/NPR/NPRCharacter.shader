@@ -43,6 +43,7 @@
         [Toggle] _SDF("sdf 面部阴影", float) = 0
         _SDFTex("SDF 图", 2D) = "white"
         _SDFValue("sdf的值", Float) = 0
+        _SDFSign("sdf sign", int) = 1
         _SDFSmooth("sdf 平滑度", Float) = 0
 
         //_SpecColor("Spec Color", Color) = (0, 0, 0, 1)

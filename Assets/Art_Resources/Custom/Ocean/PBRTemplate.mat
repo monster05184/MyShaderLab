@@ -42,9 +42,9 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 1
+    - _MetallicMultiplier: 0.61
     - _OcclusionScale: 1
-    - _RoughnessMultiplier: 1
+    - _RoughnessMultiplier: 0.76
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8

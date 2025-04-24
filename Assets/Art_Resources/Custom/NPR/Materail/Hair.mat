@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hair
-  m_Shader: {fileID: 4800000, guid: 0a6af78a28521ce48b6200883c9aea7a, type: 3}
+  m_Shader: {fileID: 4800000, guid: ecfa1a25721fb24498651ba05a8bdb69, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -39,18 +39,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShiftTex:
+        m_Texture: {fileID: 2800000, guid: 970c01fb6ecce5d439b76b4a3d0cf0d1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaTest: 0
+    - _AnisotropicMultiplier: 0.669
     - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 1
+    - _MetallicMultiplier: 0.65
     - _OcclusionScale: 1
     - _OutlineWidth: 0.1
-    - _RoughnessMultiplier: 1
+    - _RoughnessMultiplier: 0.55
     - _SDF: 0
+    - _SDFSmooth: 0
+    - _SDFValue: 0
+    - _ShiftTexScale: 1.39
     - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
@@ -61,10 +69,12 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
+    - _TangentShift: -0.18
     - _Visibility: 0
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   m_BuildTextureStacks: []

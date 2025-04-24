@@ -6,11 +6,18 @@ half _RoughnessMultiplier;
 half _TangentShift;
 half3 _SpecColor;
 
+half _AnisotropicMultiplier;
+
+sampler2D _ShiftTex;
+float4 _ShiftTex_ST;
+half _ShiftTexScale;
+
 
 struct LocalData1
 {
     float3 shiftTangent;
     float3 B;
+    half2 anisotropic;
 };
 
 LocalData1 _LocalData;
@@ -30,6 +37,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.opacity = albedo.a;
     sd.linearRoughness = materialParams.x * _RoughnessMultiplier;
     sd.metallic = metallic;
+    _LocalData.anisotropic.x = _AnisotropicMultiplier;
 }
 
 min16float3 ShiftTangent(min16float3 tangent, min16float3 normal, half shift)
@@ -38,9 +46,13 @@ min16float3 ShiftTangent(min16float3 tangent, min16float3 normal, half shift)
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 {
-    _TangentShift = 1;
-    _LocalData.shiftTangent = ShiftTangent(i.tangent, i.normal, _TangentShift);\
-    _LocalData.B = i.binormal;
+    half shiftTex = tex2D(_ShiftTex, i.uv * _ShiftTex_ST.xy + _ShiftTex_ST.zw);
+    half shift1 = (shiftTex - 0.5) * _ShiftTexScale;
+    
+    _LocalData.shiftTangent = ShiftTangent(i.tangent, i.normal, _TangentShift);
+    
+    _LocalData.B = ShiftTangent(i.binormal, i.normal, shift1);
+    //_LocalData.T = i.binormal;
 }
 
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
@@ -48,8 +60,8 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     
     half3 light = half3(0, 0, 0);
     half LoH = max(0, dot(pd.L, pd.H));
-    half3 brdfSpec = AnisotropicSpecularBRDF(pd.alpha, 1,sd.diffuse, pd.Nov, pd.Nol, pd.NoH, LoH, pd.V, pd.L, pd.H, _LocalData.shiftTangent, _LocalData.B);
+    half3 brdfSpec = AnisotropicSpecularBRDF(pd.alpha, _LocalData.anisotropic.x,sd.diffuse, pd.Nov, pd.Nol, pd.NoH, LoH, pd.V, pd.L, pd.H, _LocalData.shiftTangent, _LocalData.B);
     half3 brdfDiffuse = diffuseBRDF(sd.diffuse);
-    light = (brdfDiffuse + brdfSpec * _SpecColor) * pd.lightCol;
+    light = (brdfDiffuse + brdfSpec * pd.Nol * _SpecColor) * pd.lightCol;
     return light;
 }
