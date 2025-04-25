@@ -129,11 +129,11 @@ v2f vert_pbr (appdataPBR v)
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i);
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd,  v2f i);
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd);
+half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd);
 
-void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i)
+void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light light)
 {
     pd.N = GetNormal(sd.normalTS, i);
-    Light light = GetMainLight();
     pd.L = light.direction;
     pd.Nol = saturate(dot(pd.N, pd.L));
     pd.lightCol = light.color;
@@ -157,11 +157,23 @@ half4 frag_pbr(v2f i) : SV_Target
     half4 col;
     PrepareSurfaceData(sd, i);
 
-    HandleSurfaceData(sd, pd, i);
+    HandleSurfaceData(sd, pd, i, GetMainLight());
 
     PostSurfaceData(sd, pd, i);
 
     half3 lightColor = CalculateMainLight(sd, pd);
+
+    lightColor += CalculateIndirectLight(sd, pd);
+
+    uint AddLightCount = GetAdditionalLightsCount();
+    for (uint index = 0; index < AddLightCount; index++)
+    {
+        Debug(index);
+        Light light = GetAdditionalLight(index, pd.posWS);
+        HandleSurfaceData(sd, pd, i, light);
+        lightColor += CalculateMainLight(sd, pd);
+
+    }
     col.xyz = lightColor;
     
     //col.rgb += sd.emissive;

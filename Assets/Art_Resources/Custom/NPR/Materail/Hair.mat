@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 36569660a53720a499a705100acf25ba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EnvMap:
+        m_Texture: {fileID: 8900000, guid: 67bddf818ca24174897501b1e8a3a0fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -46,15 +50,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaTest: 0
-    - _AnisotropicMultiplier: 0.669
+    - _AnisotropicMultiplier: 0.73
     - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.65
+    - _MetallicMultiplier: 0.096
     - _OcclusionScale: 1
     - _OutlineWidth: 0.1
-    - _RoughnessMultiplier: 0.55
+    - _RoughnessMultiplier: 0.518
     - _SDF: 0
     - _SDFSmooth: 0
     - _SDFValue: 0
@@ -75,6 +79,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   m_BuildTextureStacks: []

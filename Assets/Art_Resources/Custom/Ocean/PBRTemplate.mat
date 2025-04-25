@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PBRTemplate
-  m_Shader: {fileID: 4800000, guid: 53fd32eb0804adf48b13962b60364928, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0a6af78a28521ce48b6200883c9aea7a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -27,11 +27,19 @@ Material:
         m_Texture: {fileID: 2800000, guid: 36d8cbe0b2fe9454f8636aa4a2583886, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EnvMap:
+        m_Texture: {fileID: 8900000, guid: a98e7859653bebf47ad52b432ec5927f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SDFTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -42,9 +50,15 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.61
+    - _MetallicMultiplier: 0.08
     - _OcclusionScale: 1
-    - _RoughnessMultiplier: 0.76
+    - _OutlineWidth: 0.1
+    - _RoughnessMultiplier: 0.77
+    - _SDF: 0
+    - _SDFSign: 1
+    - _SDFSmooth: 0
+    - _SDFValue: 0
+    - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8
@@ -59,4 +73,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

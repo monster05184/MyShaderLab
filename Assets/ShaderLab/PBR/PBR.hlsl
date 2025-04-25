@@ -145,3 +145,88 @@ half3 diffuseBRDF(float3 albedo)
 {
     return albedo/UNITY_PI;
 }
+//------------------------Indirect-------------------------
+samplerCUBE _EnvMap;
+half4 _EnvColor;
+
+
+half linearRoughnessToLod(half linearRoughness, half mipCount)
+{
+#if 0
+    return linearRoughness * (mipCount - 1);
+#else
+    // MAD form
+    return linearRoughness * mipCount - linearRoughness;
+#endif
+}
+half linearRoughnessToAlpha(half linearRoughness)
+{
+    return linearRoughness * linearRoughness;
+}
+
+// Refer to https://seblagarde.files.wordpress.com/2015/07/course_notes_moving_frostbite_to_pbr_v32.pdf P69
+half3 getSpecularDominantDir(half3 N, half3 R, half alpha)
+{
+    // The result is not normalized as we fetch from cubemap
+#if 1
+    // another cheap approximation from google filament
+    // we had validate that it's a better approximation compare to frosbite: https://github.com/guoxx/Notebooks/blob/dev/PBR/off_specular_peak.ipynb
+    half a2 = alpha * alpha;
+    return lerp(R, N, a2);
+#else
+    half smoothness = 1 - alpha;
+    half factor = smoothness * (sqrt(smoothness) + alpha);
+    return lerp(N, R, factor);
+#endif
+}
+half3 decodeRGBM(half4 rgbm)
+{
+    half3 color = rgbm.xyz * (rgbm.w * kRGBMRange);
+    color *= color;
+    return color;
+}
+half3 rotateInAxisY(half3 dir, half4 rotationParam)
+{
+    return half3(dot(rotationParam.xy, dir.xz), dir.y, dot(rotationParam.zw, dir.xz));
+}
+half3 getPrefilterSpecularLD(samplerCUBE envmap, half envmapMipCount, half4 rotationParam,
+                                   half3 N, half3 V,
+                                   half linearRoughness)
+{
+    half mipLevel = linearRoughnessToLod(linearRoughness, envmapMipCount);
+
+    // Calculate the reflection vector
+    half3 L = reflect(-V, N);
+    half3 dominantDir = getSpecularDominantDir(N, L, linearRoughnessToAlpha(linearRoughness));
+
+    //dominantDir = rotateInAxisY(dominantDir, rotationParam);
+    return decodeRGBM(texCUBElod(envmap, half4(dominantDir, mipLevel)));
+}
+TEXTURE2D(s_DFGTexture);
+SAMPLER(samplers_DFGTexture);
+half4 integrateDFGApprox(half NoV, half linearRoughness)
+{
+    // Refer to https://www.unrealengine.com/en-US/blog/physically-based-shading-on-mobile
+    const half4 c0 = { -1, -0.0275, -0.572, 0.022 };
+    const half4 c1 = { 1, 0.0425, 1.04, -0.04 };
+    half4 r = linearRoughness * c0 + c1;
+    half a004 = min(r.x * r.x, exp2(-9.28 * NoV)) * r.x + r.y;
+    half2 AB = half2(-1.04, 1.04) * a004 + r.zw;
+    return half4(AB, 0, 1);
+}
+half3 evalIntegralDFG(half3 specularColor, half NdotV, half linearRoughness)
+{
+    #if 1
+    half2 dfg = integrateDFGApprox(NdotV, linearRoughness);
+    #else
+    half2 dfg = SAMPLE_TEXTURE2D(s_DFGTexture, samplers_DFGTexture, half2(NdotV, linearRoughness)).xy;
+    #endif
+    //ld * (f0 * Gv * (1 - Fc)) + (f90 * Gv * Fc)
+    // Anything less than 2% is physically impossible and is instead considered to be shadowing 
+    return specularColor * dfg.x + saturate(50.0 * specularColor.g) * dfg.y;
+}
+half3 evalIndirectSpecular(half NoV, in half3 specularColor, half linearRoughness, in half3 specularLd)
+{
+    half3 indirectSpecular = specularLd * evalIntegralDFG(specularColor, NoV, linearRoughness);
+    return indirectSpecular;
+}

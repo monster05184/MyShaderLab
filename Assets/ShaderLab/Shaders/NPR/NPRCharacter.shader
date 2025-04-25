@@ -26,11 +26,17 @@
         _AlbedoMap("Albedo Map", 2D) = "white" {}
         _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
         
+        _EnvMap("环境贴图", Cube) = "grey" {}
+        _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
+        
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        
+
+        
         [Header(Light)]
         _SpecColor("Spec Color", Color) = (0, 0, 0, 1)
         
@@ -45,6 +51,7 @@
         _SDFValue("sdf的值", Float) = 0
         _SDFSign("sdf sign", int) = 1
         _SDFSmooth("sdf 平滑度", Float) = 0
+        
 
         //_SpecColor("Spec Color", Color) = (0, 0, 0, 1)
         

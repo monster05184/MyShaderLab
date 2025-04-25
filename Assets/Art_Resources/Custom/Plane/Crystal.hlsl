@@ -162,6 +162,11 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     return light;
 }
 
+half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd)
+{
+ return 0;
+}
+
 
 
             

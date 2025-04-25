@@ -79,11 +79,22 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     light = (specBRDF * _SpecColor + diffBRDF)  * pd.lightCol;
     #else
     specBRDF = CookTorranceBRDF(pd, sd);
-    light = (specBRDF * _SpecColor * pd.Nol + diffBRDF)  * pd.lightCol;
+    light = (specBRDF * _SpecColor * pd.Nol + diffBRDF * pd.Nol)  * pd.lightCol;
     #endif
-    
-    
     
     
     return light;
 }
+
+half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd)
+{
+    half3 light = half3(0, 0, 0);
+    float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
+    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.diffuse * _EnvColor;
+    light += indirectSpec * _EnvColor;
+    
+    float indirectDiffuse = SampleSH(pd.N) * sd.diffuse;
+    light += indirectDiffuse;
+    return light;
+}
+

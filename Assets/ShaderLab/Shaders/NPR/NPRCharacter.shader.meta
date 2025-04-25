@@ -4,6 +4,7 @@ ShaderImporter:
   externalObjects: {}
   defaultTextures:
   - _AlbedoMap: {instanceID: 0}
+  - _EnvMap: {instanceID: 0}
   - _NormalMap: {instanceID: 0}
   - _MaterialParamsMap: {instanceID: 0}
   - _SDFTex: {instanceID: 0}
