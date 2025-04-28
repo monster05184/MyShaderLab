@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hair
-  m_Shader: {fileID: 4800000, guid: ecfa1a25721fb24498651ba05a8bdb69, type: 3}
+  m_Name: PBRTemplate
+  m_Shader: {fileID: 4800000, guid: dea0fa158da23994a8c08cd97548a1e6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,11 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 36569660a53720a499a705100acf25ba, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EnvMap:
-        m_Texture: {fileID: 8900000, guid: 67bddf818ca24174897501b1e8a3a0fa, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
@@ -39,31 +35,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SDFTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ShiftTex:
-        m_Texture: {fileID: 2800000, guid: 970c01fb6ecce5d439b76b4a3d0cf0d1, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaTest: 0
-    - _AnisotropicMultiplier: 0.73
-    - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
-    - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.705
-    - _OcclusionScale: 1
-    - _OutlineWidth: 0.1
-    - _RoughnessMultiplier: 0.915
-    - _SDF: 0
-    - _SDFSmooth: 0
-    - _SDFValue: 0
-    - _ShiftTexScale: 1.39
-    - _SmoothNormal: 0
+    - _MetallicMultiplier: 1
+    - _RoughnessMultiplier: 1
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8
@@ -73,13 +50,8 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
-    - _TangentShift: -0.18
-    - _Visibility: 0
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EnvColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   m_BuildTextureStacks: []

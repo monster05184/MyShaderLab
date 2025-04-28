@@ -22,6 +22,9 @@ Shader "PBRTemplate"
         _AlbedoMap("Albedo Map", 2D) = "white" {}
         _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
         
+        _EnvMap("环境贴图", Cube) = "grey" {}
+        _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
+        
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         

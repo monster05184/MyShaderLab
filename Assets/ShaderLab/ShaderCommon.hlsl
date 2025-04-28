@@ -45,6 +45,10 @@ struct v2f
     float3 positionWS : TEXCOORD4;
     float4 screenPos : TEXCOORD5;
 
+    float3 vertexLight : TEXCOORD6;
+
+    float3 vertexSH    : TEXCOORD7;
+
     
 };
 
@@ -60,7 +64,7 @@ half3 GetNormal(half3 normalTS, v2f i)
 {
     //normalTS = normalTS * 2.0 - 1.0;
     half3 normal;
-    
+    Debug(i.normal);
     float3x3 tbn = float3x3(normalize(i.tangent.xyz), normalize(i.binormal.xyz), normalize(i.normal.xyz));
     normal = normalize(mul(normalTS, tbn));
 
@@ -109,7 +113,12 @@ struct PBRData
 };
 
 
-
+half3 VertexLight(appdataPBR v)
+{
+    uint lightCount = GetAdditionalLightsCount();
+    return lightCount;
+    
+}
 v2f vert_pbr (appdataPBR v)
 {
     v2f o;
@@ -122,6 +131,11 @@ v2f vert_pbr (appdataPBR v)
     o.tangent.xyz = normalInput.tangentWS;
     o.binormal.xyz = normalInput.bitangentWS;
     o.screenPos = ComputeScreenPos(o.vertex);
+    o.vertexLight = VertexLight(v);
+    //o.vertexSH = GetVertexSH(v.positionWS, normalInput.normalWS);
+    OUTPUT_LIGHTMAP_UV(input.lightmapUV, unity_LightmapST, output.lightmapUV);
+    OUTPUT_SH(o.normal, o.vertexSH);
+    
 
     return o;
 }
@@ -147,7 +161,8 @@ void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light ligh
     pd.alpha = sd.linearRoughness * sd.linearRoughness;
     
 }
-
+float4 _FPParams0;
+#define URP_FP_DIRECTIONAL_LIGHTS_COUNT ((uint)_FPParams0.w)
 
 half4 frag_pbr(v2f i) : SV_Target
 {
@@ -166,14 +181,21 @@ half4 frag_pbr(v2f i) : SV_Target
     lightColor += CalculateIndirectLight(sd, pd);
 
     uint AddLightCount = GetAdditionalLightsCount();
+
     for (uint index = 0; index < AddLightCount; index++)
     {
-        Debug(index);
         Light light = GetAdditionalLight(index, pd.posWS);
         HandleSurfaceData(sd, pd, i, light);
         lightColor += CalculateMainLight(sd, pd);
-
     }
+    for(uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        
+        Light light = GetAdditionalLight(lightIndex, pd.posWS);
+        HandleSurfaceData(sd, pd, i, light);
+        lightColor += CalculateMainLight(sd, pd);
+    }
+    
     col.xyz = lightColor;
     
     //col.rgb += sd.emissive;

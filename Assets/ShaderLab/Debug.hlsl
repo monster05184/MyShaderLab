@@ -25,4 +25,11 @@ half4 DebugOut(half4 color)
     }
     return color;
 }
+void DebugTrue()
+{
+    _Debug = 1;
+}
+
+
+
 #endif

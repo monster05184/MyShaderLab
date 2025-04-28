@@ -214,7 +214,7 @@ half4 integrateDFGApprox(half NoV, half linearRoughness)
     half2 AB = half2(-1.04, 1.04) * a004 + r.zw;
     return half4(AB, 0, 1);
 }
-half3 evalIntegralDFG(half3 specularColor, half NdotV, half linearRoughness)
+half3 IntegralDFG(half3 specularColor, half NdotV, half linearRoughness)
 {
     #if 1
     half2 dfg = integrateDFGApprox(NdotV, linearRoughness);
@@ -227,6 +227,6 @@ half3 evalIntegralDFG(half3 specularColor, half NdotV, half linearRoughness)
 }
 half3 evalIndirectSpecular(half NoV, in half3 specularColor, half linearRoughness, in half3 specularLd)
 {
-    half3 indirectSpecular = specularLd * evalIntegralDFG(specularColor, NoV, linearRoughness);
+    half3 indirectSpecular = specularLd * IntegralDFG(specularColor, NoV, linearRoughness);
     return indirectSpecular;
 }

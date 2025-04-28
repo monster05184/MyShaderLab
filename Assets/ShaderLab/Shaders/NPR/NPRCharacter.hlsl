@@ -63,9 +63,6 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
 {
     half3 light = half3(0, 0, 0);
     
-
-    
-    
     
     float3 diffBRDF = diffuseBRDF(sd.diffuse);
     half3 specBRDF;

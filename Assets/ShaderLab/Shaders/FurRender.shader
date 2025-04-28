@@ -250,32 +250,7 @@ Shader "CharacterRender/Fur"
                     SHL +=RimLight;
                     SHL +=DirLight*_DiffColor;
                     
-                    #ifdef _DEBUG_ON
-                        switch(_DebugMode)
-                        {
-                            case 1:
-                                #ifndef _StrandSpecular_ON
-                                #define _StrandSpecular_ON
-                                #endif
-                                SHL = spec;
-                                break;
-                            case 2:
-                                #ifndef _StrandSpecular_ON
-                                #define _StrandSpecular_ON
-                                #endif
-                                SHL = furDir;
-                                break;
-                            case 3:
-                                SHL = furInfo.z;
-                                break;
-                            case 4:
-                                SHL.xy = furInfo.xy;
-                                SHL.z = 0;
-                                break;
-                            default:
-                                break;
-                        }
-                    #endif
+                    
                     output.color.xyz = SHL;
 
                     
@@ -494,7 +469,99 @@ Shader "CharacterRender/Fur"
             ENDHLSL
             
         }
+
+         Pass
+        {
+            Name "DepthOnly"
+            Tags
+            {
+                "LightMode" = "DepthOnly"
+            }
+
+            // -------------------------------------
+            // Render State Commands
+            ZWrite On
+            ColorMask R
+
+            HLSLPROGRAM
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Shader Stages
+            #pragma vertex DepthOnlyVertex
+            
+            #pragma fragment DepthOnlyFragment
+
+            // -------------------------------------
+            // Material Keywords
+            #pragma shader_feature_local_fragment _ALPHATEST_ON
+
+            // -------------------------------------
+            // Unity defined keywords
+            #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+
+            //--------------------------------------
+            // GPU Instancing
+            #pragma multi_compile_instancing
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+            #define _OUTLINE 1
+
+            
+            // -------------------------------------
+            // Includes
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+            ENDHLSL
+        }
+
+        Pass
+        {
+            Name "DepthNormalsOnly"
+            Tags
+            {
+                "LightMode" = "DepthNormalsOnly"
+            }
+
+            // -------------------------------------
+            // Render State Commands
+            ZWrite On
+
+            HLSLPROGRAM
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Shader Stages
+            #pragma vertex DepthNormalsVertex
+            #pragma fragment DepthNormalsFragment
+
+            // -------------------------------------
+            // Material Keywords
+            #pragma shader_feature_local_fragment _ALPHATEST_ON
+
+            // -------------------------------------
+            // Universal Pipeline keywords
+            #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT // forward-only variant
+            #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+
+            //--------------------------------------
+            // GPU Instancing
+            #pragma multi_compile_instancing
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+            
+            #define _OUTLINE 1
+
+            // -------------------------------------
+            // Includes
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitDepthNormalsPass.hlsl"
+            ENDHLSL
+        }
     
     }
+
+   
+
+    
     CustomEditor "DebugShaderGUI"
 }

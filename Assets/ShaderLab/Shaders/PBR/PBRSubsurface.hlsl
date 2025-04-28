@@ -1,4 +1,4 @@
-#include "Assets/ShaderLab/ShaderCommon.hlsl"
+﻿#include "Assets/ShaderLab/ShaderCommon.hlsl"
 #include "Assets/ShaderLab/PBR/PBR.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
@@ -39,10 +39,11 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     half3 specbrdf = CookTorranceBRDF(pd, sd);
 
     float3 diffBRDF = diffuseBRDF(sd.diffuse);
-    
+    //DEBUG_KEY(DEBUG);
     light = (specbrdf + diffBRDF) * pd.Nol * pd.lightCol;
     return light;
 }
+
 
 half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd)
 {
