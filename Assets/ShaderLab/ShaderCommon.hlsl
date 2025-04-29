@@ -64,7 +64,6 @@ half3 GetNormal(half3 normalTS, v2f i)
 {
     //normalTS = normalTS * 2.0 - 1.0;
     half3 normal;
-    Debug(i.normal);
     float3x3 tbn = float3x3(normalize(i.tangent.xyz), normalize(i.binormal.xyz), normalize(i.normal.xyz));
     normal = normalize(mul(normalTS, tbn));
 
