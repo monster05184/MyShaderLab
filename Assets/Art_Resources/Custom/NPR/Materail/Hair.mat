@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 1999
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -50,15 +50,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaTest: 0
-    - _AnisotropicMultiplier: 0.73
+    - _AnisotropicMultiplier: 0.846
     - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.705
+    - _MetallicMultiplier: 0.9
     - _OcclusionScale: 1
     - _OutlineWidth: 0.1
-    - _RoughnessMultiplier: 0.915
+    - _RoughnessMultiplier: 0.88
     - _SDF: 0
     - _SDFSmooth: 0
     - _SDFValue: 0
@@ -66,20 +66,20 @@ Material:
     - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
-    - _StencilComp: 8
+    - _StencilComp: 6
     - _StencilFail: 0
     - _StencilPass: 0
     - _StencilReadMask: 255
-    - _StencilRef: 0
+    - _StencilRef: 5
     - _StencilWriteMask: 255
     - _StencilZFail: 0
-    - _TangentShift: -0.18
+    - _TangentShift: -0.5
     - _Visibility: 0
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EnvColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+    - _EnvColor: {r: 0.8792453, g: 0.8792453, b: 0.8792453, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   m_BuildTextureStacks: []

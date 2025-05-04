@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
-        m_Texture: {fileID: 8900000, guid: 66670f0510a478f4ebebe9c9e30f4212, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
@@ -51,14 +51,14 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.32
+    - _MetallicMultiplier: 0.11
     - _OcclusionScale: 1
     - _OutlineWidth: 0
     - _RoughnessMultiplier: 1.01
     - _SDF: 1
     - _SDFSign: 1
     - _SDFSmooth: 0.57
-    - _SDFValue: -0.99791586
+    - _SDFValue: 2.63
     - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1

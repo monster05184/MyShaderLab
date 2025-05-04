@@ -37,6 +37,7 @@ float PrintValue( float2 vStringCoords, float fValue, float fMaxDigits, float fD
 half4 _Debug;
 half _IsDebugNumber;
 float _DebugNumber;
+half _IsDebugVertex;
 void Debug(half4 colorIn)
 {
     _Debug = colorIn;
@@ -54,6 +55,25 @@ void Debug(half colorIn)
 {
     _Debug = half4(colorIn, colorIn, colorIn, 1);
 }
+//vertex Debug
+void Debug(half4 colorIn, out half4 debugColor)
+{
+    debugColor = colorIn;
+}
+void Debug(half3 colorIn, out half4 debugColor)
+{
+    debugColor = half4(colorIn, 1);
+}
+
+void Debug(half2 colorIn, out half4 debugColor)
+{
+    debugColor = half4(colorIn, 0, 1);
+}
+void Debug(half colorIn, out half4 debugColor)
+{
+    debugColor = half4(colorIn, colorIn, colorIn, 1);
+}
+void DebugNumber(float number, float2 uv, out half4 debugColor);
 void DebugNumber(float number, float2 uv)
 {
     _IsDebugNumber = 1;

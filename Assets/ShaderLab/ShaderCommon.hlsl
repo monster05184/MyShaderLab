@@ -48,7 +48,11 @@ struct v2f
     float3 vertexLight : TEXCOORD6;
 
     float3 vertexSH    : TEXCOORD7;
+    #ifdef DEBUG
+        float4 debugColor  : TEXCOORD8;
+    #endif
 
+    
     
 };
 
@@ -62,7 +66,7 @@ struct appdataPBR
 
 half3 GetNormal(half3 normalTS, v2f i)
 {
-    //normalTS = normalTS * 2.0 - 1.0;
+    normalTS = normalTS * 2.0 - 1.0;
     half3 normal;
     float3x3 tbn = float3x3(normalize(i.tangent.xyz), normalize(i.binormal.xyz), normalize(i.normal.xyz));
     normal = normalize(mul(normalTS, tbn));
@@ -70,10 +74,16 @@ half3 GetNormal(half3 normalTS, v2f i)
     return normal;
 }
 
-half4 finalOutput(half4 color)
+half4 finalOutput(half4 color, v2f i)
 {
     #ifdef DEBUG
-    return DebugOut(color);
+    if(length(i.debugColor.xyz) > 0)
+    {
+        return DebugOut(i.debugColor);
+    }else
+    {
+        return DebugOut(color);
+    }
     #endif
     return color;
 }
@@ -111,7 +121,7 @@ struct PBRData
     float2 screenUv;
 };
 
-
+//Todo Vertex Light Is Non SH Light Is Wrong
 half3 VertexLight(appdataPBR v)
 {
     uint lightCount = GetAdditionalLightsCount();
@@ -199,7 +209,7 @@ half4 frag_pbr(v2f i) : SV_Target
     
     //col.rgb += sd.emissive;
     col.a = sd.opacity;
-    return finalOutput(col);
+    return finalOutput(col, i);
 }
 
 

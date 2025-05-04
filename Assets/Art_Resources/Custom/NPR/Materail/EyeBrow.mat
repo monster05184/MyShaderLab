@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: EyeBrow
-  m_Shader: {fileID: 4800000, guid: 0a6af78a28521ce48b6200883c9aea7a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2689d22617b6a774eb33614f78be7529, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,7 +24,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: c2034da3ec52a2e4da75c2bd7888c15e, type: 3}
+        m_Texture: {fileID: 2800000, guid: b3f6eed4bdf9b8e438f41a41ebfa9b8e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EnvMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
@@ -35,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SDFTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaTest: 0
@@ -42,16 +50,22 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 1
+    - _MetallicMultiplier: 0.2
     - _OcclusionScale: 1
-    - _RoughnessMultiplier: 1
+    - _OutlineWidth: 0.1
+    - _RoughnessMultiplier: 0.58
+    - _SDF: 0
+    - _SDFSign: 1
+    - _SDFSmooth: 0
+    - _SDFValue: 0
+    - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8
     - _StencilFail: 0
-    - _StencilPass: 0
+    - _StencilPass: 2
     - _StencilReadMask: 255
-    - _StencilRef: 0
+    - _StencilRef: 5
     - _StencilWriteMask: 255
     - _StencilZFail: 0
     - _Visibility: 0
@@ -59,4 +73,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0.02641511, g: 0.02641511, b: 0.02641511, a: 1}
+    - _SpecColor: {r: 0.8037735, g: 0.8037735, b: 0.8037735, a: 1}
   m_BuildTextureStacks: []

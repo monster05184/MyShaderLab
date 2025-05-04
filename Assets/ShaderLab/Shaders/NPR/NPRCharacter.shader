@@ -11,16 +11,15 @@
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
         [Toggle] _AlphaTest("Alpha Test", Float) = 0
-        [Toggle] _Visibility("Use Visibility", Float) = 0
         _OcclusionScale("Occlusion Scale", Range(0, 1)) = 1
         _GIBakerMode("GIBakerMode", Int) = 10
-        [IntRange] _StencilRef("Stencil Ref$Group#Stencil$", Range(0, 255)) = 0
-        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp$Group#Stencil$", Float) = 8
-        [IntRange] _StencilReadMask("Stencil Read Mask$Group#Stencil$", Range(0, 255)) = 255
-        [IntRange] _StencilWriteMask("Stencil Write Mask$Group#Stencil$", Range(0, 255)) = 255
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass$Group#Stencil$", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail$Group#Stencil$", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail$Group#Stencil$", Float) = 0
+        [IntRange] _StencilRef("Stencil Ref", Range(0, 255)) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
+        [IntRange] _StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
+        [IntRange] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass", Float) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
         
         //Surface
         _AlbedoMap("Albedo Map", 2D) = "white" {}
@@ -75,6 +74,7 @@
             {
                 "LightMode" = "UniversalForward"
             }
+            
             HLSLPROGRAM
             #define DEBUG
             #pragma vertex vert_pbr
