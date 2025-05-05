@@ -22,7 +22,10 @@ struct LocalData1
 
 LocalData1 _LocalData;
 
-
+v2f VertexFunc(v2f i)
+{
+    return i;
+}
 
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {
@@ -59,6 +62,7 @@ half SDFHighLight(half3 sdf, half d)
     half lit2 = smoothstep( d - _SDFSmooth * 0.05,  d + _SDFSmooth * 0.05, sdf.z);
     return saturate(lit2 - lit1);
 }
+
 
 
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)

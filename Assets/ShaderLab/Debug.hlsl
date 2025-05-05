@@ -1,3 +1,4 @@
+#include "ShaderStructs.hlsl"
 #ifdef DEBUG
 //Print number
 float DigitBin( const int x )
@@ -32,12 +33,12 @@ float PrintValue( float2 vStringCoords, float fValue, float fMaxDigits, float fD
     return floor(fmod((fCharBin / pow(2.0, floor(frac(vStringCoords.x) * 4.0) + (floor(vStringCoords.y * 5.0) * 4.0))), 2.0));
 }
 
-
-
 half4 _Debug;
 half _IsDebugNumber;
 float _DebugNumber;
 half _IsDebugVertex;
+half _LightDebugMode;
+half _SurfaceDataDebugMode;
 void Debug(half4 colorIn)
 {
     _Debug = colorIn;
@@ -89,6 +90,25 @@ half4 DebugOut(half4 color)
     if(length(_Debug.xyz) > 0.01 || _Debug.a > 0)
     {
         return _Debug;
+    }
+    return color;
+}
+half4 DebugSD(SurfaceData sd, half4 color)
+{
+    if(_SurfaceDataDebugMode)
+        color.w = 1;
+    switch(_SurfaceDataDebugMode)
+    {
+    case 0:
+        
+    case 1:
+        color.xyz = sd.albedo;
+    case 2:
+        color.xyz = sd.metallic;
+    case 3:
+        color.xyz = sd.smoothness;
+    case 4:
+        color.xyz = sd.occlusion;
     }
     return color;
 }

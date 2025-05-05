@@ -6,13 +6,10 @@
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 2
         [SimpleToggle] _ZWrite("ZWrite", Float) = 1
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode("ZTest", Float) = 4
-        [SimpleToggle] _SpOpacity("透明是否保留高光", int) = 0
         [Enum(UnityEngine.Rendering.YABlendMode)] _BlendMode("Blend Mode", Float) = 0
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
         [Toggle] _AlphaTest("Alpha Test", Float) = 0
-        _OcclusionScale("Occlusion Scale", Range(0, 1)) = 1
-        _GIBakerMode("GIBakerMode", Int) = 10
         [IntRange] _StencilRef("Stencil Ref", Range(0, 255)) = 0
         [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
         [IntRange] _StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255

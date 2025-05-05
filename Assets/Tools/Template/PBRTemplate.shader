@@ -18,6 +18,8 @@ Shader "PBRTemplate"
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
         
+        _DebugMode
+        
         //Surface
         _AlbedoMap("Albedo Map", 2D) = "white" {}
         _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)

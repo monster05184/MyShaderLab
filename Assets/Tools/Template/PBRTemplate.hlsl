@@ -12,7 +12,11 @@ struct LocalData1
 
 LocalData1 _LocalData;
 
-
+v2f VertexFunc(v2f i)
+{
+    Debug(1, i.debugColor);
+    return i;
+}
 
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {

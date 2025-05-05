@@ -51,8 +51,6 @@ struct v2f
     #ifdef DEBUG
         float4 debugColor  : TEXCOORD8;
     #endif
-
-    
     
 };
 
@@ -89,37 +87,7 @@ half4 finalOutput(half4 color, v2f i)
 }
 
 
-struct CustomSurfaceData
-{
-    half3 emissive;
-    half3 baseColor;
-    half metallic;
-    half3 diffuse;
-    half3 specular;
-    half opacity;
-    half linearRoughness;
-    half alpha;
-    half3 normalTS;
 
-    half occlusion;
-    half cutoffThreshold;
-};
-
-struct PBRData
-{
-    half Nol;
-    half Nov;
-    half3 N;
-    half3 H;
-    half3 L;
-    half NoH;
-    half3 V;
-    half alpha;
-    half3 lightCol;
-    half atten;
-    half3 posWS;
-    float2 screenUv;
-};
 
 //Todo Vertex Light Is Non SH Light Is Wrong
 half3 VertexLight(appdataPBR v)
@@ -128,6 +96,7 @@ half3 VertexLight(appdataPBR v)
     return lightCount;
     
 }
+v2f VertexFunc(v2f i);
 v2f vert_pbr (appdataPBR v)
 {
     v2f o;
@@ -144,6 +113,8 @@ v2f vert_pbr (appdataPBR v)
     //o.vertexSH = GetVertexSH(v.positionWS, normalInput.normalWS);
     OUTPUT_LIGHTMAP_UV(input.lightmapUV, unity_LightmapST, output.lightmapUV);
     OUTPUT_SH(o.normal, o.vertexSH);
+
+    o = VertexFunc(o);
     
 
     return o;
