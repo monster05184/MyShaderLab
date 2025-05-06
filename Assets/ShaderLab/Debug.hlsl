@@ -93,24 +93,28 @@ half4 DebugOut(half4 color)
     }
     return color;
 }
-half4 DebugSD(SurfaceData sd, half4 color)
+void DebugSD(CustomSurfaceData sd, inout half4 color)
 {
     if(_SurfaceDataDebugMode)
         color.w = 1;
     switch(_SurfaceDataDebugMode)
     {
     case 0:
-        
+        color = color;
+        break;
     case 1:
-        color.xyz = sd.albedo;
+        color.xyz = sd.baseColor;
+        break;
     case 2:
         color.xyz = sd.metallic;
+        break;
     case 3:
-        color.xyz = sd.smoothness;
+        color.xyz = sd.linearRoughness;
+        break;
     case 4:
         color.xyz = sd.occlusion;
+        break;
     }
-    return color;
 }
 void DebugTrue()
 {

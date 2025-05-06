@@ -34,6 +34,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
+    sd.baseColor = albedo;
     sd.diffuse = albedo * (1 - metallic);
     sd.emissive = GetEmissive(i.uv);
     sd.normalTS = normalTS;
@@ -65,7 +66,7 @@ half SDFHighLight(half3 sdf, half d)
 
 
 
-half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
+half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     
@@ -89,7 +90,7 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     return light;
 }
 
-half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd)
+half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);

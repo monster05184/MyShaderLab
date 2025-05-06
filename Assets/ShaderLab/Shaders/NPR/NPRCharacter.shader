@@ -53,6 +53,8 @@
         
 
         //_SpecColor("Spec Color", Color) = (0, 0, 0, 1)
+        _LightDebugMode("lightDebug", Float) = 0
+        _SurfaceDebugMode("surfaceDebug", Float) = 0
         
 
     }
@@ -231,4 +233,5 @@
             ENDHLSL
         }
     }
+CustomEditor "DebugShaderGUI"
 }

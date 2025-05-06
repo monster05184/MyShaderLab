@@ -13,8 +13,8 @@ public class DebugShaderGUI : ShaderGUI
     private int PBRDataDebug = 0;
 
     private string m_debugKeyword;
-    private string lightDebugStr = "_LightDebug";
-    private string surfaceDataDebugStr = "_SurfaceDataDebug";
+    private string lightDebugStr = "_LightDebugMode";
+    private string surfaceDataDebugStr = "_SurfaceDataDebugMode";
 
 
 
@@ -45,9 +45,9 @@ public class DebugShaderGUI : ShaderGUI
     enum SurfaceDataDebugMode
     {
         non = 0,
-        albedo = 1,
+        baseColor = 1,
         metallic = 2,
-        smoothness = 3,
+        linearRoughness = 3,
         occulusion = 4,
     }
 
@@ -61,19 +61,16 @@ public class DebugShaderGUI : ShaderGUI
         Material targetMat = materialEditor.target as Material;
         LightDebugSP = materialEditor.serializedObject.FindProperty("_LightDebug");
         
-        if (targetMat.IsKeywordEnabled(debugKeyword))
-        {
-            LightDebug = Convert.ToInt32(EditorGUILayout.EnumPopup((LightDebugMode)LightDebug, GUILayout.Width(200)));
-            
-            targetMat.SetFloat(lightDebugStr,LightDebug);
-            
-            SurfaceDataDebug = Convert.ToInt32(EditorGUILayout.EnumPopup((SurfaceDataDebugMode)SurfaceDataDebug, GUILayout.Width(200)));
-            
-            targetMat.SetFloat(surfaceDataDebugStr, SurfaceDataDebug);
-        }
-        
-        //渲染默认的GUI
+        //渲染默认的GUI 
         base.OnGUI(materialEditor, properties);
+        
+        LightDebug = Convert.ToInt32(EditorGUILayout.EnumPopup((LightDebugMode)LightDebug, GUILayout.Width(200)));
+        targetMat.SetFloat(lightDebugStr,LightDebug);
+        SurfaceDataDebug = Convert.ToInt32(EditorGUILayout.EnumPopup((SurfaceDataDebugMode)SurfaceDataDebug, GUILayout.Width(200)));
+        targetMat.SetFloat(surfaceDataDebugStr, SurfaceDataDebug);
+        
+        
+
 
     }
 }

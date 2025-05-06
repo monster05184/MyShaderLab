@@ -64,7 +64,7 @@ half SDFHighLight(half3 sdf, half d)
 }
 
 
-half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
+half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     
@@ -88,7 +88,7 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd)
     return light;
 }
 
-half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd)
+half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);

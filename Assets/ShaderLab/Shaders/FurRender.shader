@@ -478,6 +478,7 @@ Shader "CharacterRender/Fur"
                 "LightMode" = "DepthOnly"
             }
 
+            
             // -------------------------------------
             // Render State Commands
             ZWrite On
@@ -485,10 +486,109 @@ Shader "CharacterRender/Fur"
 
             HLSLPROGRAM
             #pragma target 2.0
+            Varyings vert(Attributes input)
+            {
+
+                
+                float4 furInfo = tex2Dlod(_FlowMap,float4(input.uv.xy,0,0));
+                
+                //将顶点挤出
+                FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
+                float3 aNormal = (input.normal.xyz);
+                float3 n = aNormal*(FUR_OFFSET)*_FurLength;
+                input.positionOS.xyz +=n;
+                // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
+                const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+                Varyings output;
+                output.positionCS = vertexInput.positionCS;
+               
+        
+                //数据准备
+                float3 normalWS = normalize(TransformObjectToWorldNormal(input.normal));
+                output.normal = normalWS;
+                float3 positionWS = vertexInput.positionWS;
+                float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
+                float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
+                float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                
+                //uv的偏移，毛发的偏移
+                float2 flowMapOff = furInfo.rg;
+                flowMapOff = (flowMapOff*2 -1) * _FlowMapScale;
+                float2 uvoffset = _UvOffset.xy * FUR_OFFSET + flowMapOff*20 * FUR_OFFSET;
+                uvoffset *=0.1;
+                float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap) + uvoffset*float2(1,1)/_FurAlphaScale;
+                float2 uv2 = TRANSFORM_TEX(input.uv.xy,_BaseMap)*_FurAlphaScale + uvoffset;
+                output.uv = float4(uv1,uv2);
+        
+                //毛发的环境光遮蔽
+                half3 SH = half3(0.5,0.5,0.5);
+                half Occlusion = FUR_OFFSET*FUR_OFFSET;//伽马转为线性光照
+                Occlusion += 0.04;
+
+               
+                
+        
+             
+
+                //模型周围毛发的透射光
+                half Fresnel  = 1 - max(0,dot(normalWS,viewVec));
+                half RimLight = Fresnel * Occlusion;
+                RimLight *= RimLight;
+                RimLight *= _FresnelLV * SH;
+
+                //太阳光//TODO接收阴影
+                Light mainLight = GetMainLight(shadowCoord);
+                half3 lightDir = mainLight.direction;
+                half NoL = dot(lightDir,normalWS);
+                half3 DirLight = saturate(NoL + _LightFilter + FUR_OFFSET)*mainLight.color;
+                #ifdef _Shadow_ON
+                    DirLight*=mainLight.shadowAttenuation*mainLight.distanceAttenuation;
+                #endif
+        
+                //GI采样
+                //TODO 环境光
+                half3 SHL;
+                SHL = lerp(SH*_OcclusionColor,SH,Occlusion);
+        
+                #ifdef _GI_ON
+                OUTPUT_LIGHTMAP_UV(input.lightmapUV, unity_LightmapST, output.lightmapUV);
+                OUTPUT_SH(normalWS, output.vertexSH);
+                output.color.w = Occlusion;
+                SHL = float3(0,0,0);
+                #endif
+        
+                
+        
+                //毛发的各向异性高光
+                #if defined(_StrandSpecular_ON)
+                    //计算毛发的方向
+                    float3 tangentWS = normalize(mul(unity_ObjectToWorld, input.tangent.xyz).xyz);
+                    float3 binormalWS = cross(normalWS, tangentWS) * input.tangent.w ;
+                    float3x3 TBN = float3x3(tangentWS, binormalWS, normalWS);
+                    float3 furDir = - SafeNormalize(mul(float3(uvoffset.xy, 0), TBN));
+                    //furDir = binormalWS;
+                    float spec = Kajiya_KaySpecular(furDir, normalWS, viewVec, lightDir) * furInfo.z * saturate(NoL * 4);
+                    SHL += spec;
+                #endif
+
+                
+                
+                //光照的计算
+                SHL +=RimLight;
+                SHL +=DirLight*_DiffColor;
+                
+                
+                output.color.xyz = SHL;
+
+                
+
+        
+                return output;
+            }
 
             // -------------------------------------
             // Shader Stages
-            #pragma vertex DepthOnlyVertex
+            #pragma vertex vert
             
             #pragma fragment DepthOnlyFragment
 
@@ -528,10 +628,109 @@ Shader "CharacterRender/Fur"
 
             HLSLPROGRAM
             #pragma target 2.0
+                           
+            Varyings vert(Attributes input)
+            {
 
+                
+                float4 furInfo = tex2Dlod(_FlowMap,float4(input.uv.xy,0,0));
+                
+                //将顶点挤出
+                FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
+                float3 aNormal = (input.normal.xyz);
+                float3 n = aNormal*(FUR_OFFSET)*_FurLength;
+                input.positionOS.xyz +=n;
+                // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
+                const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+                Varyings output;
+                output.positionCS = vertexInput.positionCS;
+               
+        
+                //数据准备
+                float3 normalWS = normalize(TransformObjectToWorldNormal(input.normal));
+                output.normal = normalWS;
+                float3 positionWS = vertexInput.positionWS;
+                float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
+                float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
+                float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                
+                //uv的偏移，毛发的偏移
+                float2 flowMapOff = furInfo.rg;
+                flowMapOff = (flowMapOff*2 -1) * _FlowMapScale;
+                float2 uvoffset = _UvOffset.xy * FUR_OFFSET + flowMapOff*20 * FUR_OFFSET;
+                uvoffset *=0.1;
+                float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap) + uvoffset*float2(1,1)/_FurAlphaScale;
+                float2 uv2 = TRANSFORM_TEX(input.uv.xy,_BaseMap)*_FurAlphaScale + uvoffset;
+                output.uv = float4(uv1,uv2);
+        
+                //毛发的环境光遮蔽
+                half3 SH = half3(0.5,0.5,0.5);
+                half Occlusion = FUR_OFFSET*FUR_OFFSET;//伽马转为线性光照
+                Occlusion += 0.04;
+
+               
+                
+        
+             
+
+                //模型周围毛发的透射光
+                half Fresnel  = 1 - max(0,dot(normalWS,viewVec));
+                half RimLight = Fresnel * Occlusion;
+                RimLight *= RimLight;
+                RimLight *= _FresnelLV * SH;
+
+                //太阳光//TODO接收阴影
+                Light mainLight = GetMainLight(shadowCoord);
+                half3 lightDir = mainLight.direction;
+                half NoL = dot(lightDir,normalWS);
+                half3 DirLight = saturate(NoL + _LightFilter + FUR_OFFSET)*mainLight.color;
+                #ifdef _Shadow_ON
+                    DirLight*=mainLight.shadowAttenuation*mainLight.distanceAttenuation;
+                #endif
+        
+                //GI采样
+                //TODO 环境光
+                half3 SHL;
+                SHL = lerp(SH*_OcclusionColor,SH,Occlusion);
+        
+                #ifdef _GI_ON
+                OUTPUT_LIGHTMAP_UV(input.lightmapUV, unity_LightmapST, output.lightmapUV);
+                OUTPUT_SH(normalWS, output.vertexSH);
+                output.color.w = Occlusion;
+                SHL = float3(0,0,0);
+                #endif
+        
+                
+        
+                //毛发的各向异性高光
+                #if defined(_StrandSpecular_ON)
+                    //计算毛发的方向
+                    float3 tangentWS = normalize(mul(unity_ObjectToWorld, input.tangent.xyz).xyz);
+                    float3 binormalWS = cross(normalWS, tangentWS) * input.tangent.w ;
+                    float3x3 TBN = float3x3(tangentWS, binormalWS, normalWS);
+                    float3 furDir = - SafeNormalize(mul(float3(uvoffset.xy, 0), TBN));
+                    //furDir = binormalWS;
+                    float spec = Kajiya_KaySpecular(furDir, normalWS, viewVec, lightDir) * furInfo.z * saturate(NoL * 4);
+                    SHL += spec;
+                #endif
+
+                
+                
+                //光照的计算
+                SHL +=RimLight;
+                SHL +=DirLight*_DiffColor;
+                
+                
+                output.color.xyz = SHL;
+
+                
+
+        
+                return output;
+            }
             // -------------------------------------
             // Shader Stages
-            #pragma vertex DepthNormalsVertex
+            #pragma vertex vert 
             #pragma fragment DepthNormalsFragment
 
             // -------------------------------------
