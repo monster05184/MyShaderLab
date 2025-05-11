@@ -27,11 +27,19 @@ Material:
         m_Texture: {fileID: 2800000, guid: c2034da3ec52a2e4da75c2bd7888c15e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EnvMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SDFTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -42,9 +50,16 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 1
+    - _LightDebugMode: 0
+    - _MetallicMultiplier: 0
     - _OcclusionScale: 1
-    - _RoughnessMultiplier: 1
+    - _OutlineWidth: 0.1
+    - _RoughnessMultiplier: 7.94
+    - _SDF: 0
+    - _SDFSign: 1
+    - _SDFSmooth: 0
+    - _SDFValue: 0
+    - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
     - _StencilComp: 8
@@ -54,9 +69,13 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
+    - _SurfaceDebugMode: 0
     - _Visibility: 0
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -1,4 +1,4 @@
-﻿Shader "NPRHair"
+﻿Shader "NPRHair_EyeBrow"
 {
     Properties
     {
@@ -32,6 +32,10 @@
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 2)) = 1
         
         _SpecColor("高光颜色", Color) = (0.6, 0.6, 0.6, 1)
+        _NolSmooth("卡通光照平滑度", Range(0, 1)) = 0.5
+        
+        [Header(Eyebrow perspective)]
+        _AlphaIntensity("Alpha Intensity", Range(0, 1)) = 0.5
         
         //Anisotropic
         [Header(Anisotropic)]
@@ -41,9 +45,12 @@
         _ShiftTexScale("高光偏移贴图缩放", Float) = 0.5
         
 
+        
+
     }
     SubShader
     {
+        Name "Forward"
         Tags {             
             "RenderType" = "Opaque"
             "RenderPipeline" = "UniversalPipeline"
@@ -51,11 +58,12 @@
             "IgnoreProjector" = "True" 
         }
         LOD 100
+
         
         Stencil
         {
             Ref [_StencilRef]
-            Comp [_StencilComp]
+            Comp NotEqual
             Pass [_StencilPass]
             Fail [_StencilFail]
             ZFail [_StencilZFail]
@@ -63,10 +71,15 @@
         
         Pass
         {
+            Name "ForwardLit"
             Tags
             {
                 "LightMode" = "UniversalForward"
+                "UniversalMaterialType" = "Lit"
+                "IgnoreProjector" = "True"
+
             }
+            
             HLSLPROGRAM
             #define DEBUG
             #pragma vertex vert_pbr
@@ -77,15 +90,46 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "NPRHair.hlsl"
-
-
-
-
-
-
+            
             ENDHLSL
         }
 
+        Pass
+        {
+            Name "ForwardLitTransparent"
+            Tags
+            {
+                "LightMode" = "SRPDefaultUnlit"
+                "UniversalMaterialType" = "Lit"
+                "IgnoreProjector" = "True"
+
+            }
+            Blend SrcAlpha OneMinusSrcAlpha
+            Stencil
+            {
+                Ref [_StencilRef]
+                Comp Equal
+                Pass [_StencilPass]
+                Fail [_StencilFail]
+                ZFail [_StencilZFail]
+            }
+            
+            HLSLPROGRAM
+            #define DEBUG
+            #pragma vertex vert_pbr
+            #pragma fragment frag_pbr
+            // make fog work
+            #pragma multi_compile_fog
+            
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "NPRHair.hlsl"
+            
+            ENDHLSL
+        }
+
+
+        
         Pass
         {
             Name "DepthOnly"

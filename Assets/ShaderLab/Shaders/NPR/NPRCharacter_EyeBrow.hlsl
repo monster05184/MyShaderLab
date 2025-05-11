@@ -35,6 +35,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
     sd.diffuse = albedo * (1 - metallic);
+    sd.specular = lerp(0.04f, albedo.rgb, metallic);
     sd.emissive = GetEmissive(i.uv);
     sd.normalTS = normalTS;
     sd.opacity = albedo.a;
@@ -92,7 +93,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
-    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.diffuse * _EnvColor;
+    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
     light += indirectSpec * _EnvColor;
     float indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
     light += indirectDiffuse;

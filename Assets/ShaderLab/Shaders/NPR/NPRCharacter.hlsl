@@ -1,5 +1,6 @@
 ﻿#include "Assets/ShaderLab/ShaderCommon.hlsl"
 #include "Assets/ShaderLab/PBR/PBR.hlsl"
+#include "Assets/ShaderLab/NPR/NPRCommon.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
 
@@ -35,6 +36,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
     sd.baseColor = albedo;
+    sd.specular = lerp(0.04f, albedo.rgb, metallic);
     sd.diffuse = albedo * (1 - metallic);
     sd.emissive = GetEmissive(i.uv);
     sd.normalTS = normalTS;
@@ -52,6 +54,9 @@ void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
     _LocalData.sdf.gb = tex2D(_SDFTex, sdfuv).gb;
     #endif
     _LocalData.vertexSH = i.vertexSH;
+    half3 ramp = NPRRamp(pd.Nol);
+    sd.diffuse = sd.diffuse * ramp;
+    sd.specular = sd.specular * ramp;
 }
 half SDF(half3 sdf, half d)
 {
@@ -82,9 +87,13 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     specBRDF = (specLobe * 2 + NoL) * sd.diffuse;
     light = (specBRDF * _SpecColor + diffBRDF)  * pd.lightCol;
     #else
+    
     specBRDF = CookTorranceBRDF(pd, sd);
-    light = (specBRDF * _SpecColor * pd.Nol + diffBRDF * pd.Nol)  * pd.lightCol;
+    half NPRnol = NPRNol(pd.Nol);
+    
+    light = (specBRDF * _SpecColor * NPRnol + diffBRDF * NPRnol)  * pd.lightCol;
     #endif
+    
 
     
     return light;
@@ -94,7 +103,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
-    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.diffuse * _EnvColor;
+    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
     light += indirectSpec * _EnvColor;
     float indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
     light += indirectDiffuse;

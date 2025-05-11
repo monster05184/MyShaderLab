@@ -31,13 +31,17 @@
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
-        _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
-        _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1
+        _RoughnessMultiplier("Roughness Multiplier", Range(0, 2)) = 1
         
 
         
         [Header(Light)]
         _SpecColor("Spec Color", Color) = (0, 0, 0, 1)
+        _NolSmooth("卡通光照平滑度", Range(0, 1)) = 0.5
+        
+        [Header(Ramp)]
+        _RampTex("Ramp Texture", 2D) = "white" {}
         
         //Outline 
         [Toggle] _SmoothNormal("Smooth Normal", Float) = 0

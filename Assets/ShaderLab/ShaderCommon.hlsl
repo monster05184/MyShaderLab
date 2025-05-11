@@ -32,6 +32,8 @@ half4 GetEmissive(float2 uv)
     return tex2D(EmissiveMap, emissiveUV);
 }
 
+LightOut lightOut;
+
 struct v2f
 {
     float2 uv : TEXCOORD0;
@@ -177,6 +179,7 @@ half4 frag_pbr(v2f i) : SV_Target
     }
     
     col.xyz = lightColor;
+    
 
     
     //col.rgb += sd.emissive;

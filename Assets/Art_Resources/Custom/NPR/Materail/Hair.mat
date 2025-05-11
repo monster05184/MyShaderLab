@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 1999
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -49,16 +49,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaIntensity: 0.139
     - _AlphaTest: 0
     - _AnisotropicMultiplier: 0.846
     - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
     - _GIBakerMode: 10
-    - _MetallicMultiplier: 0.9
+    - _MetallicMultiplier: 0
+    - _NolSmooth: 0.447
     - _OcclusionScale: 1
     - _OutlineWidth: 0.1
-    - _RoughnessMultiplier: 0.88
+    - _RoughnessMultiplier: 0.962
     - _SDF: 0
     - _SDFSmooth: 0
     - _SDFValue: 0
@@ -81,5 +83,5 @@ Material:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _EnvColor: {r: 0.8792453, g: 0.8792453, b: 0.8792453, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

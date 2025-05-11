@@ -116,6 +116,30 @@ void DebugSD(CustomSurfaceData sd, inout half4 color)
         break;
     }
 }
+half _PBRDataDebugMode;
+// void DebugPBR(PBRData pbr, inout half4 color)
+// {
+//     if(_PBRDataDebugMode)
+//         color.w = 1;
+//     switch(_PBRDataDebugMode)
+//     {
+//     case 0:
+//         color = color;
+//         break;
+//     case 1:
+//         color.xyz = pbr.diffuseColor;
+//         break;
+//     case 2:
+//         color.xyz = pbr.specularColor;
+//         break;
+//     case 3:
+//         color.xyz = pbr.roughness;
+//         break;
+//     case 4:
+//         color.xyz = pbr.metallic;
+//         break;
+//     }
+// }
 void DebugTrue()
 {
     _Debug = 1;
