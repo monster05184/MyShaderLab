@@ -13,6 +13,7 @@ half _SDFSmooth;
 half3 _SpecColor;
 
 
+
 struct LocalData1
 {
     #ifdef _SDF_ON
@@ -93,7 +94,8 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     
     light = (specBRDF * _SpecColor * NPRnol + diffBRDF * NPRnol)  * pd.lightCol;
     #endif
-    
+    float3 rimLight = ToonRimLight(pd.N, pd.V, _RimPower) * _RimColor;
+    light += rimLight;
 
     
     return light;
