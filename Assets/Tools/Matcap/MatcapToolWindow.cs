@@ -6,7 +6,7 @@ public class MatcapToolWindow : EditorWindow
 {
     private MatcapToolConfig dataContainer;
     private SerializedObject serializedData;
-    private SerializedProperty matcapGenerateShaderProp;
+    private SerializedProperty matcapGenerateMatProp;
     private SerializedProperty textureSizeProp;
     private SerializedProperty savePathProp;
 
@@ -33,7 +33,7 @@ public class MatcapToolWindow : EditorWindow
         if (dataContainer != null)
         {
             serializedData = new SerializedObject(dataContainer);
-            matcapGenerateShaderProp = serializedData.FindProperty("matcapGenerateShader");
+            matcapGenerateMatProp = serializedData.FindProperty("matcapGenerateMaterial");
             textureSizeProp = serializedData.FindProperty("textureSize");
             savePathProp = serializedData.FindProperty("savePath");
         }
@@ -55,7 +55,7 @@ public class MatcapToolWindow : EditorWindow
         
         EditorGUILayout.Space(10);
         EditorGUILayout.LabelField("Data Settings", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(matcapGenerateShaderProp);
+        EditorGUILayout.PropertyField(matcapGenerateMatProp);
         EditorGUILayout.PropertyField(textureSizeProp);
         EditorGUILayout.PropertyField(savePathProp);
 
@@ -119,6 +119,11 @@ public class MatcapToolWindow : EditorWindow
         if (GUILayout.Button("Save Data", GUILayout.Height(30)))
         {
             SaveData();
+        }
+        if (GUILayout.Button("Generate Matcap Texture", GUILayout.Height(30)))
+        {
+            MatcapTool.ExportAndSetMaterials(dataContainer);
+
         }
     }
 

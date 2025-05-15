@@ -15,7 +15,7 @@ public class MatcapToolConfig : ScriptableObject
         Size4096 = 4096
     }
     
-    public Shader matcapGenerateShader;
+    public Material matcapGenerateMaterial;
     public TextureSize textureSize = TextureSize.Size512;
     public string savePath = "Assets/Art_Resources/Matcap";
     
