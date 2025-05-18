@@ -50,9 +50,11 @@ struct v2f
     float3 vertexLight : TEXCOORD6;
 
     float3 vertexSH    : TEXCOORD7;
+
     #ifdef DEBUG
         float4 debugColor  : TEXCOORD8;
     #endif
+    float4 shadowCoord : TEXCOORD9;
     
 };
 
@@ -98,6 +100,19 @@ half3 VertexLight(appdataPBR v)
     return lightCount;
     
 }
+float4 TransformWorldToShadowCoord1(float3 positionWS)
+{
+    #ifdef _MAIN_LIGHT_SHADOWS_CASCADE
+    half cascadeIndex = ComputeCascadeIndex(positionWS);
+    #else
+    half cascadeIndex = half(0.0);
+    #endif
+
+    float4 shadowCoord = mul(_MainLightWorldToShadow[cascadeIndex], float4(positionWS, 1.0));
+
+    return float4(shadowCoord.xyz, 0);
+}
+
 v2f VertexFunc(v2f i);
 v2f vert_pbr (appdataPBR v)
 {
@@ -115,6 +130,7 @@ v2f vert_pbr (appdataPBR v)
     //o.vertexSH = GetVertexSH(v.positionWS, normalInput.normalWS);
     OUTPUT_LIGHTMAP_UV(input.lightmapUV, unity_LightmapST, output.lightmapUV);
     OUTPUT_SH(o.normal, o.vertexSH);
+    o.shadowCoord = TransformWorldToShadowCoord1(o.positionWS);
 
     o = VertexFunc(o);
     
@@ -133,7 +149,7 @@ void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light ligh
     pd.L = light.direction;
     pd.Nol = saturate(dot(pd.N, pd.L));
     pd.lightCol = light.color;
-    pd.atten = light.shadowAttenuation * light.distanceAttenuation;
+    pd.atten = light.shadowAttenuation;
     pd.posWS = i.positionWS;
     pd.V = normalize(_WorldSpaceCameraPos - pd.posWS);
     pd.Nov = saturate(dot(pd.N, pd.V));
@@ -154,7 +170,7 @@ half4 frag_pbr(v2f i) : SV_Target
     half4 col;
     PrepareSurfaceData(sd, i);
 
-    HandleSurfaceData(sd, pd, i, GetMainLight());
+    HandleSurfaceData(sd, pd, i, GetMainLight(i.shadowCoord));
 
     PostSurfaceData(sd, pd, i);
 

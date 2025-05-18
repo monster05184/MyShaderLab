@@ -90,7 +90,7 @@
             #pragma fragment frag_pbr
             #pragma target 2.0
 
-                        //开启阴影相关的宏
+            //开启阴影相关的宏
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS

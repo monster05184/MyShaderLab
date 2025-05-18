@@ -94,6 +94,7 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     
     light = (specBRDF * _SpecColor * NPRnol + diffBRDF * NPRnol)  * pd.lightCol;
     #endif
+    light *= pd.atten;
     float3 rimLight = ToonRimLight(pd.N, pd.V, _RimPower) * _RimColor;
     light += rimLight;
 
