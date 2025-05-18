@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dea0fa158da23994a8c08cd97548a1e6
+guid: d6e644292148d834a95e8c160b9db30c
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
@@ -7,6 +7,7 @@ ShaderImporter:
   - _EnvMap: {instanceID: 0}
   - _NormalMap: {instanceID: 0}
   - _MaterialParamsMap: {instanceID: 0}
+  - _SkinSSSMap: {instanceID: 0}
   nonModifiableTextures: []
   userData: 
   assetBundleName: 

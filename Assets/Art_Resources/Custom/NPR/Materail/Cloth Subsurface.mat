@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cloth
-  m_Shader: {fileID: 4800000, guid: 0a6af78a28521ce48b6200883c9aea7a, type: 3}
+  m_Name: Cloth Subsurface
+  m_Shader: {fileID: 4800000, guid: d6e644292148d834a95e8c160b9db30c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -47,6 +47,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SkinSSSMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaTest: 0
@@ -65,6 +69,7 @@ Material:
     - _SDFSign: 1
     - _SDFSmooth: 0
     - _SDFValue: 0
+    - _SSSIntensity: 0.67
     - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1
@@ -84,5 +89,8 @@ Material:
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SSSColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _SSSColor2: {r: 0.7, g: 0.2, b: 0, a: 1}
+    - _SSSColor3: {r: 1, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

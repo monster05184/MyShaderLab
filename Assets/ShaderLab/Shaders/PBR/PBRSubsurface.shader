@@ -6,7 +6,6 @@
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 2
         [SimpleToggle] _ZWrite("ZWrite", Float) = 1
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode("ZTest", Float) = 4
-        [SimpleToggle] _SpOpacity("透明是否保留高光", int) = 0
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
 
@@ -18,21 +17,28 @@
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
         
+        
+         
         //Surface
         _AlbedoMap("Albedo Map", 2D) = "white" {}
         _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
         
         _EnvMap("环境贴图", Cube) = "grey" {}
         _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
-        s_DFGTexture("DFGTexture", 2D) = "white" {}
-        
-        
         
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        
+        //SSS
+        [Header(SSS)]
+        _SkinSSSMap("SkinSSS Map (R,G,B)", 2D) = "white" {}
+        _SSSIntensity("SSS Intensity", Range (0, 4)) = 0
+        [HDR] _SSSColor1("SSS color 1", Color) = (1, 1, 1, 1)
+        [HDR] _SSSColor2("SSS color 2", Color) = (0.7, 0.2, 0, 1)
+        [HDR] _SSSColor3("SSS color 3", Color) = (1, 0, 0, 1)
         
         
 
@@ -64,11 +70,7 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "PBRSubsurface.hlsl"
-
-
-
-
-
+            
 
             ENDHLSL
         }

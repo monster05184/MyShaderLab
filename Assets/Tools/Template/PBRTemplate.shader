@@ -6,7 +6,6 @@ Shader "PBRTemplate"
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 2
         [SimpleToggle] _ZWrite("ZWrite", Float) = 1
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode("ZTest", Float) = 4
-        [SimpleToggle] _SpOpacity("透明是否保留高光", int) = 0
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
 
