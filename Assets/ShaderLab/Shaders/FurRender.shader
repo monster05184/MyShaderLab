@@ -3,7 +3,7 @@ Shader "CharacterRender/Fur"
 {
     Properties
     {
-        [NoScaleOffset]_BaseMap("MainTex", 2D) = "White" { }
+        [NoScaleOffset] _AlbedoMap("MainTex", 2D) = "White" { }
         //_FurMask("毛发的遮罩层贴图",2D) = "White" { }
         [Header(FurAlpha)]
         [NoScaleOffset]_FurAlpha("毛发的生成透明度贴图",2D) = "White" { }
@@ -53,7 +53,7 @@ Shader "CharacterRender/Fur"
             // 将不占空间的材质相关变量放在CBUFFER中，为了兼容SRP Batcher
             CBUFFER_START(UnityPerMaterial)
                 float4 _UvOffset;
-                float4 _BaseMap_ST;
+                float4  _AlbedoMap_ST;
                 float _FurAlphaScale;
                 float _FurLength;
                 half4 _DiffColor;
@@ -71,8 +71,8 @@ Shader "CharacterRender/Fur"
             SAMPLER(sampler_FurMask);
             TEXTURE2D(_FurAlpha);
             SAMPLER(sampler_FurAlpha);
-            TEXTURE2D(_BaseMap);
-            SAMPLER(sampler_BaseMap);
+            TEXTURE2D( _AlbedoMap);
+            SAMPLER(sampler_AlbedoMap);
             // 材质单独声明，使用DX11风格的新采样方法
             
             #ifdef _DEBUG_ON
@@ -169,7 +169,7 @@ Shader "CharacterRender/Fur"
                     FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
                     float3 aNormal = (input.normal.xyz);
                     float3 n = aNormal*(FUR_OFFSET)*_FurLength;
-                    input.positionOS.xyz +=n;
+                    //input.positionOS.xyz +=n;
                     // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
                     const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                     Varyings output;
@@ -182,15 +182,15 @@ Shader "CharacterRender/Fur"
                     float3 positionWS = vertexInput.positionWS;
                     float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
                     float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-                    float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                    float2 inUv = TRANSFORM_TEX(input.uv.xy, _AlbedoMap);
                     
                     //uv的偏移，毛发的偏移
                     float2 flowMapOff = furInfo.rg;
                     flowMapOff = (flowMapOff*2 -1) * _FlowMapScale;
                     float2 uvoffset = _UvOffset.xy * FUR_OFFSET + flowMapOff*20 * FUR_OFFSET;
                     uvoffset *=0.1;
-                    float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap) + uvoffset*float2(1,1)/_FurAlphaScale;
-                    float2 uv2 = TRANSFORM_TEX(input.uv.xy,_BaseMap)*_FurAlphaScale + uvoffset;
+                    float2 uv1 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap) + uvoffset*float2(1,1)/_FurAlphaScale;
+                    float2 uv2 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap)*_FurAlphaScale + uvoffset;
                     output.uv = float4(uv1,uv2);
             
                     //毛发的环境光遮蔽
@@ -265,7 +265,7 @@ Shader "CharacterRender/Fur"
                     
                     //对毛发的噪声Alpha图和主图片进行取样
                     half3 NoiseTex = SAMPLE_TEXTURE2D(_FurAlpha, sampler_FurAlpha, input.uv.zw);
-                    half3 MainTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv.xy);
+                    half3 MainTex = SAMPLE_TEXTURE2D( _AlbedoMap, sampler_AlbedoMap, input.uv.xy);
                     half Noise = NoiseTex.r;
                     
                     //光照采样开启GI之后采样GI，不开启则默认
@@ -329,7 +329,7 @@ Shader "CharacterRender/Fur"
 
                     float3 aNormal = (input.normal.xyz);
                     float3 n = aNormal*(FUR_OFFSET)*_FurLength;
-                    input.positionOS.xyz +=n;
+                    //input.positionOS.xyz +=n;
                     // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
                     const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                     Varyings output;
@@ -342,11 +342,11 @@ Shader "CharacterRender/Fur"
                     float3 positionWS = vertexInput.positionWS;
                     float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
                     float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-                    float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                    float2 inUv = TRANSFORM_TEX(input.uv.xy, _AlbedoMap);
                     
                     //uv的偏移，毛发的偏移
 
-                    float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                    float2 uv1 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap);
                     output.uv = float4(uv1,0,0);
             
                     //毛发的环境光遮蔽
@@ -405,7 +405,7 @@ Shader "CharacterRender/Fur"
                     
                     //对毛发的噪声Alpha图和主图片进行取样
                     //half3 NoiseTex = SAMPLE_TEXTURE2D(_FurAlpha, sampler_FurAlpha, input.uv.zw);
-                    half3 MainTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv.xy);
+                    half3 MainTex = SAMPLE_TEXTURE2D( _AlbedoMap, sampler_AlbedoMap, input.uv.xy);
                     //half Noise = NoiseTex.r;
                     
                     //光照采样开启GI之后采样GI，不开启则默认
@@ -496,7 +496,7 @@ Shader "CharacterRender/Fur"
                 FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
                 float3 aNormal = (input.normal.xyz);
                 float3 n = aNormal*(FUR_OFFSET)*_FurLength;
-                input.positionOS.xyz +=n;
+                //input.positionOS.xyz +=n;
                 // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
                 const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                 Varyings output;
@@ -509,15 +509,15 @@ Shader "CharacterRender/Fur"
                 float3 positionWS = vertexInput.positionWS;
                 float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
                 float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-                float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                float2 inUv = TRANSFORM_TEX(input.uv.xy, _AlbedoMap);
                 
                 //uv的偏移，毛发的偏移
                 float2 flowMapOff = furInfo.rg;
                 flowMapOff = (flowMapOff*2 -1) * _FlowMapScale;
                 float2 uvoffset = _UvOffset.xy * FUR_OFFSET + flowMapOff*20 * FUR_OFFSET;
                 uvoffset *=0.1;
-                float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap) + uvoffset*float2(1,1)/_FurAlphaScale;
-                float2 uv2 = TRANSFORM_TEX(input.uv.xy,_BaseMap)*_FurAlphaScale + uvoffset;
+                float2 uv1 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap) + uvoffset*float2(1,1)/_FurAlphaScale;
+                float2 uv2 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap)*_FurAlphaScale + uvoffset;
                 output.uv = float4(uv1,uv2);
         
                 //毛发的环境光遮蔽
@@ -585,6 +585,18 @@ Shader "CharacterRender/Fur"
         
                 return output;
             }
+            half DepthOnlyFragment(Varyings input) : SV_TARGET
+            {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
+                //Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a, _BaseColor, _Cutoff);
+
+            #ifdef LOD_FADE_CROSSFADE
+                LODFadeCrossFade(input.positionCS);
+            #endif
+
+                return input.positionCS.z;
+            }
 
             // -------------------------------------
             // Shader Stages
@@ -610,7 +622,7 @@ Shader "CharacterRender/Fur"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+            //#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             ENDHLSL
         }
 
@@ -639,7 +651,7 @@ Shader "CharacterRender/Fur"
                 FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
                 float3 aNormal = (input.normal.xyz);
                 float3 n = aNormal*(FUR_OFFSET)*_FurLength;
-                input.positionOS.xyz +=n;
+                //input.positionOS.xyz +=n;
                 // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
                 const VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                 Varyings output;
@@ -652,15 +664,15 @@ Shader "CharacterRender/Fur"
                 float3 positionWS = vertexInput.positionWS;
                 float3 viewVec = normalize(_WorldSpaceCameraPos-positionWS);
                 float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-                float2 inUv = TRANSFORM_TEX(input.uv.xy,_BaseMap);
+                float2 inUv = TRANSFORM_TEX(input.uv.xy, _AlbedoMap);
                 
                 //uv的偏移，毛发的偏移
                 float2 flowMapOff = furInfo.rg;
                 flowMapOff = (flowMapOff*2 -1) * _FlowMapScale;
                 float2 uvoffset = _UvOffset.xy * FUR_OFFSET + flowMapOff*20 * FUR_OFFSET;
                 uvoffset *=0.1;
-                float2 uv1 = TRANSFORM_TEX(input.uv.xy,_BaseMap) + uvoffset*float2(1,1)/_FurAlphaScale;
-                float2 uv2 = TRANSFORM_TEX(input.uv.xy,_BaseMap)*_FurAlphaScale + uvoffset;
+                float2 uv1 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap) + uvoffset*float2(1,1)/_FurAlphaScale;
+                float2 uv2 = TRANSFORM_TEX(input.uv.xy, _AlbedoMap)*_FurAlphaScale + uvoffset;
                 output.uv = float4(uv1,uv2);
         
                 //毛发的环境光遮蔽
@@ -728,6 +740,36 @@ Shader "CharacterRender/Fur"
         
                 return output;
             }
+            void DepthNormalsFragment(
+            Varyings input
+                , out half4 outNormalWS : SV_Target0
+            #ifdef _WRITE_RENDERING_LAYERS
+                , out float4 outRenderingLayers : SV_Target1
+            #endif
+            )
+            {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
+                #ifdef LOD_FADE_CROSSFADE
+                    LODFadeCrossFade(input.positionCS);
+                #endif
+
+                // Output...
+                #if defined(_GBUFFER_NORMALS_OCT)
+                    float3 normalWS = normalize(input.normalWS);
+                    float2 octNormalWS = PackNormalOctQuadEncode(normalWS);             // values between [-1, +1], must use fp32 on some platforms
+                    float2 remappedOctNormalWS = saturate(octNormalWS * 0.5 + 0.5);     // values between [ 0,  1]
+                    half3 packedNormalWS = half3(PackFloat2To888(remappedOctNormalWS)); // values between [ 0,  1]
+                    outNormalWS = half4(packedNormalWS, 0.0);
+                #else
+                    outNormalWS = half4(NormalizeNormalPerPixel(input.normal), 0.0);
+                #endif
+
+                #ifdef _WRITE_RENDERING_LAYERS
+                    uint renderingLayers = GetMeshRenderingLayer();
+                    outRenderingLayers = float4(EncodeMeshRenderingLayer(renderingLayers), 0, 0, 0);
+                #endif
+        }
             // -------------------------------------
             // Shader Stages
             #pragma vertex vert 
@@ -753,7 +795,7 @@ Shader "CharacterRender/Fur"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitDepthNormalsPass.hlsl"
+            //#include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitDepthNormalsPass.hlsl"
             ENDHLSL
         }
     

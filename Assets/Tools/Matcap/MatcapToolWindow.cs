@@ -1,4 +1,6 @@
 // DataEditorWindow.cs
+
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ public class MatcapToolWindow : EditorWindow
     private SerializedProperty matcapGenerateMatProp;
     private SerializedProperty textureSizeProp;
     private SerializedProperty savePathProp;
+    Vector3 cameraRotation = Vector3.zero;
 
     [MenuItem("Window/MatcapToolWindow")]
     public static void ShowWindow()
@@ -20,12 +23,19 @@ public class MatcapToolWindow : EditorWindow
     {
         // 尝试自动加载已存在的实例
         string[] guids = AssetDatabase.FindAssets("t:MatcapToolConfig");
+        
         if (guids.Length > 0)
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[0]);
             dataContainer = AssetDatabase.LoadAssetAtPath<MatcapToolConfig>(path);
             InitializeSerializedProperties();
         }
+        MatcapTool.OnInitialize(dataContainer);
+    }
+
+    private void OnDisable()
+    {
+        MatcapTool.Release();
     }
 
     void InitializeSerializedProperties()
@@ -55,9 +65,26 @@ public class MatcapToolWindow : EditorWindow
         
         EditorGUILayout.Space(10);
         EditorGUILayout.LabelField("Data Settings", EditorStyles.boldLabel);
+        EditorGUI.BeginChangeCheck();
         EditorGUILayout.PropertyField(matcapGenerateMatProp);
         EditorGUILayout.PropertyField(textureSizeProp);
         EditorGUILayout.PropertyField(savePathProp);
+        serializedData.ApplyModifiedProperties();
+        EditorGUILayout.Space(10);
+        if(EditorGUI.EndChangeCheck())
+        {
+            MatcapTool.Release();
+            MatcapTool.OnInitialize(dataContainer);
+        }
+        EditorGUILayout.LabelField("Matetail Adjust", EditorStyles.boldLabel);
+        MatcapTool.matcapSphere.transform.localEulerAngles = EditorGUILayout.Vector3Field("Materail Rotation", MatcapTool.matcapSphere.transform.localEulerAngles);
+        EditorGUI.BeginChangeCheck();
+        cameraRotation = EditorGUILayout.Vector3Field("Camera Rotation", cameraRotation);
+        if (EditorGUI.EndChangeCheck())
+        {
+            MatcapTool.RotateCamera(cameraRotation);
+        }
+        
 
         if (serializedData.ApplyModifiedProperties())
         {
@@ -65,6 +92,12 @@ public class MatcapToolWindow : EditorWindow
         }
 
         DrawSaveButton();
+        MatcapTool.RenderCamera();
+        Rect rect = GUILayoutUtility.GetRect(500, 500);
+        EditorGUI.DrawPreviewTexture(rect, 
+            MatcapTool.camera.GetComponent<Camera>().targetTexture, 
+            null, 
+            ScaleMode.ScaleToFit);
     }
 
     void DrawMatcapToolConfigField()
@@ -116,15 +149,15 @@ public class MatcapToolWindow : EditorWindow
 
     void DrawSaveButton()
     {
-        if (GUILayout.Button("Save Data", GUILayout.Height(30)))
-        {
-            SaveData();
-        }
+        // if (GUILayout.Button("Save Data", GUILayout.Height(30)))
+        // {
+        //     SaveData();
+        // }
         if (GUILayout.Button("Generate Matcap Texture", GUILayout.Height(30)))
         {
-            MatcapTool.ExportAndSetMaterials(dataContainer);
-
+            MatcapTool.CaptureTexture(dataContainer);
         }
+
     }
 
     void SaveData()
