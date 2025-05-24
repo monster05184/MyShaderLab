@@ -8,11 +8,57 @@ using System.Text;
 using UnityEditor.ProjectWindowCallback;
 using System.Text.RegularExpressions;
 
-public class ExtendTemplate : MonoBehaviour
+public class ExtendTemplate : EditorWindow
 {
     public const string PbrPath = "Assets/Create/Shader/PBRTemplate";
     public static string monoScriptPath = "Assets/Tools/Template";
+    
+    public enum ShaderType
+    {
+        PBR,
+        Unlit
+    }
+    public ShaderType shaderType = ShaderType.PBR;
+    public string shaderName = "ShaderName";
+    [MenuItem("Assets/Create/Shader/ShaderTemplate")]
+    public static void ShowWindow()
+    {
+        GetWindow<ExtendTemplate>("ShaderTemplate");
+    }
+    
+    private void OnGUI()
+    {
+        GUILayout.Label("Settings", EditorStyles.boldLabel);
 
+        // 多选框
+        shaderType = (ShaderType)EditorGUILayout.EnumPopup("ShaderType", shaderType, GUILayout.Width(200));
+
+        // 文本输入框
+        shaderName = EditorGUILayout.TextField("PBRTemplate", shaderName);
+        
+        // 添加一些间距
+        EditorGUILayout.Space(10);
+        
+        if(GUILayout.Button("Create Shader"))
+        {
+            if (string.IsNullOrEmpty(shaderName))
+            {
+                EditorUtility.DisplayDialog("Error", "Shader name cannot be empty.", "OK");
+                return;
+            }
+            switch (shaderType)
+            {
+                case ShaderType.PBR:
+                    CreateNewShader("PBRTemplate", shaderName);
+                    break;
+                case ShaderType.Unlit:
+                    CreateNewShader("UnlitTemplate", shaderName);
+                    break;
+            }
+        }
+        
+    }
+    
     static string GetResourcePath(string name)
     {
         //Get the path of the current script
@@ -26,22 +72,25 @@ public class ExtendTemplate : MonoBehaviour
     [MenuItem(PbrPath, false, 80)]
     public static void CreatNewPBRShader()
     {
-        CreateNewShader("PBRTemplate");
+        CreateNewShader("PBRTemplate", "PBRTemplate");
     }
 
-    static void CreateNewShader(string shaderName)
+    static void CreateNewShader(string shaderName, string replaceShaderName)
     {
         var selectedPath = GetSelectedPathOrFallback();
+        Debug.Log(GetResourcePath($"{shaderName}.shader"));
+        Debug.Log(selectedPath + $"{replaceShaderName}.shader");
         ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0,
             ScriptableObject.CreateInstance<MyDoCreateScriptAsset>(),
-            selectedPath + $"/{shaderName}.shader",
+            selectedPath + $"/{replaceShaderName}.shader",
             null,
-            GetResourcePath("PBRTemplate.shader"));
+            GetResourcePath($"{shaderName}.shader"));
         ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0,
             ScriptableObject.CreateInstance<MyDoCreateScriptAsset>(),
-            selectedPath + $"/{shaderName}.hlsl",
+            selectedPath + $"/{replaceShaderName}.hlsl",
             null,
-            GetResourcePath("PBRTemplate.hlsl"));
+            GetResourcePath($"{shaderName}.hlsl"));
+
     }
 
 
@@ -60,6 +109,7 @@ public class ExtendTemplate : MonoBehaviour
         }
         return path;
     }
+    
 }
 class MyDoCreateScriptAsset : EndNameEditAction
 {
@@ -79,18 +129,7 @@ class MyDoCreateScriptAsset : EndNameEditAction
         streamReader.Close();
         string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(pathName);
         text = Regex.Replace(text, "#NAME#", fileNameWithoutExtension);
-        //string text2 = Regex.Replace(fileNameWithoutExtension, " ", string.Empty);
-        //text = Regex.Replace(text, "#SCRIPTNAME#", text2);
-        //if (char.IsUpper(text2, 0))
-        //{
-        //    text2 = char.ToLower(text2[0]) + text2.Substring(1);
-        //    text = Regex.Replace(text, "#SCRIPTNAME_LOWER#", text2);
-        //}
-        //else
-        //{
-        //    text2 = "my" + char.ToUpper(text2[0]) + text2.Substring(1);
-        //    text = Regex.Replace(text, "#SCRIPTNAME_LOWER#", text2);
-        //}
+
         bool encoderShouldEmitUTF8Identifier = true;
         bool throwOnInvalidBytes = false;
         UTF8Encoding encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier, throwOnInvalidBytes);

@@ -2,66 +2,70 @@ Shader "#NAME#"
 {
     Properties
     {
-         // ---- Begin build-in properties
-        [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 2
-        [SimpleToggle] _ZWrite("ZWrite", Float) = 1
-        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode("ZTest", Float) = 4
-        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
+        [MainTexture] _BaseMap("Texture", 2D) = "white" {}
+        [MainColor] _BaseColor("Color", Color) = (1, 1, 1, 1)
+        _Cutoff("AlphaCutout", Range(0.0, 1.0)) = 0.5
 
-        [IntRange] _StencilRef("Stencil Ref", Range(0, 255)) = 0
-        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
-        [IntRange] _StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
-        [IntRange] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
-        
-         
-        //Surface
-        _AlbedoMap("Albedo Map", 2D) = "white" {}
-        _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
-        
-        _EnvMap("环境贴图", Cube) = "grey" {}
-        _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
-        
-        _NormalMap("Normal Map", 2D) = "bump" {}
-        _MaterialParamsMap("Material Params Map", 2D) = "white" {}
-        
-        _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
-        _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
-        
-        
+        // BlendMode
+        _Surface("__surface", Float) = 0.0
+        _Blend("__mode", Float) = 0.0
+        _Cull("__cull", Float) = 2.0
+        [ToggleUI] _AlphaClip("__clip", Float) = 0.0
+        [HideInInspector] _BlendOp("__blendop", Float) = 0.0
+        [HideInInspector] _SrcBlend("__src", Float) = 1.0
+        [HideInInspector] _DstBlend("__dst", Float) = 0.0
+        [HideInInspector] _SrcBlendAlpha("__srcA", Float) = 1.0
+        [HideInInspector] _DstBlendAlpha("__dstA", Float) = 0.0
+        [HideInInspector] _ZWrite("__zw", Float) = 1.0
+        [HideInInspector] _AlphaToMask("__alphaToMask", Float) = 0.0
 
+        // Editmode props
+        _QueueOffset("Queue offset", Float) = 0.0
+
+        // ObsoleteProperties
+        [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
+        [HideInInspector] _Color("Base Color", Color) = (0.5, 0.5, 0.5, 1)
+        [HideInInspector] _SampleGI("SampleGI", float) = 0.0 // needed from bakedlit
     }
+
     SubShader
     {
-        Tags {             
+        Tags
+        {
             "RenderType" = "Opaque"
+            "IgnoreProjector" = "True"
             "RenderPipeline" = "UniversalPipeline"
-            "UniversalMaterialType" = "Lit"
-            "IgnoreProjector" = "True" 
         }
         LOD 100
-        
+
+        // -------------------------------------
+        // Render State Commands
+        Blend [_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
+        ZWrite [_ZWrite]
+        Cull [_Cull]
+
         Pass
         {
-            Name "Forward"
-            Tags
-            {
-                "LightMode" = "UniversalForward"
-            }
+            Name "Unlit"
+
+            // -------------------------------------
+            // Render State Commands
+            AlphaToMask[_AlphaToMask]
+
             HLSLPROGRAM
-            #define DEBUG
-            #pragma vertex vert_pbr
-            #pragma fragment frag_pbr
-            // make fog work
-            #pragma multi_compile_fog
-            
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Shader Stages
+            #pragma vertex vert_unlit
+            #pragma fragment frag_unlit
+
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "#NAME#.hlsl"
-            
+
+
+
 
             ENDHLSL
         }
@@ -181,4 +185,7 @@ Shader "#NAME#"
             ENDHLSL
         }
     }
+
+    FallBack "Hidden/Universal Render Pipeline/FallbackError"
+    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
 }

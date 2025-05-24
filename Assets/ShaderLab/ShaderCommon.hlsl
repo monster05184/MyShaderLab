@@ -146,6 +146,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i);
 void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light light)
 {
     pd.N = GetNormal(sd.normalTS, i);
+    //Debug(pd.N);
     pd.L = light.direction;
     pd.Nol = saturate(dot(pd.N, pd.L));
     pd.lightCol = light.color;
