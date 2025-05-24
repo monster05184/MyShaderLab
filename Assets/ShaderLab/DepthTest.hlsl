@@ -1,4 +1,4 @@
-#include "Assets/ShaderLab/ShaderCommon.hlsl"
+﻿#include "Assets/ShaderLab/ShaderCommon.hlsl"
 #include "Assets/ShaderLab/PBR/PBR.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
@@ -12,8 +12,9 @@ struct LocalData1
 
 LocalData1 _LocalData;
 
-v2f VertexFunc(v2f i, appdataPBR v)
+v2f VertexFunc(v2f i)
 {
+    Debug(1, i.debugColor);
     return i;
 }
 

@@ -22,7 +22,7 @@ struct LocalData1
 
 LocalData1 _LocalData;
 
-v2f VertexFunc(v2f i)
+v2f VertexFunc(v2f i, appdataPBR v)
 {
     return i;
 }

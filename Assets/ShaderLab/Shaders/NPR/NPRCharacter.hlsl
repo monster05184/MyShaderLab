@@ -20,11 +20,12 @@ struct LocalData1
     float3 sdf;
     #endif
     float3 vertexSH;
+    half3 ramp;
 };
 
 LocalData1 _LocalData;
 
-v2f VertexFunc(v2f i)
+v2f VertexFunc(v2f i, appdataPBR v)
 {
     return i;
 }
@@ -55,9 +56,11 @@ void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
     _LocalData.sdf.gb = tex2D(_SDFTex, sdfuv).gb;
     #endif
     _LocalData.vertexSH = i.vertexSH;
-    half3 ramp = NPRRamp(pd.Nol);
-    sd.diffuse = sd.diffuse * ramp;
-    sd.specular = sd.specular * ramp;
+    half fullNol  = dot(pd.N, pd.L);
+    fullNol = fullNol * 0.5 + 0.5;
+    half3 ramp = NPRRamp(fullNol);
+    _LocalData.ramp = ramp;
+
 }
 half SDF(half3 sdf, half d)
 {
@@ -90,13 +93,17 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     #else
     
     specBRDF = CookTorranceBRDF(pd, sd);
-    half NPRnol = NPRNol(pd.Nol);
+    half3 NPRnol = NPRNol(pd.Nol);
+    #ifdef _RAMP_ON
+    NPRnol = _LocalData.ramp;
+    #endif
     
     light = (specBRDF * _SpecColor * NPRnol + diffBRDF * NPRnol)  * pd.lightCol;
     #endif
+    //Debug(NPRnol);
+    
     light *= pd.atten;
-    //float3 rimLight = ToonRimLight(pd.N, pd.V, _RimPower) * _RimColor;
-    //light += rimLight;
+    
 
     
     return light;

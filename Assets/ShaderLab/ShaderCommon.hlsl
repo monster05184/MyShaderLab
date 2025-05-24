@@ -1,4 +1,6 @@
 #include "Debug.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 sampler2D _NormalMap;
 float4 _NormalMap_ST;
 half3 GetNormalTS(float2 uv)
@@ -7,13 +9,15 @@ half3 GetNormalTS(float2 uv)
     return tex2D(_NormalMap, normalTSUV);
 }
 
-sampler2D _AlbedoMap;
+//sampler2D _AlbedoMap;
+TEXTURE2D(_AlbedoMap);
+SAMPLER(sampler_AlbedoMap);
 float4 _AlbedoMap_ST;
 half4 _AlbedoColor;
 half4 GetAlbedo(float2 uv)
 {
     float2 albedoUV = uv * _AlbedoMap_ST.xy + _AlbedoMap_ST.zw;
-    return tex2D(_AlbedoMap, albedoUV) * _AlbedoColor;
+    return SAMPLE_TEXTURE2D(_AlbedoMap, sampler_AlbedoMap, uv) * _AlbedoColor;
 }
 
 sampler2D _MaterialParamsMap;
@@ -113,7 +117,7 @@ float4 TransformWorldToShadowCoord1(float3 positionWS)
     return float4(shadowCoord.xyz, 0);
 }
 
-v2f VertexFunc(v2f i);
+v2f VertexFunc(v2f i, appdataPBR v);
 v2f vert_pbr (appdataPBR v)
 {
     v2f o;
@@ -132,7 +136,7 @@ v2f vert_pbr (appdataPBR v)
     OUTPUT_SH(o.normal, o.vertexSH);
     o.shadowCoord = TransformWorldToShadowCoord1(o.positionWS);
 
-    o = VertexFunc(o);
+    o = VertexFunc(o, v);
     
 
     return o;
