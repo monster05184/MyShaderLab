@@ -1,31 +1,41 @@
-Shader "#NAME#"
+﻿Shader "FurLayer"
 {
     Properties
     {
-        [MainTexture] _BaseMap("Texture", 2D) = "white" {}
-        [MainColor] _BaseColor("Color", Color) = (1, 1, 1, 1)
-        _Cutoff("AlphaCutout", Range(0.0, 1.0)) = 0.5
-
         // BlendMode
-        _Surface("__surface", Float) = 0.0
         _Blend("__mode", Float) = 0.0
         _Cull("__cull", Float) = 2.0
         [ToggleUI] _AlphaClip("__clip", Float) = 0.0
-        [HideInInspector] _BlendOp("__blendop", Float) = 0.0
-        [HideInInspector] _SrcBlend("__src", Float) = 1.0
-        [HideInInspector] _DstBlend("__dst", Float) = 0.0
-        [HideInInspector] _SrcBlendAlpha("__srcA", Float) = 1.0
-        [HideInInspector] _DstBlendAlpha("__dstA", Float) = 0.0
-        [HideInInspector] _ZWrite("__zw", Float) = 1.0
-        [HideInInspector] _AlphaToMask("__alphaToMask", Float) = 0.0
+        _BlendOp("__blendop", Float) = 0.0
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
+        _SrcBlendAlpha("__srcA", Float) = 1.0
+        _DstBlendAlpha("__dstA", Float) = 0.0
+        _ZWrite("__zw", Float) = 1.0
+        _AlphaToMask("__alphaToMask", Float) = 0.0
 
-        // Editmode props
-        _QueueOffset("Queue offset", Float) = 0.0
 
-        // ObsoleteProperties
-        [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
-        [HideInInspector] _Color("Base Color", Color) = (0.5, 0.5, 0.5, 1)
-        [HideInInspector] _SampleGI("SampleGI", float) = 0.0 // needed from bakedlit
+        [NoScaleOffset] _AlbedoMap("MainTex", 2D) = "White" { }
+        //_FurMask("毛发的遮罩层贴图",2D) = "White" { }
+        [Header(FurAlpha)]
+        [NoScaleOffset]_FurAlpha("毛发的生成透明度贴图",2D) = "White" { }
+        [NoScaleOffset]_FlowMap("毛发的UV偏移FlowMap",2D) = "Black" { }
+        _FlowMapScale("FlowMap的权重",Range(0,1)) = 0
+        _FurAlphaScale("毛发生成透明贴图缩放",Range(1,1000)) = 1
+        _UvOffset("Uv的偏移程度:XY=UV偏移;ZW=UV扰动",Vector) = (0,0,0.2,0.2)
+        [Header(FurSetting)]
+        _FurLength("毛发的长度",Range(0,2)) = 1
+        [Space(10)]
+        [Header(Lighting)]
+        _DiffColor("漫反射的颜色",Color) = (0,0,0,0)
+        _OcclusionColor("毛发环境光遮蔽的颜色",Color) = (1,1,1,0)
+        _FresnelLV("毛发的边缘透光的强度",Range(0,100)) = 0
+        _LightFilter("平行光毛发穿透",Range(-0.5,0.5))  = 0.0
+        [Toggle(_StrandSpecular_ON)]_StrandSpecular_ON("各向异性高光",Float) = 0
+        _SpecColor1("高光颜色1",Color) = (1,1,1,0)
+        _SpecColor2("高光颜色2",Color) = (1,1,1,0)
+        _SpecInfo("高光的调节系数",Vector) = (1,1,1,0)
+        [Toggle(_GI_ON)]_GI_ON("开启全局光照",Float) = 0
     }
 
     SubShader
@@ -47,6 +57,8 @@ Shader "#NAME#"
         Pass
         {
             Name "Unlit"
+            Tags {"LightMode" = "FurRenderLayer"
+            "RanderType" = "Opaque"}
 
             // -------------------------------------
             // Render State Commands
@@ -60,9 +72,9 @@ Shader "#NAME#"
             #pragma vertex vert_unlit
             #pragma fragment frag_unlit
 
-
+            #define DEBUG
             
-            #include "#NAME#.hlsl"
+            #include "FurLayer.hlsl"
 
 
 
@@ -130,7 +142,7 @@ Shader "#NAME#"
             // Shader Stages
             #pragma vertex vert_unlit
             #pragma fragment DepthNormalsFragment
-            #include "#NAME#.hlsl"
+            #include "FurLayer.hlsl"
 
 
             ENDHLSL
@@ -171,5 +183,5 @@ Shader "#NAME#"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
+    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
 }
