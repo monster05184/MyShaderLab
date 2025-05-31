@@ -21,7 +21,7 @@
         [NoScaleOffset]_FurAlpha("毛发的生成透明度贴图",2D) = "White" { }
         [NoScaleOffset]_FlowMap("毛发的UV偏移FlowMap",2D) = "Black" { }
         _FlowMapScale("FlowMap的权重",Range(0,1)) = 0
-        _FurAlphaScale("毛发生成透明贴图缩放",Range(1,1000)) = 1
+        _FurAlphaScale("毛发生成透明贴图缩放",Range(0,10)) = 1
         _UvOffset("Uv的偏移程度:XY=UV偏移;ZW=UV扰动",Vector) = (0,0,0.2,0.2)
         [Header(FurSetting)]
         _FurLength("毛发的长度",Range(0,2)) = 1
@@ -57,8 +57,10 @@
         Pass
         {
             Name "Unlit"
-            Tags {"LightMode" = "FurRenderLayer"
-            "RanderType" = "Opaque"}
+            Tags
+            {
+                "LightMode" = "FurRenderLayer"
+            }
 
             // -------------------------------------
             // Render State Commands
@@ -66,87 +68,56 @@
 
             HLSLPROGRAM
             #pragma target 2.0
+            #pragma shader_feature _ _GI_ON
+            #pragma shader_feature _ _StrandSpecular_ON
 
             // -------------------------------------
             // Shader Stages
             #pragma vertex vert_unlit
             #pragma fragment frag_unlit
 
-            #define DEBUG
+
             
             #include "FurLayer.hlsl"
 
 
 
-
             ENDHLSL
         }
-
         Pass
         {
-            Name "DepthOnly"
+            Name "Unlit"
             Tags
             {
-                "LightMode" = "DepthOnly"
+                "LightMode" = "FurRenderBase"
             }
-
+            
             // -------------------------------------
             // Render State Commands
-            ZWrite On
-            ColorMask R
+            AlphaToMask[_AlphaToMask]
+            Blend One Zero
 
             HLSLPROGRAM
             #pragma target 2.0
-
-            // -------------------------------------
-            // Shader Stages
-            #pragma vertex DepthOnlyVertex
-            #pragma fragment DepthOnlyFragment
-
-            // -------------------------------------
-            // Material Keywords
-            #pragma shader_feature_local_fragment _ALPHATEST_ON
-
-            // -------------------------------------
-            // Unity defined keywords
-            #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
-
-            //--------------------------------------
-            // GPU Instancing
-            #pragma multi_compile_instancing
-            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
-
-            // -------------------------------------
-            // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
-            ENDHLSL
-        }
-
-        Pass
-        {
-            Name "DepthNormalsOnly"
-            Tags
-            {
-                "LightMode" = "DepthNormalsOnly"
-            }
-
-            // -------------------------------------
-            // Render State Commands
-            ZWrite On
-
-            HLSLPROGRAM
-            #pragma target 2.0
+            #pragma shader_feature _ _GI_ON
+            #pragma shader_feature _ _StrandSpecular_ON
 
             // -------------------------------------
             // Shader Stages
             #pragma vertex vert_unlit
-            #pragma fragment DepthNormalsFragment
+            #pragma fragment frag_unlit
+
+
+            
             #include "FurLayer.hlsl"
+
 
 
             ENDHLSL
         }
+                
+
+
 
 
         // This pass it not used during regular rendering, only for lightmap baking.
@@ -183,5 +154,4 @@
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
 }

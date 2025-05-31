@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FurLayer
+  m_Name: FurLayerTest
   m_Shader: {fileID: 4800000, guid: af6bb0a2aef11e5429eb3082680d2971, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

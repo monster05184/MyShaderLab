@@ -36,6 +36,7 @@ struct appdataUnlit
     float4 tangent : TANGENT;
 };
 
+
 CBUFFER_START(UnityPerMaterial)
 float4 _UvOffset;
 float4  _AlbedoMap_ST;
@@ -58,19 +59,17 @@ TEXTURE2D(_FurAlpha);
 SAMPLER(sampler_FurAlpha);
 TEXTURE2D( _AlbedoMap);
 SAMPLER(sampler_AlbedoMap);
-
-v2f vert_unlit (appdataUnlit v)
+v2f VertexFunc(v2f v, appdataUnlit i);
+v2f VertexFunc(v2f output, appdataUnlit v)
 {
     float4 furInfo = tex2Dlod(_FlowMap,float4(v.uv.xy,0,0));
-    FUR_OFFSET = 1;
     //将顶点挤出
     FUR_OFFSET = max(0,FUR_OFFSET*furInfo.b); 
     float3 aNormal = (v.normal.xyz);
-    float3 n = aNormal*(FUR_OFFSET)*_FurLength;
+    float3 n = aNormal*(FUR_OFFSET)*_FurLength * 0.001;
     v.vertex.xyz +=n;
     // GetVertexPositionInputs方法根据使用情况自动生成各个坐标系下的定点信息
     const VertexPositionInputs vertexInput = GetVertexPositionInputs(v.vertex.xyz);
-    v2f output;
     output.vertex = vertexInput.positionCS;
    
 
@@ -95,11 +94,6 @@ v2f vert_unlit (appdataUnlit v)
     half3 SH = half3(0.5,0.5,0.5);
     half Occlusion = FUR_OFFSET*FUR_OFFSET;//伽马转为线性光照
     Occlusion += 0.04;
-    
-
-   
-    
-
  
 
     //模型周围毛发的透射光
@@ -114,7 +108,15 @@ v2f vert_unlit (appdataUnlit v)
     half NoL = dot(lightDir,normalWS);
     half3 DirLight = saturate(NoL + _LightFilter + FUR_OFFSET)*mainLight.color;
     output.color.xyz = RimLight * _OcclusionColor + DirLight * Occlusion;
+    //v.vertex += 1;
+    return output;
+}
 
+v2f vert_unlit (appdataUnlit v)
+{
+    v2f output;
+    output = VertexFunc(output, v);
+    
     return output;
 }
 
@@ -128,10 +130,10 @@ half4 frag_unlit(v2f i) : SV_Target
     //光照采样开启GI之后采样GI，不开启则默认
     half4 col = float4(MainTex,1);
     #ifdef _GI_ON
-    float3 bakeGI = SAMPLE_GI(input.lightmapUV,input.vertexSH,input.normal);
+    float3 bakeGI = SAMPLE_GI(i.lightmapUV,i.vertexSH,i.normal);
     //MixRealtimeAndBakedGI(GetMainLight(),input.normal,bakeGI,half4(0,0,0,0));
-    bakeGI = lerp(bakeGI*_OcclusionColor,bakeGI,input.color.w);
-    col.xyz *= (input.color.xyz+bakeGI);
+    bakeGI = lerp(bakeGI*_OcclusionColor, bakeGI, i.color.w);
+    col.xyz *= (i.color.xyz + bakeGI);
     #else
     col.xyz *= i.color.xyz;
     #endif
@@ -146,37 +148,7 @@ half4 frag_unlit(v2f i) : SV_Target
     return col;
 }
 
-void DepthNormalsFragment(
-    v2f input
-    , out half4 outNormalWS : SV_Target0
-#ifdef _WRITE_RENDERING_LAYERS
-    , out float4 outRenderingLayers : SV_Target1
-#endif
-)
-{
 
-    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
-    #ifdef LOD_FADE_CROSSFADE
-    LODFadeCrossFade(input.positionCS);
-    #endif
-
-    // Output...
-    #if defined(_GBUFFER_NORMALS_OCT)
-    float3 normalWS = normalize(input.normalWS);
-    float2 octNormalWS = PackNormalOctQuadEncode(normalWS);             // values between [-1, +1], must use fp32 on some platforms
-    float2 remappedOctNormalWS = saturate(octNormalWS * 0.5 + 0.5);     // values between [ 0,  1]
-    half3 packedNormalWS = half3(PackFloat2To888(remappedOctNormalWS)); // values between [ 0,  1]
-    outNormalWS = half4(packedNormalWS, 0.0);
-    #else
-    outNormalWS = half4(NormalizeNormalPerPixel(input.normal), 0.0);
-    #endif
-
-    #ifdef _WRITE_RENDERING_LAYERS
-    uint renderingLayers = GetMeshRenderingLayer();
-    outRenderingLayers = float4(EncodeMeshRenderingLayer(renderingLayers), 0, 0, 0);
-    #endif
-}
 
 
 
