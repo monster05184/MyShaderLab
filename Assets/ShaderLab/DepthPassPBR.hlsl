@@ -1,6 +1,5 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-v2f VertexFunc(v2f i);
 half Alpha(half albedoAlpha, half4 color, half cutoff)
 {
     #if !defined(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A) && !defined(_GLOSSINESS_FROM_BASE_ALPHA)

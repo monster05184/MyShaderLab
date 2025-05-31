@@ -66,7 +66,6 @@ Shader "#NAME#"
 
 
 
-
             ENDHLSL
         }
 
@@ -93,7 +92,7 @@ Shader "#NAME#"
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature_local_fragment _ALPHATEST_ON
+            #pragma shader_feature_local_fragment _ALPHA#NAME#_ON
 
             // -------------------------------------
             // Unity defined keywords
@@ -128,10 +127,10 @@ Shader "#NAME#"
 
             // -------------------------------------
             // Shader Stages
-            #pragma vertex vert_unlit
+            #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
             #include "#NAME#.hlsl"
-
+            #include "Assets/ShaderLab/DepthPassUnlit.hlsl"
 
             ENDHLSL
         }

@@ -136,7 +136,7 @@
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
             #include "PBRSubsurface.hlsl"
-            #include "Assets/ShaderLab/DepthPass.hlsl"
+            #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL
         }

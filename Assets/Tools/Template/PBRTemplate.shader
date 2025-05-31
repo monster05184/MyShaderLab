@@ -127,7 +127,7 @@ Shader "#NAME#"
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
             #include "#NAME#.hlsl"
-            #include "Assets/ShaderLab/DepthPass.hlsl"
+            #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL
         }
