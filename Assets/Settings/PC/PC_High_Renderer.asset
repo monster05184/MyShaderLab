@@ -77,7 +77,8 @@ MonoBehaviour:
   - {fileID: 3573653513797426673}
   - {fileID: -3751262535411419207}
   - {fileID: 8978488719121456070}
-  m_RendererFeatureMap: a163f70a5ce289f0ad6b866f10d7b46cf1dd38d0ef2a9831b937925d99d6f0cbc61b1683ebff997c
+  - {fileID: 748430265839320903}
+  m_RendererFeatureMap: a163f70a5ce289f0ad6b866f10d7b46cf1dd38d0ef2a9831b937925d99d6f0cbc61b1683ebff997c47ff80865cf5620a
   m_UseNativeRenderPass: 1
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -116,6 +117,33 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &748430265839320903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d366781ae444db4d80cd5bba8e400e2, type: 3}
+  m_Name: OutlineAddFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: Outline
+    ShouldRender: 1
+    PassLayerNum: 20
+    QueueMin: 2000
+    QueueMax: 5000
+    PassEvent: 400
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 4294967295
+      PassNames:
+      - Outline
 --- !u!114 &3573653513797426673
 MonoBehaviour:
   m_ObjectHideFlags: 0

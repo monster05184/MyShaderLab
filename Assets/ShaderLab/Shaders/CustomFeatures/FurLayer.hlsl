@@ -94,6 +94,7 @@ v2f VertexFunc(v2f output, appdataUnlit v)
     half3 SH = half3(0.5,0.5,0.5);
     half Occlusion = FUR_OFFSET*FUR_OFFSET;//伽马转为线性光照
     Occlusion += 0.04;
+    Occlusion = lerp(Occlusion, _OcclusionColor, _OcclusionColor.a);
  
 
     //模型周围毛发的透射光
@@ -106,7 +107,7 @@ v2f VertexFunc(v2f output, appdataUnlit v)
     Light mainLight = GetMainLight(shadowCoord);
     half3 lightDir = mainLight.direction;
     half NoL = dot(lightDir,normalWS);
-    half3 DirLight = saturate(NoL + _LightFilter + FUR_OFFSET)*mainLight.color;
+    half3 DirLight = saturate(NoL + _LightFilter + FUR_OFFSET) * mainLight.color * _DiffColor.rgb;
     output.color.xyz = RimLight * _OcclusionColor + DirLight * Occlusion;
     //v.vertex += 1;
     return output;
@@ -138,7 +139,8 @@ half4 frag_unlit(v2f i) : SV_Target
     col.xyz *= i.color.xyz;
     #endif
     col.a = max(0,Noise - FUR_OFFSET);
-    //Debug(Noise);
+    i.color.a = col.a;
+    Debug(i.color);
     
     
     #ifdef DEBUG

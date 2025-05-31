@@ -75,6 +75,7 @@
             // Shader Stages
             #pragma vertex vert_unlit
             #pragma fragment frag_unlit
+            #define DEBUG
 
 
             
@@ -97,6 +98,7 @@
             AlphaToMask[_AlphaToMask]
             Blend One Zero
 
+
             HLSLPROGRAM
             #pragma target 2.0
             #pragma shader_feature _ _GI_ON
@@ -106,6 +108,8 @@
             // Shader Stages
             #pragma vertex vert_unlit
             #pragma fragment frag_unlit
+
+            #define DEBUG
 
 
             

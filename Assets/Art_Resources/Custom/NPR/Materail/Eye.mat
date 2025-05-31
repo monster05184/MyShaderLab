@@ -39,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RampTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SDFTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -52,8 +56,11 @@ Material:
     - _GIBakerMode: 10
     - _LightDebugMode: 0
     - _MetallicMultiplier: 0
+    - _NolSmooth: 0.5
     - _OcclusionScale: 1
-    - _OutlineWidth: 0.1
+    - _OutlineWidth: 0.183
+    - _Ramp: 0
+    - _RimPower: 20
     - _RoughnessMultiplier: 7.94
     - _SDF: 0
     - _SDFSign: 1
@@ -77,5 +84,6 @@ Material:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

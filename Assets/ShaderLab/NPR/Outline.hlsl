@@ -67,7 +67,7 @@ Varyings_Outline vert_outline(Attributes_Outline input)
             float Set_OutlineWidth = positionCS.w * _OutlineWidth;
             Set_OutlineWidth = min(Set_OutlineWidth, _OutlineWidth);
             Set_OutlineWidth *= _OutlineWidth;
-            Set_OutlineWidth = min(Set_OutlineWidth, _OutlineWidth) * 0.001;
+            Set_OutlineWidth = min(Set_OutlineWidth, _OutlineWidth) * 0.01;
         #if _OUTLINEWIDTHWITHVERTEXTCOLORA
             Set_OutlineWidth *= input.color.a;
         #elif _OUTLINEWIDTHWITHUV8A
@@ -87,7 +87,7 @@ Varyings_Outline vert_outline(Attributes_Outline input)
 
 half4 frag_outline(Varyings_Outline input) : SV_Target
 {
-    return 1;
+    return _OutlineColor;
 
 }
 

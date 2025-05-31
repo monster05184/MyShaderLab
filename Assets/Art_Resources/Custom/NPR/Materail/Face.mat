@@ -60,6 +60,8 @@ Material:
     - _NolSmooth: 0.5
     - _OcclusionScale: 1
     - _OutlineWidth: 0
+    - _Ramp: 0
+    - _RimPower: 20
     - _RoughnessMultiplier: 1.01
     - _SDF: 1
     - _SDFSign: -1
@@ -83,5 +85,6 @@ Material:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _EnvColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_BuildTextureStacks: []

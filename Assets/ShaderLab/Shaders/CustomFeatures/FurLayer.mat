@@ -56,12 +56,12 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 10
     - _DstBlendAlpha: 0
-    - _FlowMapScale: 0
-    - _FresnelLV: 25.6
+    - _FlowMapScale: 0.013
+    - _FresnelLV: 35.4
     - _FurAlphaScale: 6.12
     - _FurLength: 0.13
     - _GI_ON: 1
-    - _LightFilter: -0.066
+    - _LightFilter: -0.198
     - _QueueOffset: 0
     - _SampleGI: 0
     - _SrcBlend: 5
@@ -73,9 +73,9 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffColor: {r: 1, g: 1, b: 1, a: 0}
-    - _OcclusionColor: {r: 0.2735849, g: 0.25680846, b: 0.25680846, a: 0}
+    - _OcclusionColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 0.6313726}
     - _SpecColor1: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor2: {r: 1, g: 1, b: 1, a: 0}
     - _SpecInfo: {r: 0.71, g: 0.97, b: 1, a: 0}
-    - _UvOffset: {r: -2.2, g: 0, b: 0.2, a: 0.2}
+    - _UvOffset: {r: -0.01, g: -0.42, b: 0.06, a: 0.2}
   m_BuildTextureStacks: []

@@ -117,6 +117,27 @@
 
             ENDHLSL
         }
+        
+        Pass
+        {
+            Name "Outline"
+            Tags
+            {
+                "LightMode" = "Outline"
+            }
+            Cull Front
+            HLSLPROGRAM
+            #define DEBUG
+            #pragma vertex vert_outline
+            #pragma fragment frag_outline
+            #pragma target 2.0
+            #define _OUTLINE 1
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Assets/ShaderLab/NPR/Outline.hlsl"
+
+            ENDHLSL
+        }
 
 
 
@@ -154,7 +175,6 @@
             // GPU Instancing
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
-            #define _OUTLINE 1
 
             
             // -------------------------------------
@@ -199,13 +219,11 @@
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
             
-            #define _OUTLINE 1
 
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitDepthNormalsPass.hlsl"
-            #include  "..\..\NPR\Outline.hlsl"
             ENDHLSL
         }
 

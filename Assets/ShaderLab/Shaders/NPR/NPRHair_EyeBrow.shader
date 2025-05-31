@@ -37,6 +37,11 @@
         [Header(Eyebrow perspective)]
         _AlphaIntensity("Alpha Intensity", Range(0, 1)) = 0.5
         
+                 //Outline 
+        [Toggle] _SmoothNormal("Smooth Normal", Float) = 0
+        _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
+        _OutlineWidth("Outline Width", Range(0, 1)) = 0.1
+        
         //Anisotropic
         [Header(Anisotropic)]
         _AnisotropicMultiplier("各向异性程度", Range(0, 1)) = 0.8
@@ -44,6 +49,7 @@
         _ShiftTex("高光偏移贴图", 2D) = "white"
         _ShiftTexScale("高光偏移贴图缩放", Float) = 0.5
         
+
 
         
 
@@ -125,6 +131,27 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "NPRHair.hlsl"
             
+            ENDHLSL
+        }
+
+        Pass
+        {
+            Name "Outline"
+            Tags
+            {
+                "LightMode" = "Outline"
+            }
+            Cull Front
+            HLSLPROGRAM
+            #define DEBUG
+            #pragma vertex vert_outline
+            #pragma fragment frag_outline
+            #pragma target 2.0
+            #define _OUTLINE 1
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Assets/ShaderLab/NPR/Outline.hlsl"
+
             ENDHLSL
         }
 
