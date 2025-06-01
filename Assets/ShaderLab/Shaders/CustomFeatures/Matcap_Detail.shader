@@ -1,4 +1,4 @@
-﻿Shader "Matcap"
+﻿Shader "Matcap_Detail"
 {
     Properties
     {
@@ -36,9 +36,15 @@
         _EnvLightMatcap("Env Light Matcap Texture", 2D) = "white" {}
         [HDR]_EnvLightColor("Env Light Color", Color) = (1, 1, 1, 1)
         
+        [Header(Detail)]
+        _DetailMap("Detail Map(RG/Normal, B/AO)", 2D) = "white" {}
+        //_DetailsControl
+        _DetailsControl("Detail Control Map", Vector) = (1, 1, 1, 1)
+        _DetailAOControl("Detail AO Control", Range(0, 1)) = 1
+        _DetailSpecControl("Detail Spec Control", Range(-0.5, 0.5)) = 0
+        _DetailEnvControl("Detail Env Control", Range(-0.5, 0.5)) = 0
         
-        
-
+         
     }
     SubShader
     {
@@ -66,7 +72,7 @@
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Matcap.hlsl"
+            #include "Matcap_Detail.hlsl"
             
 
             ENDHLSL
@@ -132,7 +138,7 @@
             // Shader Stages
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
-            #include "Matcap.hlsl"
+            #include "Matcap_Detail.hlsl"
             #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL

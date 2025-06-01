@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Matcap
-  m_Shader: {fileID: 4800000, guid: 4481bce88e9724e449a755e49569cfe1, type: 3}
+  m_Shader: {fileID: 4800000, guid: 77be39382b429554c8d1ff13ab30d54c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,24 +24,43 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
+        m_Texture: {fileID: 2800000, guid: 64b6f9eb402dd8c4286339050e34c68e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap:
+        m_Texture: {fileID: 2800000, guid: 4e11e4ad9ef720042941501e6258b769, type: 3}
+        m_Scale: {x: 40, y: 40}
+        m_Offset: {x: 0, y: 0}
+    - _DetailsControl:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EnvLightMatcap:
+        m_Texture: {fileID: 2800000, guid: 3c6e8006e3f6ba54a836c7c85b38edca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighLightMatcap:
+        m_Texture: {fileID: 2800000, guid: 06c5c9cfe1bdf1643840d241b9b6681c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d07ae8807a3279e46919a4c25790bf2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9f218a2a340a3d94985507c412d7bbed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Cull: 2
+    - _DetailAOControl: 0.378
+    - _DetailEnvControl: 0
+    - _DetailSpecControl: -0.031
     - _DstBlend: 0
     - _MetallicMultiplier: 1
     - _RoughnessMultiplier: 1
@@ -57,5 +76,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DetailsControl: {r: 0.25, g: 0.12, b: 0.98, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvLightColor: {r: 0.7578583, g: 0.7578583, b: 0.7578583, a: 1}
+    - _HighLightColor: {r: 1.2167861, g: 1.2167861, b: 1.2167861, a: 1}
   m_BuildTextureStacks: []
