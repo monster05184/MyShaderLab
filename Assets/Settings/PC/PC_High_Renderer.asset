@@ -133,10 +133,10 @@ MonoBehaviour:
   settings:
     passTag: Outline
     ShouldRender: 1
-    PassLayerNum: 20
+    PassLayerNum: 1
     QueueMin: 2000
     QueueMax: 5000
-    PassEvent: 400
+    PassEvent: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:

@@ -1,4 +1,4 @@
-
+ 
 half2 MatCapUV (in float3 N,in float3 viewPos)
 {
     float3 viewNorm = mul((float3x3)UNITY_MATRIX_V, N);

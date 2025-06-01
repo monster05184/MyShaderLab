@@ -52,7 +52,7 @@ Material:
     - _GIBakerMode: 10
     - _MetallicMultiplier: 0
     - _OcclusionScale: 1
-    - _OutlineWidth: 0.1
+    - _OutlineWidth: 0.308
     - _RoughnessMultiplier: 0
     - _SDF: 0
     - _SDFSign: 1

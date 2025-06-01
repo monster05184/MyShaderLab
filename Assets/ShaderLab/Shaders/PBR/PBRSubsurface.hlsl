@@ -97,7 +97,7 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 
     float3 diffBRDF = diffuseBRDF(sd.diffuse);
     
-    light = (specbrdf + diffBRDF) * sss * pd.lightCol;
+    light = (specbrdf * sd.specular + diffBRDF) * sss * pd.lightCol;
     return light;
 }
 

@@ -7,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Face
-  m_Shader: {fileID: 4800000, guid: 0a6af78a28521ce48b6200883c9aea7a, type: 3}
+  m_Name: Matcap
+  m_Shader: {fileID: 4800000, guid: 4481bce88e9724e449a755e49569cfe1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SDF_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -25,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: b3f6eed4bdf9b8e438f41a41ebfa9b8e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
@@ -40,35 +39,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RampTex:
-        m_Texture: {fileID: 2800000, guid: 1ed9fe1e04b6f2444899ba62192b8be7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SDFTex:
-        m_Texture: {fileID: 2800000, guid: 129d22318325e8e49b5b02a08993bed8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0.06}
     m_Ints: []
     m_Floats:
-    - _AlphaTest: 0
-    - _BlendMode: 0
     - _Cull: 2
     - _DstBlend: 0
-    - _GIBakerMode: 10
-    - _LightDebugMode: 0
-    - _MetallicMultiplier: 0.11
-    - _NolSmooth: 0.5
-    - _OcclusionScale: 1
-    - _OutlineWidth: 0.576
-    - _Ramp: 0
-    - _RimPower: 20
-    - _RoughnessMultiplier: 1.01
-    - _SDF: 1
-    - _SDFSign: -1
-    - _SDFSmooth: 0.57
-    - _SDFValue: -0.9
-    - _SmoothNormal: 0
-    - _SpOpacity: 0
+    - _MetallicMultiplier: 1
+    - _RoughnessMultiplier: 1
     - _SrcBlend: 1
     - _StencilComp: 8
     - _StencilFail: 0
@@ -77,14 +53,9 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
-    - _SurfaceDebugMode: 0
-    - _Visibility: 0
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EnvColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
-    - _OutlineColor: {r: 0.8962264, g: 0.647121, b: 0.62144, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
+    - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
