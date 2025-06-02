@@ -30,6 +30,7 @@
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        _AOMultiplier("AO Multiplier", Range(0, 1)) = 1
         
         _HighLightMatcap("High Light Matcap Texture", 2D) = "white" {}
         [HDR]_HighLightColor("High Light Color", Color) = (1, 1, 1, 1)

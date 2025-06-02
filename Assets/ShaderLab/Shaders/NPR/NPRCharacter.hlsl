@@ -45,9 +45,11 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.opacity = albedo.a;
     sd.linearRoughness = materialParams.x * _RoughnessMultiplier;
     sd.metallic = metallic;
+    sd.occlusion = materialParams.z;
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 {
+    
     float2 sdfuv = i.uv * _SDFTex_ST.xy + _SDFTex_ST.zw;
     sdfuv.x = _SDFSign > 0 ? sdfuv.x : 1 - sdfuv.x;
     #ifdef _SDF_ON
@@ -112,10 +114,16 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
+    //indirect specular
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
+    int indirectSpecAO = lerp(0.7, 1, sd.occlusion);
     float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
+    indirectSpec *= indirectSpecAO;
     light += indirectSpec * _EnvColor;
+
+    //indirect diffuse
     float indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
+    indirectDiffuse *= sd.occlusion;
     light += indirectDiffuse;
     return light;
 }

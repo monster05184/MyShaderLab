@@ -28,6 +28,7 @@ struct PBRData
     half atten;
     half3 posWS;
     float2 screenUv;
+    half ao;
 };
 
 struct LightOut
