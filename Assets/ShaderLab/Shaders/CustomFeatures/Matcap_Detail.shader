@@ -28,12 +28,12 @@
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
-        _MetallicMultiplier("Metallic Multiplier", Range(0, 10)) = 1
-        _RoughnessMultiplier("Roughness Multiplier", Range(0, 10)) = 1
+        _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1
+        _RoughnessMultiplier("Roughness Multiplier", Range(0, 2)) = 1
         
-        _HighLightMatcap("High Light Matcap Texture", 2D) = "white" {}
+        [NoScaleOffset]_HighLightMatcap("High Light Matcap Texture", 2D) = "white" {}
         [HDR]_HighLightColor("High Light Color", Color) = (1, 1, 1, 1)
-        _EnvLightMatcap("Env Light Matcap Texture", 2D) = "white" {}
+        [NoScaleOffset]_EnvLightMatcap("Env Light Matcap Texture", 2D) = "white" {}
         [HDR]_EnvLightColor("Env Light Color", Color) = (1, 1, 1, 1)
         
         [Header(Detail)]

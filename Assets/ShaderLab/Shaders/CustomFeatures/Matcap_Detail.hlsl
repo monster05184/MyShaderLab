@@ -3,6 +3,8 @@
 #include "Assets/ShaderLab/Features/MatcapLight.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
+half _AOMultiplier;
+
 
 TEXTURE2D(_HighLightMatcap);
 SAMPLER(sampler_HighLightMatcap);
@@ -106,12 +108,21 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 
 half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
+    //occusion
+    half occlusion = lerp(1, sd.occlusion, _AOMultiplier);
+    half indirectSpecAO = lerp(0.7, 1, occlusion);
+    
     half3 light = half3(0, 0, 0);
     float2 envOffset = _LocalData.envOffset;
     float2 matcapUV = _LocalData.matcapUV;
     matcapUV += envOffset;
     half4 envLightMatcap = SAMPLE_TEXTURE2D(_EnvLightMatcap, sampler_EnvLightMatcap, matcapUV);
-    light = envLightMatcap * sd.diffuse * _EnvLightColor;
+    light = envLightMatcap * sd.diffuse * _EnvLightColor * indirectSpecAO;
+
+    half3 indirectDiffuse = SampleSH(pd.N) * sd.diffuse;
+    indirectDiffuse *= occlusion;
+
+    light += indirectDiffuse;
     
 
     return light;

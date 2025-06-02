@@ -3,6 +3,7 @@
 #include "Assets/ShaderLab/NPR/NPRCommon.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
+half _AOMultiplier;
 
 sampler2D _SDFTex;
 float4 _SDFTex_ST;
@@ -114,16 +115,19 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
+    //occusion
+    half occlusion = lerp(1, sd.occlusion, _AOMultiplier);
+    half indirectSpecAO = lerp(0.7, 1, occlusion);
+    
     //indirect specular
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
-    int indirectSpecAO = lerp(0.7, 1, sd.occlusion);
     float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
     indirectSpec *= indirectSpecAO;
     light += indirectSpec * _EnvColor;
 
     //indirect diffuse
     float indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
-    indirectDiffuse *= sd.occlusion;
+    indirectDiffuse *= occlusion;
     light += indirectDiffuse;
     return light;
 }
