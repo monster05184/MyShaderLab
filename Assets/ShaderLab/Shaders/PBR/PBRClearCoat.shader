@@ -27,14 +27,18 @@
         
         _NormalMap("Normal Map", 2D) = "bump" {}
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
+        _NormalScale("Normal Scale", Range(0, 1)) = 1
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 1
+        _AOMultiplier("AO Multiplier", Range(0, 1)) = 1
+        _MainLightAO("Main Light AO", Range(0, 1)) = 1
         
         [Header(ClearCoat)]
         _ClearCoatMetallic("Clear Coat Metallic", Range(0, 1)) = 1
         _ClearCoatRoughness("Clear Coat Roughness", Range(0, 1)) = 0.1
         _ClearCoatEnvColor("Clear Coat Environment Color", Color) = (1, 1, 1, 1)
+        _ClearCoatLightColor("Clear Coat Light Color", Color) = (1, 1, 1, 1)
         
         
 

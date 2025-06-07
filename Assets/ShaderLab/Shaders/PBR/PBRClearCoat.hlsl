@@ -7,6 +7,8 @@ half _AOMultiplier;
 half _ClearCoatMetallic;
 half _ClearCoatRoughness;
 half3 _ClearCoatEnvColor;
+float _MainLightAO;
+half3 _ClearCoatLightColor;
 
 struct ClearCoatSurfaceData
 {
@@ -68,6 +70,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.opacity = albedo.a;
     sd.linearRoughness = materialParams.x + _RoughnessMultiplier;
     sd.metallic = metallic;
+    sd.occlusion = materialParams.z;
 
     PrepareClearCoatSurfaceData(_LocalData.clearCoatData, i);
 }
@@ -94,11 +97,11 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     light = (specbrdf + diffBRDF) * pd.Nol * pd.lightCol;
     
 
-    half3 clearCoatLight = CalculateClearCoatLight(_LocalData.clearCoatData, pd, i);
+    half3 clearCoatLight = CalculateClearCoatLight(_LocalData.clearCoatData, pd, i) * _ClearCoatLightColor;
     
 
     //Mix clear coat light with main light
-    half3 refrectedLight = light * (1 - _LocalData.clearCoatFresnel);
+    half3 refrectedLight = light * (1 - _LocalData.clearCoatFresnel) * lerp(1, sd.occlusion, _MainLightAO);
     light = refrectedLight + clearCoatLight;
     
     

@@ -69,10 +69,14 @@ struct appdataPBR
     float3 normal : NORMAL;
     float4 tangent : TANGENT;
 };
-
+half _NormalScale;
 half3 GetNormal(half4 normalTS, v2f i)
 {
-    normalTS.xyz = UnpackNormal(normalTS);
+    if(_NormalScale <= 0)
+    {
+        return i.normal;
+    }
+    normalTS.xyz = UnpackNormalScale(normalTS, _NormalScale);
     
     half3 normal;
     float3x3 tbn = float3x3(normalize(i.tangent.xyz), normalize(i.binormal.xyz), normalize(i.normal.xyz));
