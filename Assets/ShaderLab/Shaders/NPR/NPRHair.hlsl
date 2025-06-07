@@ -33,7 +33,7 @@ v2f VertexFunc(v2f i, appdataPBR v)
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {
     _LocalData = (LocalData1)0;
-    half3 normalTS = GetNormalTS(i.uv);
+    half4 normalTS = GetNormalTS(i.uv);
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;

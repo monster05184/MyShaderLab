@@ -3,7 +3,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 sampler2D _NormalMap;
 float4 _NormalMap_ST;
-half3 GetNormalTS(float2 uv)
+half4 GetNormalTS(float2 uv)
 {
     float2 normalTSUV = uv * _NormalMap_ST.xy + _NormalMap_ST.zw;
     return tex2D(_NormalMap, normalTSUV);
@@ -70,9 +70,10 @@ struct appdataPBR
     float4 tangent : TANGENT;
 };
 
-half3 GetNormal(half3 normalTS, v2f i)
+half3 GetNormal(half4 normalTS, v2f i)
 {
-    normalTS = normalTS * 2.0 - 1.0;
+    normalTS.xyz = UnpackNormal(normalTS);
+    
     half3 normal;
     float3x3 tbn = float3x3(normalize(i.tangent.xyz), normalize(i.binormal.xyz), normalize(i.normal.xyz));
     normal = normalize(mul(normalTS, tbn));
@@ -150,6 +151,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i);
 void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light light)
 {
     pd.N = GetNormal(sd.normalTS, i);
+    pd.modelNormal = i.normal;
     //Debug(pd.N);
     pd.L = light.direction;
     pd.Nol = saturate(dot(pd.N, pd.L));

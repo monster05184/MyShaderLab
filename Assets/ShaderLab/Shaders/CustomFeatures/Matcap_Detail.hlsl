@@ -43,7 +43,7 @@ v2f VertexFunc(v2f i, appdataPBR v)
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {
     _LocalData = (LocalData1)0;
-    half3 normalTS = GetNormalTS(i.uv);
+    half4 normalTS = GetNormalTS(i.uv);
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
@@ -54,6 +54,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.opacity = albedo.a;
     sd.linearRoughness = materialParams.x * _RoughnessMultiplier;
     sd.metallic = metallic;
+    sd.occlusion = materialParams.z;
 
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
@@ -61,7 +62,7 @@ void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
     half3 viewPos;
     //将模型世界空间坐标转换成视图空间坐标
     viewPos = TransformWorldToView(i.positionWS);
-    float2 matcapUV = MatCapUV(pd.N, viewPos);
+    float2 matcapUV = MatCapUV(pd.N, pd.V);
     _LocalData.matcapUV = matcapUV;
 
     //DetailMap
@@ -96,12 +97,11 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     float2 matcapUV = _LocalData.matcapUV;
     matcapUV += _LocalData.specOffset;
     half4 highLightMatcap = SAMPLE_TEXTURE2D(_HighLightMatcap, sampler_HighLightMatcap, matcapUV);
-
     half3 diffuseTerm = diffuseBRDF(sd.diffuse);
     light = highLightMatcap * sd.specular * _HighLightColor + diffuseTerm;
     light *= pd.Nol * pd.lightCol;
-
-
+    
+    //Debug(highLightMatcap);
     
     return light;
 }

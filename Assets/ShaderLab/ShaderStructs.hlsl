@@ -8,7 +8,7 @@ struct CustomSurfaceData
     half opacity;
     half linearRoughness;
     half alpha;
-    half3 normalTS;
+    half4 normalTS;
 
     half occlusion;
     half cutoffThreshold;
@@ -28,6 +28,7 @@ struct PBRData
     half atten;
     half3 posWS;
     float2 screenUv;
+    half3 modelNormal;
     half ao;
 };
 

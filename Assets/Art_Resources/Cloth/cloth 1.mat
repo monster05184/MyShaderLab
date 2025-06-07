@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cloth
+  m_Name: cloth 1
   m_Shader: {fileID: 4800000, guid: 77be39382b429554c8d1ff13ab30d54c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -40,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMap:
-        m_Texture: {fileID: 2800000, guid: 3d2345e2a43be6049bed1991bbbf34ff, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Texture: {fileID: 2800000, guid: c7e107bb2fd5f3d4e9de8d20b7253c63, type: 3}
+        m_Scale: {x: 20, y: 20}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -118,11 +118,11 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailAOControl: 0.204
+    - _DetailAOControl: 0.395
     - _DetailAlbedoMapScale: 1
-    - _DetailEnvControl: 0.03
+    - _DetailEnvControl: 0
     - _DetailNormalMapScale: 1
-    - _DetailSpecControl: 0.047
+    - _DetailSpecControl: 0.003
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -130,12 +130,12 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _MetallicMultiplier: 0
+    - _MetallicMultiplier: 0.416
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RoughnessMultiplier: 0.754
+    - _RoughnessMultiplier: 0.324
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -160,7 +160,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
     - _EnvLightColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
-    - _HighLightColor: {r: 17.148375, g: 17.148375, b: 17.148375, a: 1}
+    - _HighLightColor: {r: 4.319702, g: 4.319702, b: 4.319702, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5637758713616061821
