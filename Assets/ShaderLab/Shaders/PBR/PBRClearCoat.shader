@@ -1,4 +1,4 @@
-Shader "#NAME#"
+﻿Shader "PBRClearCoat"
 {
     Properties
     {
@@ -31,6 +31,11 @@ Shader "#NAME#"
         _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1
         _RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 1
         
+        [Header(ClearCoat)]
+        _ClearCoatMetallic("Clear Coat Metallic", Range(0, 1)) = 1
+        _ClearCoatRoughness("Clear Coat Roughness", Range(0, 1)) = 0.1
+        _ClearCoatEnvColor("Clear Coat Environment Color", Color) = (1, 1, 1, 1)
+        
         
 
     }
@@ -60,7 +65,7 @@ Shader "#NAME#"
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "#NAME#.hlsl"
+            #include "PBRClearCoat.hlsl"
             
 
             ENDHLSL
@@ -126,7 +131,7 @@ Shader "#NAME#"
             // Shader Stages
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
-            #include "#NAME#.hlsl"
+            #include "PBRClearCoat.hlsl"
             #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL

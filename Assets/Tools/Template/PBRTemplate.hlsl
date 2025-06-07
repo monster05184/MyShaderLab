@@ -2,6 +2,7 @@
 #include "Assets/ShaderLab/PBR/PBR.hlsl"
 half _MetallicMultiplier;
 half _RoughnessMultiplier;
+half _AOMultiplier;
 
 
 
@@ -29,7 +30,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.emissive = GetEmissive(i.uv);
     sd.normalTS = normalTS;
     sd.opacity = albedo.a;
-    sd.linearRoughness = materialParams.x * _RoughnessMultiplier;
+    sd.linearRoughness = materialParams.x + _RoughnessMultiplier;
     sd.metallic = metallic;
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
@@ -51,11 +52,19 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
-    float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
-    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.diffuse * _EnvColor;
-    light += indirectSpec * _EnvColor;
+    //occusion
+    half occlusion = lerp(1, sd.occlusion, _AOMultiplier);
+    half indirectSpecAO = lerp(0.7, 1, occlusion);
     
-    float indirectDiffuse = SampleSH(pd.N) * sd.diffuse;
+    //indirect specular
+    float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
+    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
+    indirectSpec *= indirectSpecAO;
+    light += indirectSpec * _EnvColor;
+
+    //indirect diffuse
+    float3 indirectDiffuse = SampleSHPixel(i.vertexSH, pd.N) * sd.diffuse;
+    indirectDiffuse *= occlusion;
     light += indirectDiffuse;
     return light;
 }

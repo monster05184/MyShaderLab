@@ -126,7 +126,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
     light += indirectSpec * _EnvColor;
 
     //indirect diffuse
-    float indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
+    float3 indirectDiffuse = SampleSHPixel(_LocalData.vertexSH, pd.N) * sd.diffuse;
     indirectDiffuse *= occlusion;
     light += indirectDiffuse;
     return light;

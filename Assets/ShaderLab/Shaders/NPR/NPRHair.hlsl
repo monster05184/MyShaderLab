@@ -81,7 +81,7 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
     float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
     float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
     light += indirectSpec * _EnvColor;
-    float indirectDiffuse = SampleSH(pd.N) * sd.diffuse;
+    float3 indirectDiffuse = SampleSH(pd.N) * sd.diffuse;
     light += indirectDiffuse;
     return light;
 }
