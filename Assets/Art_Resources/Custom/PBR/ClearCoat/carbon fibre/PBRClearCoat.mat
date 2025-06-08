@@ -46,10 +46,10 @@ Material:
     - _ClearCoatRoughness: 0.183
     - _Cull: 2
     - _DstBlend: 0
-    - _MainLightAO: 1
-    - _MetallicMultiplier: 0.838
-    - _NormalScale: 0.045
-    - _RoughnessMultiplier: -0.436
+    - _MainLightAO: 0.434
+    - _MetallicMultiplier: 1.42
+    - _NormalScale: 0.151
+    - _RoughnessMultiplier: 0.67
     - _SrcBlend: 1
     - _StencilComp: 8
     - _StencilFail: 0
@@ -61,7 +61,7 @@ Material:
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
-    - _AlbedoColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+    - _AlbedoColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
     - _ClearCoatEnvColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
     - _ClearCoatLightColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}

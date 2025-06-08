@@ -67,32 +67,11 @@ v2f vert_unlit (appdataUnlit v)
     return o;
 }
 
-
-TEXTURE2D(_FlowMap);
-SAMPLER(sampler_FlowMap);
-float4 _FlowMap_ST;
-half _FlowmapSpeed;
-
 half4 frag_unlit(v2f i) : SV_Target
 {
     half4 col;
     half4 baseColor = GetBaseColor(i.uv);
     col = baseColor;
-
-    // flowmap                
-    half4 flow_map_color = SAMPLE_TEXTURE2D(_FlowMap, sampler_FlowMap, i.uv * _FlowMap_ST.xy + _FlowMap_ST.zw);
-    half2 flowDir = flow_map_color.rg * 2.0f - 1.0f;
-    flowDir *= _FlowmapSpeed * flow_map_color.b;
-
-    float phase0 = frac(_Time[1] * 0.5f + 0.5f);
-    float phase1 = frac(_Time[1] * 0.5f + 1.0f);
-
-    half4 col0 = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv.xy + flowDir.xy * phase0);
-    half4 col1 = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv.xy + flowDir.xy * phase1);
-
-    half flowLerp = abs((0.5f - phase0) / 0.5f);
-    col = lerp(col0, col1, flowLerp) * _BaseColor;
-    // fixed4 col = tex2D(_AlbedoMap, i.texcoord) * _AlbedoColor;
     return col;
 }
 

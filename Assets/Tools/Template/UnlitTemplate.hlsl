@@ -39,6 +39,17 @@ v2f VertexFunc(v2f v, appdataUnlit i)
     return v;
 }
 
+TEXTURE2D(_BaseMap);
+SAMPLER(sampler_BaseMap);
+float4 _BaseMap_ST;
+half4 _BaseColor;
+
+half4 GetBaseColor(float2 uv)
+{
+    float2 baseUV = uv * _BaseMap_ST.xy + _BaseMap_ST.zw;
+    return SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, baseUV) * _BaseColor;
+}
+
 v2f vert_unlit (appdataUnlit v)
 {
     v2f o;
@@ -59,7 +70,8 @@ v2f vert_unlit (appdataUnlit v)
 half4 frag_unlit(v2f i) : SV_Target
 {
     half4 col;
-    col = 1;
+    half4 baseColor = GetBaseColor(i.uv);
+    col = baseColor;
     return col;
 }
 

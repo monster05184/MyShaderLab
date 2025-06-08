@@ -9,9 +9,6 @@
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
         _AlphaToMask("Alpha ToMask", Float) = 0.0
         
-        _FlowMap("Flow Map", 2D) = "black" {}
-        _FlowmapSpeed("Flow Map Speed", Float) = 0
-        
     }
 
     SubShader

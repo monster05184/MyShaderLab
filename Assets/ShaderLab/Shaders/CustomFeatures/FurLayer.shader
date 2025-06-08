@@ -3,16 +3,9 @@
     Properties
     {
         // BlendMode
-        _Blend("__mode", Float) = 0.0
-        _Cull("__cull", Float) = 2.0
-        [ToggleUI] _AlphaClip("__clip", Float) = 0.0
-        _BlendOp("__blendop", Float) = 0.0
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
-        _SrcBlendAlpha("__srcA", Float) = 1.0
-        _DstBlendAlpha("__dstA", Float) = 0.0
-        _ZWrite("__zw", Float) = 1.0
-        _AlphaToMask("__alphaToMask", Float) = 0.0
+        _AlphaToMask("Alpha ToMask", Float) = 0.0
 
 
         [NoScaleOffset] _AlbedoMap("MainTex", 2D) = "White" { }
@@ -50,9 +43,7 @@
 
         // -------------------------------------
         // Render State Commands
-        Blend [_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
-        ZWrite [_ZWrite]
-        Cull [_Cull]
+        Blend [_SrcBlend][_DstBlend]
 
         Pass
         {

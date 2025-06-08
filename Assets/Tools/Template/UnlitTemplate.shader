@@ -4,28 +4,11 @@ Shader "#NAME#"
     {
         [MainTexture] _BaseMap("Texture", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1, 1, 1, 1)
-        _Cutoff("AlphaCutout", Range(0.0, 1.0)) = 0.5
-
         // BlendMode
-        _Surface("__surface", Float) = 0.0
-        _Blend("__mode", Float) = 0.0
-        _Cull("__cull", Float) = 2.0
-        [ToggleUI] _AlphaClip("__clip", Float) = 0.0
-        [HideInInspector] _BlendOp("__blendop", Float) = 0.0
-        [HideInInspector] _SrcBlend("__src", Float) = 1.0
-        [HideInInspector] _DstBlend("__dst", Float) = 0.0
-        [HideInInspector] _SrcBlendAlpha("__srcA", Float) = 1.0
-        [HideInInspector] _DstBlendAlpha("__dstA", Float) = 0.0
-        [HideInInspector] _ZWrite("__zw", Float) = 1.0
-        [HideInInspector] _AlphaToMask("__alphaToMask", Float) = 0.0
-
-        // Editmode props
-        _QueueOffset("Queue offset", Float) = 0.0
-
-        // ObsoleteProperties
-        [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
-        [HideInInspector] _Color("Base Color", Color) = (0.5, 0.5, 0.5, 1)
-        [HideInInspector] _SampleGI("SampleGI", float) = 0.0 // needed from bakedlit
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
+        _AlphaToMask("Alpha ToMask", Float) = 0.0
+        
     }
 
     SubShader
@@ -170,5 +153,4 @@ Shader "#NAME#"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
 }
