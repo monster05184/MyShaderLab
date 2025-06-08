@@ -158,14 +158,14 @@ void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light ligh
     pd.modelNormal = i.normal;
     //Debug(pd.N);
     pd.L = light.direction;
-    pd.Nol = saturate(dot(pd.N, pd.L));
+    pd.Nol = max(0, dot(pd.N, pd.L));
     pd.lightCol = light.color;
     pd.atten = light.shadowAttenuation;
     pd.posWS = i.positionWS;
     pd.V = normalize(_WorldSpaceCameraPos - pd.posWS);
-    pd.Nov = saturate(dot(pd.N, pd.V));
+    pd.Nov = max(0, dot(pd.N, pd.V));
     pd.H = normalize(pd.L + pd.V);
-    pd.NoH = saturate(dot(pd.N, pd.H));
+    pd.NoH = max(0, dot(pd.N, pd.H));
     pd.screenUv = i.screenPos.xy / i.screenPos.w;
     pd.alpha = sd.linearRoughness * sd.linearRoughness;
     

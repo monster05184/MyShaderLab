@@ -1,4 +1,4 @@
-Shader "#NAME#"
+﻿Shader "PBR_Fabric"
 {
     Properties
     {
@@ -60,7 +60,7 @@ Shader "#NAME#"
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "#NAME#.hlsl"
+            #include "PBR_Fabric.hlsl"
             
 
             ENDHLSL
@@ -126,7 +126,7 @@ Shader "#NAME#"
             // Shader Stages
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
-            #include "#NAME#.hlsl"
+            #include "PBR_Fabric.hlsl"
             #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL

@@ -7,14 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CharacterRender_Fur
-  m_Shader: {fileID: 4800000, guid: af6959e5691cc6d4e85a1d2a9b30f77d, type: 3}
+  m_Name: PBR_Fabric
+  m_Shader: {fileID: 4800000, guid: 84e6ed1b8851c7d47abac68b3af1e20f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _Shadow_ON
-  m_InvalidKeywords:
-  - _ZWRITE_ON
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,36 +27,35 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BaseMap:
+    - _EnvMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _FlowMap:
+    - _MaterialParamsMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _FurAlpha:
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DstBlend: 10
-    - _FlowMapScale: 0
-    - _FresnelLV: 0
-    - _FurAlphaScale: 1
-    - _FurLength: 0
-    - _GI_ON: 0
-    - _LightFilter: 0
-    - _Shadow_ON: 1
-    - _SrcBlend: 5
-    - _StrandSpecular_ON: 0
+    - _Cull: 2
+    - _DstBlend: 0
+    - _MetallicMultiplier: 1.01
+    - _RoughnessMultiplier: -0.16
+    - _SrcBlend: 1
+    - _StencilComp: 8
+    - _StencilFail: 0
+    - _StencilPass: 0
+    - _StencilReadMask: 255
+    - _StencilRef: 0
+    - _StencilWriteMask: 255
+    - _StencilZFail: 0
+    - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
-    - _DiffColor: {r: 0, g: 0, b: 0, a: 0}
-    - _OcclusionColor: {r: 1, g: 1, b: 1, a: 0}
-    - _SpecColor1: {r: 1, g: 1, b: 1, a: 0}
-    - _SpecColor2: {r: 1, g: 1, b: 1, a: 0}
-    - _SpecInfo: {r: 1, g: 1, b: 1, a: 0}
-    - _UvOffset: {r: 0, g: 0, b: 0.2, a: 0.2}
+    - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

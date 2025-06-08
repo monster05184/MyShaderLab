@@ -1,4 +1,4 @@
-Shader "#NAME#"
+﻿Shader "PBR_Fabric_Detail"
 {
     Properties
     {
@@ -31,6 +31,10 @@ Shader "#NAME#"
         _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
         _RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
         
+        [Header(DetailMap)]
+        _DetailMap("RG Normal, B AO", 2D) = "white" {}
+        _DetailNormalScale("Detail Normal Scale", Range(0, 1)) = 1
+        _DetailMapAOScale("Detail AO Scale", Range(0, 1)) = 1
         
 
     }
@@ -60,7 +64,7 @@ Shader "#NAME#"
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "#NAME#.hlsl"
+            #include "PBR_Fabric_Detail.hlsl"
             
 
             ENDHLSL
@@ -126,7 +130,7 @@ Shader "#NAME#"
             // Shader Stages
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
-            #include "#NAME#.hlsl"
+            #include "PBR_Fabric_Detail.hlsl"
             #include "Assets/ShaderLab/DepthPassPBR.hlsl"
 
             ENDHLSL
