@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MaterialParamsMap:
         m_Texture: {fileID: 2800000, guid: 7ce5b05148c0a01439db846e8d47e1cf, type: 3}
-        m_Scale: {x: 5, y: 5}
+        m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: b964ff307dbd17c4f9db8188400821b3, type: 3}
