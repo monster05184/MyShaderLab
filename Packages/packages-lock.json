@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.jasonma.lwgui": {
+      "version": "file:C:/Users/ioo/Desktop/LWGUI-1.x",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.8",
       "depth": 1,

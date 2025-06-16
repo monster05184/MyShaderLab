@@ -2,12 +2,28 @@ Shader "#NAME#"
 {
     Properties
     {
-        [MainTexture] _BaseMap("Texture", 2D) = "white" {}
-        [MainColor] _BaseColor("Color", Color) = (1, 1, 1, 1)
-        // BlendMode
-        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
-        _AlphaToMask("Alpha ToMask", Float) = 0.0
+        [Main(Basic, _, on, off)] _BasicGroup ("Basic Settings", float) = 0
+		[SubEnum(Basic, UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 2
+		[SubEnum(Basic, UnityEngine.Rendering.BlendMode)] _SrcBlend ("SrcBlend", Float) = 1
+		[SubEnum(Basic, UnityEngine.Rendering.BlendMode)] _DstBlend ("DstBlend", Float) = 0
+		[SubToggle(Basic)] _ZWrite ("ZWrite ", Float) = 1
+		[SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Float) = 4 // 4 is LEqual
+		[SubEnum(Basic, RGBA, 15, RGB, 14)] _ColorMask ("ColorMask", Float) = 15 // 15 is RGBA (binary 1111)
+        
+        [Advanced(Stencil)][Sub(Basic)]_StencilRef("Stencil Ref", Range(0, 255)) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
+        [Advanced][Sub(Basic)]_StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
+        [Advanced][Sub(Basic)] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass", Float) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
+        
+        [Main(Unlit, _, on, off)]_UnlitGroup("Unlit Settings", float) = 1
+        [Sub(Unlit)]_BaseMap("Texture", 2D) = "white" {}
+        [Sub(Unlit)]_BaseColor("Color", Color) = (1, 1, 1, 1)
+        
+        
+
         
     }
 
@@ -23,9 +39,21 @@ Shader "#NAME#"
 
         // -------------------------------------
         // Render State Commands
-        Blend [_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
-        ZWrite [_ZWrite]
         Cull [_Cull]
+        ZWrite [_ZWrite]
+        ZTest [_ZTest]
+        Blend [_SrcBlend] [_DstBlend]
+        ColorMask [_ColorMask]
+        Stencil
+        {
+            Ref [_StencilRef]
+            Comp [_StencilComp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+            Pass [_StencilPass]
+            Fail [_StencilFail]
+            ZFail [_StencilZFail]
+        }
 
         Pass
         {
@@ -153,4 +181,5 @@ Shader "#NAME#"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
+    CustomEditor "LWGUI.LWGUI"
 }

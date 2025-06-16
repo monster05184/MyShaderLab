@@ -2,34 +2,37 @@ Shader "#NAME#"
 {
     Properties
     {
-         // ---- Begin build-in properties
-        [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 2
-        [SimpleToggle] _ZWrite("ZWrite", Float) = 1
-        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode("ZTest", Float) = 4
-        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("SrcBlend", Float) = 1
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("DstBlend", Float) = 0
+        [Main(Basic, _, on, off)] _BasicGroup ("Basic Settings", float) = 0
+		[SubEnum(Basic, UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 2
+		[SubEnum(Basic, UnityEngine.Rendering.BlendMode)] _SrcBlend ("SrcBlend", Float) = 1
+		[SubEnum(Basic, UnityEngine.Rendering.BlendMode)] _DstBlend ("DstBlend", Float) = 0
+		[SubToggle(Basic)] _ZWrite ("ZWrite ", Float) = 1
+		[SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Float) = 4 // 4 is LEqual
+		[SubEnum(Basic, RGBA, 15, RGB, 14)] _ColorMask ("ColorMask", Float) = 15 // 15 is RGBA (binary 1111)
 
-        [IntRange] _StencilRef("Stencil Ref", Range(0, 255)) = 0
-        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
-        [IntRange] _StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
-        [IntRange] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
-        [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
+        [Advanced(Stencil)][Sub(Basic)]_StencilRef("Stencil Ref", Range(0, 255)) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
+        [Advanced][Sub(Basic)]_StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
+        [Advanced][Sub(Basic)] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilPass("Stencil Pass", Float) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
+        [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
         
          
         //Surface
-        _AlbedoMap("Albedo Map", 2D) = "white" {}
-        _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
+        [Main(Surface, _, on, off)]_SurfaceGroup("Surface", Float) = 1
+        [Sub(Surface)]_AlbedoMap("Albedo Map", 2D) = "white" {}
+        [Sub(Surface)]_AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
         
-        _EnvMap("环境贴图", Cube) = "grey" {}
-        _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
+        [Sub(Surface)]_EnvMap("环境贴图", Cube) = "grey" {}
+        [Sub(Surface)]_EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
         
-        _NormalMap("Normal Map", 2D) = "bump" {}
-        _MaterialParamsMap("Material Params Map", 2D) = "white" {}
+        [Sub(Surface)][Normal]_NormalMap("Normal Map", 2D) = "bump" {}
+        [Sub(Surface)]_MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
-        _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
-        _RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
+        [Sub(Surface)]_MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
+        [Sub(Surface)]_RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
+        [Sub(Surface)]_AOMultiplier("AO Multiplier", Range(0, 1)) = 0
         
         
 
@@ -43,6 +46,22 @@ Shader "#NAME#"
             "IgnoreProjector" = "True" 
         }
         LOD 100
+        
+        Cull [_Cull]
+        ZWrite [_ZWrite]
+        ZTest [_ZTest]
+        Blend [_SrcBlend] [_DstBlend]
+        ColorMask [_ColorMask]
+        Stencil
+        {
+            Ref [_StencilRef]
+            Comp [_StencilComp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+            Pass [_StencilPass]
+            Fail [_StencilFail]
+            ZFail [_StencilZFail]
+        }
         
         Pass
         {
@@ -164,4 +183,5 @@ Shader "#NAME#"
             ENDHLSL
         }
     }
+    CustomEditor "LWGUI.LWGUI"
 }

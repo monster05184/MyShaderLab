@@ -21,6 +21,9 @@ struct v2f
     float4 debugColor  : TEXCOORD8;
     #endif
     float4 shadowCoord : TEXCOORD9;
+    uint vertexID : TEXCOORD10;
+
+    UNITY_VERTEX_INPUT_INSTANCE_ID
     
 };
 
@@ -30,6 +33,9 @@ struct appdataUnlit
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL;
     float4 tangent : TANGENT;
+
+    uint instanceID : SV_InstanceID;
+    
 };
 
 v2f VertexFunc(v2f v, appdataUnlit i);
@@ -50,9 +56,11 @@ half4 GetBaseColor(float2 uv)
     return SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, baseUV) * _BaseColor;
 }
 
-v2f vert_unlit (appdataUnlit v)
+v2f vert_unlit (appdataUnlit v, uint vertexID : SV_VertexID)
 {
     v2f o;
+    UNITY_SETUP_INSTANCE_ID(v);
+    o.vertexID = vertexID;
     VertexPositionInputs positionInput = GetVertexPositionInputs(v.vertex);
     o.vertex = positionInput.positionCS;
     o.positionWS = positionInput.positionWS;
@@ -72,6 +80,8 @@ half4 frag_unlit(v2f i) : SV_Target
     half4 col;
     half4 baseColor = GetBaseColor(i.uv);
     col = baseColor;
+    col.xyz = (half)i.vertexID / 24.0;
+    
     return col;
 }
 
