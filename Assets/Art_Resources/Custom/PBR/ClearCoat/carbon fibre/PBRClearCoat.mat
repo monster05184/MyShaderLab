@@ -12,7 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -42,14 +43,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _AOMultiplier: 1
-    - _ClearCoatMetallic: 0.962
-    - _ClearCoatRoughness: 0.183
+    - _BasicGroup: 0
+    - _ClearCoatGroup: 0
+    - _ClearCoatMetallic: 0.984
+    - _ClearCoatRoughness: 0.212
+    - _ColorMask: 15
     - _Cull: 2
     - _DstBlend: 0
     - _MainLightAO: 0.434
-    - _MetallicMultiplier: 1.42
-    - _NormalScale: 0.151
-    - _RoughnessMultiplier: 0.67
+    - _MetallicMultiplier: 1.29
+    - _NormalScale: 0.434
+    - _RoughnessMultiplier: -0.82
     - _SrcBlend: 1
     - _StencilComp: 8
     - _StencilFail: 0
@@ -58,10 +62,12 @@ Material:
     - _StencilRef: 0
     - _StencilWriteMask: 255
     - _StencilZFail: 0
+    - _SurfaceGroup: 1
+    - _ZTest: 4
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
-    - _AlbedoColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    - _AlbedoColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
     - _ClearCoatEnvColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
     - _ClearCoatLightColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}

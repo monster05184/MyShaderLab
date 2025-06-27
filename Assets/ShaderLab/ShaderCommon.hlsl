@@ -166,7 +166,8 @@ void HandleSurfaceData(CustomSurfaceData sd, inout PBRData pd, v2f i, Light ligh
     pd.Nov = max(0, dot(pd.N, pd.V));
     pd.H = normalize(pd.L + pd.V);
     pd.NoH = max(0, dot(pd.N, pd.H));
-    pd.screenUv = i.screenPos.xy / i.screenPos.w;
+    pd.screenUv.xy = i.screenPos.xy / i.screenPos.w;
+    pd.screenUv.zw = i.screenPos.zw;
     pd.alpha = sd.linearRoughness * sd.linearRoughness;
     
 }

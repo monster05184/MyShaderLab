@@ -50,6 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0.06}
     m_Ints: []
     m_Floats:
+    - _AOMultiplier: 1
     - _AlphaTest: 0
     - _BlendMode: 0
     - _Cull: 2
@@ -66,7 +67,7 @@ Material:
     - _SDF: 1
     - _SDFSign: -1
     - _SDFSmooth: 0.57
-    - _SDFValue: -0.9
+    - _SDFValue: -0.8090164
     - _SmoothNormal: 0
     - _SpOpacity: 0
     - _SrcBlend: 1

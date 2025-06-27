@@ -28,6 +28,7 @@
         [Sub(Surface)]_EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
         
         [Sub(Surface)][Normal]_NormalMap("Normal Map", 2D) = "bump" {}
+        [Sub(Surface)]_NormalScale("Normal Scale", Range(0, 1)) = 1
         [Sub(Surface)]_MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
         [Sub(Surface)]_MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1

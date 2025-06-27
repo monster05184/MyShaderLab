@@ -98,7 +98,6 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     
 
     half3 clearCoatLight = CalculateClearCoatLight(_LocalData.clearCoatData, pd, i) * _ClearCoatLightColor;
-    
 
     //Mix clear coat light with main light
     half3 refrectedLight = light * (1 - _LocalData.clearCoatFresnel) * lerp(1, sd.occlusion, _MainLightAO);

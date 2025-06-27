@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cloth_2_4
+  m_Shader: {fileID: 4800000, guid: 972aa04ce1975dd4faa717557df4ab01, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _DETAILS_MAP_ON
+  - _ENABLEDISSOLVE_ON
+  - _HAS_CUSTOMENVTEX_ON
+  m_InvalidKeywords:
+  - _TEXBLEND_ADD
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - TransparentDepthPostpass
+  - TransparentDepthPrepass
+  - Reflection
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailsMaskTex:
+        m_Texture: {fileID: 2800000, guid: 86fff5698174d484ebfaa8924078bf8a, type: 3}
+        m_Scale: {x: 20, y: 20}
+        m_Offset: {x: -0.2, y: 0}
+    - _DissolveTex:
+        m_Texture: {fileID: 2800000, guid: c37c745f7c3499347a3c0be5d7b152c7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissiveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EnvCapTex:
+        m_Texture: {fileID: 2800000, guid: 22ab737fde3fcdd49b6526759cd7485c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GlitterMap:
+        m_Texture: {fileID: 2800000, guid: 9d3f76b642cc2ec4484644bfec72b93f, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaterialParamsMap:
+        m_Texture: {fileID: 2800000, guid: 38eae13f88ee1be4b81d4c62d29c5f3d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: e642c26ae7de4224e942f5965de1eab1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RefCapTex:
+        m_Texture: {fileID: 2800000, guid: 47d007a628c97a7408c20366596b1719, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaTest: 0
+    - _BlendMode: 0
+    - _Cull: 2
+    - _DETAILS_MAP: 1
+    - _Dissolve: -0.823
+    - _DissolveON: 0
+    - _DstBlend: 0
+    - _EdgeWidth: 0.105
+    - _EnableDissolve: 1
+    - _EnableIBL: 0
+    - _FenierPow: 6.25
+    - _FenierRange: -1.085
+    - _HAS_GLITTER: 0
+    - _Has_CustomEnvTex: 1
+    - _LightCookie: 0
+    - _Matcapize: 1
+    - _Metalness: -0.722
+    - _OcclusionScale: 0
+    - _Roughness: 0.846
+    - _Scattering: 0
+    - _ShadowStrength: 1
+    - _SpOpacity: 0
+    - _SpecGrey: 0
+    - _SrcBlend: 1
+    - _StencilComp: 0
+    - _StencilFail: 0
+    - _StencilPass: 0
+    - _StencilReadMask: 255
+    - _StencilRef: 0
+    - _StencilWriteMask: 255
+    - _StencilZFail: 0
+    - _ZTestMode: 4
+    - _spPow: 1.36
+    m_Colors:
+    - _AlbedoColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
+    - _DetailsControl: {r: 0.261, g: 0.12, b: 0.07, a: 0}
+    - _DissolveEdgeColor: {r: 12, g: 1, b: 0, a: 1}
+    - _DissolveEdgeColor2: {r: 0, g: 0, b: 0, a: 0}
+    - _DissolveLV: {r: 0, g: 0, b: 0, a: 0}
+    - _DissolveTexUVG: {r: 1, g: 1, b: 0, a: 0}
+    - _DissolveTexUVR: {r: 1, g: 1, b: 0, a: 0}
+    - _EmissiveColor: {r: 3.732132, g: 2.682891, b: 1.8543293, a: 1}
+    - _EnvColor: {r: 2.4321935, g: 2.4321935, b: 2.4321935, a: 0.8}
+    - _GlitteryControl: {r: 0.848, g: 9.1, b: 3.73, a: 7}
+    - _GlitterySPColor: {r: 1.6210741, g: 1.0858136, b: 0.1937131, a: 1}
+    - _RefColor: {r: 9.849154, g: 9.849154, b: 9.849154, a: 0}
+    - _SelfGI: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

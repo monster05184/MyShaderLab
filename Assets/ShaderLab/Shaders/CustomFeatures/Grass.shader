@@ -22,7 +22,11 @@
         [Sub(Unlit)]_BaseMap("Texture", 2D) = "white" {}
         [Sub(Unlit)]_BaseColor("Color", Color) = (1, 1, 1, 1)
         
-        
+        [Main(Bazier, _, on, off)]_BazierGroup("Bazier Settings", float) = 1
+        [Sub(Bazier)]_P0("P0", Vector) = (0, 0, 0, 0)
+        [Sub(Bazier)]_P1("P1", Vector) = (0, 0, 0, 0)
+        [Sub(Bazier)]_P2("P2", Vector) = (0, 0, 0, 0)
+        [Sub(Bazier)]_Root("Root", Vector) = (0, 0, 0, 0)
 
         
     }
@@ -65,6 +69,7 @@
 
             HLSLPROGRAM
             #pragma target 2.0
+            #define DEBUG
 
             // -------------------------------------
             // Shader Stages

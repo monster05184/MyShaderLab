@@ -27,7 +27,7 @@ struct PBRData
     half3 lightCol;
     half atten;
     half3 posWS;
-    float2 screenUv;
+    float4 screenUv;
     half3 modelNormal;
     half ao;
 };

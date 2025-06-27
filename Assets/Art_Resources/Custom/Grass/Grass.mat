@@ -25,14 +25,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 64b6f9eb402dd8c4286339050e34c68e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BasicGroup: 0
+    - _BazierGroup: 1
     - _ColorMask: 15
-    - _Cull: 2
+    - _Cull: 0
     - _DstBlend: 0
     - _SrcBlend: 1
     - _StencilComp: 8
@@ -47,4 +48,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _P0: {r: 0, g: 0, b: 0, a: 0}
+    - _P1: {r: 0, g: 0.54, b: 0, a: 0}
+    - _P2: {r: 0, g: 1, b: 0, a: 0}
+    - _Root: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
