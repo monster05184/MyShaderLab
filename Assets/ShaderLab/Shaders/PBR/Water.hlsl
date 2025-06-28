@@ -13,6 +13,14 @@ half4 _ReflectionColor;
 TEXTURE2D(_AbsorptionRamp);
 SAMPLER(sampler_AbsorptionRamp);
 
+TEXTURE2D(_AbsorptionRamp2);
+SAMPLER(sampler_AbsorptionRamp2);
+
+TEXTURE2D(_CameraOpaqueTexture);
+SAMPLER(sampler_CameraOpaqueTexture);
+
+half2 _NormalFlow;
+
 struct LocalData1
 {
     
@@ -25,10 +33,15 @@ v2f VertexFunc(v2f i, appdataPBR v)
     return i;
 }
 
+float2 Flow(float2 uv, float2 flow)
+{
+    return uv + frac(flow * _Time.y * 0.1);
+}
+
 void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {
     _LocalData = (LocalData1)0;
-    half4 normalTS = GetNormalTS(i.uv);
+    half4 normalTS = GetNormalTS(Flow(i.uv, _NormalFlow));
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
@@ -52,21 +65,18 @@ half3 GetReflectionColor(float3 ViewDir, float3 Normal)
     return reflectionColor;
 }
 
-half3 GetRefractionColor()
+half3 GetRefractionColor(float2 screenUV)
 {
-
+    half3 refractionColor = SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, screenUV).rgb;
+    half3 causticsColor = Caustics(screenUV);
+    refractionColor *= 1 + causticsColor;
+    return refractionColor;
 }
 
 half4 Absorption(half height)
 {
     half4 absorptionColor = SAMPLE_TEXTURE2D(_AbsorptionRamp, sampler_AbsorptionRamp, float2(height, 0));
     return absorptionColor;   
-}
-
-half4 GetHeight(float3 position)
-{
-    // Assuming the height is stored in the y component of the position
-    return half4(position.y, 0, 0, 0);
 }
 
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
@@ -80,10 +90,19 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 
     //float3 refractionColor = GetRefractionColor(pd.V, pd.N);
 
+    half depth = GetDepthFade(pd.posWS, _WaterDepth, pd.screenUv);
+
+    half distortion = DistortionUVs(depth, pd.N);
+
     float3 reflectionColor = GetReflectionColor(pd.V, pd.N);
-    Debug(Caustics(pd.screenUv.xy));
+
+    float3 refractionColor = GetRefractionColor(pd.screenUv + distortion);
+
+    float4 ramp = Absorption(depth);
+
+    refractionColor = lerp(ramp.rgb, refractionColor, ramp.a);
     
-    light = (specbrdf + diffBRDF) * pd.Nol * pd.lightCol;
+    light = refractionColor + reflectionColor;
     
     return light;
 }
@@ -92,18 +111,18 @@ half3 CalculateIndirectLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
     //occusion
-    half occlusion = lerp(1, sd.occlusion, _AOMultiplier);
-    half indirectSpecAO = lerp(0.7, 1, occlusion);
-    
-    //indirect specular
-    float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
-    float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
-    indirectSpec *= indirectSpecAO;
-    light += indirectSpec * _EnvColor;
-
-    //indirect diffuse
-    float3 indirectDiffuse = SampleSHPixel(i.vertexSH, pd.N) * sd.diffuse;
-    indirectDiffuse *= occlusion;
-    light += indirectDiffuse;
+    // half occlusion = lerp(1, sd.occlusion, _AOMultiplier);
+    // half indirectSpecAO = lerp(0.7, 1, occlusion);
+    //
+    // //indirect specular
+    // float3 indirectSpecColor = getPrefilterSpecularLD(_EnvMap, 6, (0, 0, 0,0), pd.N, pd.V, sd.linearRoughness);
+    // float3 indirectSpec = evalIndirectSpecular(pd.Nov, indirectSpecColor, sd.linearRoughness, 1) * sd.specular * _EnvColor;
+    // indirectSpec *= indirectSpecAO;
+    // light += indirectSpec * _EnvColor;
+    //
+    // //indirect diffuse
+    // float3 indirectDiffuse = SampleSHPixel(i.vertexSH, pd.N) * sd.diffuse;
+    // indirectDiffuse *= occlusion;
+    // light += indirectDiffuse;
     return light;
 }

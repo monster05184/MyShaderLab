@@ -118,7 +118,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailAOControl: 0.211
+    - _DetailAOControl: 0.506
     - _DetailAlbedoMapScale: 1
     - _DetailEnvControl: 0.039
     - _DetailNormalMapScale: 1

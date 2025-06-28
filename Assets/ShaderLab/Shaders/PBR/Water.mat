@@ -25,11 +25,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AbsorptionRamp:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8238f957e2fe93f4b98120cb733a0a02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AbsorptionRamp2:
+        m_Texture: {fileID: 2800000, guid: 8238f957e2fe93f4b98120cb733a0a02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlbedoMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CausticsMap:
+        m_Texture: {fileID: 2800000, guid: 0df18a5a7cf0335488927cce7c9bd826, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
@@ -41,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 219becf927ef6184e8f011ac63f93a90, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflectionMap:
@@ -54,13 +62,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - WaterGroup: 1
     - _AOMultiplier: 0
     - _AbsorptionGroup: 1
     - _BasicGroup: 0
+    - _CausticsBlendDistance: 0.24
+    - _CausticsGroup: 1
+    - _CausticsIntensity: 1
+    - _CausticsOffset: 1.83
+    - _CausticsScale: 0.27
     - _ColorMask: 15
     - _Cull: 2
+    - _Distortion: 0.903
     - _DstBlend: 0
     - _MetallicMultiplier: 0
+    - _NormalScale: 0.046
     - _ReflectionGroup: 1
     - _RefractionGroup: 1
     - _RoughnessMultiplier: 0
@@ -73,10 +89,14 @@ Material:
     - _StencilWriteMask: 255
     - _StencilZFail: 0
     - _SurfaceGroup: 1
+    - _WaterDepth: 6.4
+    - _WaterLevel: -4.68
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CausticsColor: {r: 0.9708657, g: 0.9669811, b: 1, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _NormalFlow: {r: 0.06, g: 0.09, b: 0, a: 0}
+    - _ReflectionColor: {r: 0.6002945, g: 0.5613208, b: 1, a: 1}
   m_BuildTextureStacks: []

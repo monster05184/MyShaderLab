@@ -50,6 +50,12 @@ half3 Caustics(float3 worldPos)
     return caustics;
                     
 }
+half _Distortion;
+float2 DistortionUVs(half depth, float3 normalWS)
+{
+    half3 viewNormal = mul((float3x3)GetWorldToHClipMatrix(), -normalWS).xyz;
+    return viewNormal.xz * saturate(depth) * _Distortion;
+}
 
 half3 Caustics(half2 screenUv)
 {

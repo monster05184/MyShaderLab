@@ -28,32 +28,36 @@
         [Sub(Surface)]_EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
         
         [Sub(Surface)][Normal]_NormalMap("Normal Map", 2D) = "bump" {}
+        [Sub(Surface)]_NormalScale("Normal Scale", Range(0, 1)) = 1
+        [Sub(Surface)]_NormalFlow("Normal Flow", Vector) = (0, 0, 0, 0)
+        
         [Sub(Surface)]_MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
         [Sub(Surface)]_MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
         [Sub(Surface)]_RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
         [Sub(Surface)]_AOMultiplier("AO Multiplier", Range(0, 1)) = 0
         
-        [Main(WaterSetting, _, on, off)]WaterGroup("Reflection", Float) = 1
-        [Sub(WaterSetting)]_WaterDepth("Water Depth", Float) = 1
+        [Main(WaterSetting, _, on, off)]WaterGroup("Water Setting", Float) = 1
         
         [Main(Reflection, _, on, off)]_ReflectionGroup("Reflection", Float) = 1
         [Sub(Reflection)]_ReflectionMap("Reflection Map", 2D) = "grey" {}
         [Sub(Reflection)]_ReflectionColor("Reflection Color", Color) = (1, 1, 1, 1)
         
         [Main(Refraction, _, on, off)]_RefractionGroup("Refraction", Float) = 1
-        [Sub(Refraction)]_RefractionMap("Refraction Map", 2D) = "grey" {}
+        [Sub(Refraction)]_Distortion("Water Distortion", Range(0, 1)) = 1
         
         [Main(Absorption, _, on, off)]_AbsorptionGroup("Absorption", Float) = 1
-        [Sub(Absorption)]_AbsorptionRamp("Refraction Map", 2D) = "grey" {}
+        
+        [Ramp(Absorption)] _AbsorptionRamp("Absorption Ramp", 2D) = "grey" {}
+        [Sub(Absorption)]_WaterDepth("Water Depth", Float) = 1
         
         [Main(Caustics, _, on, off)]_CausticsGroup("Caustics", Float) = 1
-        [NoScaleOffset]_CausticsMap("Caustics Map", 2D) = "black"{ }
-        _CausticsScale("Caustics Scale", Range(0.1,5)) = 1
-        _WaterLevel("Water Level 水位", Float) = 0
-        _CausticsOffset("Caustics Offset 焦散的上下偏移", Float) = 0
-        _CausticsColor("Caustics Color", Color) = (1, 1, 1, 1)
-        _CausticsBlendDistance("Caustics Blend Distance 焦散混合的宽度", Range(0.1, 10)) = 1
+        [Sub(Caustics)][NoScaleOffset]_CausticsMap("Caustics Map", 2D) = "black"{ }
+        [Sub(Caustics)]_CausticsScale("Caustics Scale", Range(0.1,5)) = 1
+        [Sub(Caustics)]_WaterLevel("Water Level 水位", Float) = 0
+        [Sub(Caustics)]_CausticsOffset("Caustics Offset 焦散的上下偏移", Float) = 0
+        [Sub(Caustics)]_CausticsColor("Caustics Color", Color) = (1, 1, 1, 1)
+        [Sub(Caustics)]_CausticsBlendDistance("Caustics Blend Distance 焦散混合的宽度", Range(0.1, 10)) = 1
         
         
         
