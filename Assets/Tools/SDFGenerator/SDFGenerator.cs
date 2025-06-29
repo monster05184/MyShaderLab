@@ -139,6 +139,19 @@ public class CreateSDF : EditorWindow {
 		}
 	}
 
+	void CreateSdf(Texture2D[] texture)
+	{
+		InitTexture();
+
+		foreach( Texture2D t in texture ) {
+			// 为 t 生成 SDF，保存到 _sdfTexture
+			GenerateSDF( t, _sdfTexture );
+
+			// 保存 _sdfTexture 为 png
+			SaveTexture( _sdfTexture, t );
+		}
+	}
+
 
 	/// <summary>
 	/// 生成一张 SD F纹理

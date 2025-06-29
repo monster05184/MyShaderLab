@@ -50,6 +50,7 @@ half3 Caustics(float3 worldPos)
     return caustics;
                     
 }
+
 half _Distortion;
 float2 DistortionUVs(half depth, float3 normalWS)
 {

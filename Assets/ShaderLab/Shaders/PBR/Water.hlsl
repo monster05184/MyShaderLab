@@ -19,6 +19,9 @@ SAMPLER(sampler_AbsorptionRamp2);
 TEXTURE2D(_CameraOpaqueTexture);
 SAMPLER(sampler_CameraOpaqueTexture);
 
+TEXTURE2D(_FoamMap);
+SAMPLER(sampler_FoamMap);
+
 half2 _NormalFlow;
 
 struct LocalData1
@@ -78,7 +81,7 @@ half4 Absorption(half height)
     half4 absorptionColor = SAMPLE_TEXTURE2D(_AbsorptionRamp, sampler_AbsorptionRamp, float2(height, 0));
     return absorptionColor;   
 }
-
+half _FoamDistance;
 half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
 {
     half3 light = half3(0, 0, 0);
@@ -101,6 +104,12 @@ half3 CalculateMainLight(CustomSurfaceData sd, PBRData pd, v2f i)
     float4 ramp = Absorption(depth);
 
     refractionColor = lerp(ramp.rgb, refractionColor, ramp.a);
+
+    half sdf = SAMPLE_TEXTURE2D(_FoamMap, sampler_FoamMap, i.uv).r;
+
+    sdf = sdf > _FoamDistance ? 1 : 0;
+
+    //Debug(sdf);
     
     light = refractionColor + reflectionColor;
     

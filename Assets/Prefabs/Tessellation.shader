@@ -1,4 +1,4 @@
-Shader "#NAME#"
+﻿Shader "Tessellation"
 {
     Properties
     {
@@ -9,7 +9,7 @@ Shader "#NAME#"
 		[SubToggle(Basic)] _ZWrite ("ZWrite ", Float) = 1
 		[SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Float) = 4 // 4 is LEqual
 		[SubEnum(Basic, RGBA, 15, RGB, 14)] _ColorMask ("ColorMask", Float) = 15 // 15 is RGBA (binary 1111)
-
+        
         [Advanced(Stencil)][Sub(Basic)]_StencilRef("Stencil Ref", Range(0, 255)) = 0
         [Advanced][SubEnum(Basic, UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comp", Float) = 8
         [Advanced][Sub(Basic)]_StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
@@ -18,36 +18,27 @@ Shader "#NAME#"
         [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilFail("Stencil Fail", Float) = 0
         [Advanced][SubEnum(Basic, UnityEngine.Rendering.StencilOp)] _StencilZFail("Stencil ZFail", Float) = 0
         
-         
-        //Surface
-        [Main(Surface, _, on, off)]_SurfaceGroup("Surface", Float) = 1
-        [Sub(Surface)]_AlbedoMap("Albedo Map", 2D) = "white" {}
-        [Sub(Surface)]_AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
-        
-        [Sub(Surface)]_EnvMap("环境贴图", Cube) = "grey" {}
-        [Sub(Surface)]_EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
-        
-        [Sub(Surface)][Normal]_NormalMap("Normal Map", 2D) = "bump" {}
-        [Sub(Surface)]_NormalScale("Normal Scale", Range(0, 1)) = 1
-        [Sub(Surface)]_MaterialParamsMap("Material Params Map", 2D) = "white" {}
-        
-        [Sub(Surface)]_MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
-        [Sub(Surface)]_RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
-        [Sub(Surface)]_AOMultiplier("AO Multiplier", Range(0, 1)) = 0
+        [Main(Unlit, _, on, off)]_UnlitGroup("Unlit Settings", float) = 1
+        [Sub(Unlit)]_BaseMap("Texture", 2D) = "white" {}
+        [Sub(Unlit)]_BaseColor("Color", Color) = (1, 1, 1, 1)
         
         
 
+        
     }
+
     SubShader
     {
-        Tags {             
+        Tags
+        {
             "RenderType" = "Opaque"
+            "IgnoreProjector" = "True"
             "RenderPipeline" = "UniversalPipeline"
-            "UniversalMaterialType" = "Lit"
-            "IgnoreProjector" = "True" 
         }
         LOD 100
-        
+
+        // -------------------------------------
+        // Render State Commands
         Cull [_Cull]
         ZWrite [_ZWrite]
         ZTest [_ZTest]
@@ -63,25 +54,28 @@ Shader "#NAME#"
             Fail [_StencilFail]
             ZFail [_StencilZFail]
         }
-        
+
         Pass
         {
-            Name "Forward"
-            Tags
-            {
-                "LightMode" = "UniversalForward"
-            }
+            Name "Unlit"
+
+            // -------------------------------------
+            // Render State Commands
+            AlphaToMask[_AlphaToMask]
+
             HLSLPROGRAM
-            #define DEBUG
-            #pragma vertex vert_pbr
-            #pragma fragment frag_pbr
-            // make fog work
-            #pragma multi_compile_fog
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Shader Stages
+            #pragma vertex vert_unlit
+            #pragma fragment frag_unlit
+
+
             
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "#NAME#.hlsl"
-            
+            #include "Tessellation.hlsl"
+
+
 
             ENDHLSL
         }
@@ -109,7 +103,7 @@ Shader "#NAME#"
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature_local_fragment _ALPHATEST_ON
+            #pragma shader_feature_local_fragment _ALPHATessellation_ON
 
             // -------------------------------------
             // Unity defined keywords
@@ -146,11 +140,12 @@ Shader "#NAME#"
             // Shader Stages
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
-            #include "#NAME#.hlsl"
-            #include "Assets/ShaderLab/DepthPassPBR.hlsl"
+            #include "Tessellation.hlsl"
+            #include "Assets/ShaderLab/DepthPassUnlit.hlsl"
 
             ENDHLSL
         }
+
 
         // This pass it not used during regular rendering, only for lightmap baking.
         Pass
@@ -184,5 +179,7 @@ Shader "#NAME#"
             ENDHLSL
         }
     }
+
+    FallBack "Hidden/Universal Render Pipeline/FallbackError"
     CustomEditor "LWGUI.LWGUI"
 }

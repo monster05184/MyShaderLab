@@ -13,7 +13,7 @@ public class MatcapToolWindow : EditorWindow
     private SerializedProperty savePathProp;
     Vector3 cameraRotation = Vector3.zero;
 
-    [MenuItem("Window/MatcapToolWindow")]
+    [MenuItem("IOO Tools/MatcapToolWindow")]
     public static void ShowWindow()
     {
         GetWindow<MatcapToolWindow>("MatcapToolWindow");

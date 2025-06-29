@@ -59,7 +59,9 @@
         [Sub(Caustics)]_CausticsColor("Caustics Color", Color) = (1, 1, 1, 1)
         [Sub(Caustics)]_CausticsBlendDistance("Caustics Blend Distance 焦散混合的宽度", Range(0.1, 10)) = 1
         
-        
+        [Main(Foam, _, on, off)]_FoamGroup("Foam", Float) = 1
+        [Sub(Foam)][NoScaleOffset]_FoamMap("Foam Map", 2D) = "white" {}
+        [Sub(Foam)]_FoamDistance("Foam Distance", Range(0, 1)) = 1
         
 
     }
