@@ -42,6 +42,8 @@
         [Sub(ClearCoat)]_ClearCoatEnvColor("Clear Coat Environment Color", Color) = (1, 1, 1, 1)
         [Sub(ClearCoat)]_ClearCoatLightColor("Clear Coat Light Color", Color) = (1, 1, 1, 1)
         
+        [Sub(ClearCoat)]_ClearCoatIntensity("清漆透光率", Float) = 0.8
+        
         
 
     }

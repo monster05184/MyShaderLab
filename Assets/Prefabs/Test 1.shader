@@ -68,7 +68,7 @@ Shader "Custom/TessellationExample"
 
                 
                 // 从[0,1]转换到[-1,1]范围
-                displacementVector.xyz = displacementVector.xyz * 2.0 - 1.0;
+                //displacementVector.xyz = displacementVector.xyz * 2.0 - 1.0;
                 
                 // 构造切线空间到世界空间的矩阵
                 float3 bitangent = cross(normalWS, tangentWS.xyz) * tangentWS.w;

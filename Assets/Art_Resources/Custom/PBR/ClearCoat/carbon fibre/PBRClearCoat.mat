@@ -45,12 +45,13 @@ Material:
     - _AOMultiplier: 1
     - _BasicGroup: 0
     - _ClearCoatGroup: 0
+    - _ClearCoatIntensity: 0.13
     - _ClearCoatMetallic: 0.984
     - _ClearCoatRoughness: 0.212
     - _ColorMask: 15
     - _Cull: 2
     - _DstBlend: 0
-    - _MainLightAO: 0.434
+    - _MainLightAO: 0.604
     - _MetallicMultiplier: 1.29
     - _NormalScale: 0.434
     - _RoughnessMultiplier: -0.82
@@ -67,8 +68,8 @@ Material:
     - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
-    - _AlbedoColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
-    - _ClearCoatEnvColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-    - _ClearCoatLightColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+    - _AlbedoColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+    - _ClearCoatEnvColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+    - _ClearCoatLightColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

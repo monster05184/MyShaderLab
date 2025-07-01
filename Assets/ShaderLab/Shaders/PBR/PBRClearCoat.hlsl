@@ -10,6 +10,8 @@ half3 _ClearCoatEnvColor;
 float _MainLightAO;
 half3 _ClearCoatLightColor;
 
+half _ClearCoatIntensity;
+
 struct ClearCoatSurfaceData
 {
     half3 emissive;
@@ -76,7 +78,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 {
-    _LocalData.clearCoatFresnel = fresnelSchlick(pd.Nov, sd.specular);
+    _LocalData.clearCoatFresnel = fresnelSchlick(pd.Nov, _ClearCoatIntensity);
 }
 half3 CalculateClearCoatLight(ClearCoatSurfaceData sd, PBRData pd, v2f i)
 {
