@@ -26,6 +26,7 @@
         _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
         
         _NormalMap("Normal Map", 2D) = "bump" {}
+        _NormalScale("Normal Scale", Range(0, 1)) = 1
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 1

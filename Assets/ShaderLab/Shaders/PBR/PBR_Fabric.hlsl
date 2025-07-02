@@ -4,11 +4,22 @@ half _MetallicMultiplier;
 half _RoughnessMultiplier;
 half _AOMultiplier;
 
+TEXTURE2D(_DetailMap);
+SAMPLER(sampler_DetailMap);
+half4 _DetailMap_ST;
+
+half4 _DetailsControl;
+
+half _DetailAOControl;
+half _DetailSpecControl;
+half _DetailEnvControl;
+
+
 
 
 struct LocalData1
 {
-    
+    half detailAO;
 };
 
 LocalData1 _LocalData;
@@ -22,6 +33,10 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
 {
     _LocalData = (LocalData1)0;
     half4 normalTS = GetNormalTS(i.uv);
+
+    half4 DetailMap = SAMPLE_TEXTURE2D(_DetailMap, sampler_DetailMap, i.uv * _DetailMap_ST.xy + _DetailMap_ST.zw);
+    normalTS.xy += DetailMap.xy * _DetailSpecControl;
+    
     half4 albedo = GetAlbedo(i.uv);
     half4 materialParams = GetMaterialParams(i.uv);
     half metallic = materialParams.y * _MetallicMultiplier;
@@ -32,6 +47,7 @@ void PrepareSurfaceData(inout CustomSurfaceData sd, v2f i)
     sd.opacity = albedo.a;
     sd.linearRoughness = materialParams.x + _RoughnessMultiplier;
     sd.metallic = metallic;
+    sd.occlusion -= DetailMap.z * _DetailAOControl;
 }
 void PostSurfaceData(inout CustomSurfaceData sd, PBRData pd, v2f i)
 {

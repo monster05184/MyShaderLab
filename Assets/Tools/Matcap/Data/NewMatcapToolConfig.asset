@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2e610e0943cc3409dce12caf2eb667, type: 3}
   m_Name: NewMatcapToolConfig
   m_EditorClassIdentifier: 
-  matcapGenerateMaterial: {fileID: 2100000, guid: 3115ef5386591834ab752dad5b07746b, type: 2}
+  matcapGenerateMaterial: {fileID: 2100000, guid: fcb40a20340172e47b57a8ce769fa476, type: 2}
   textureSize: 512
   savePath: Assets/Art_Resources/Matcap

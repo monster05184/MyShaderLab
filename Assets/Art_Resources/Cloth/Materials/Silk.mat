@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cloth 1
+  m_Name: Silk
   m_Shader: {fileID: 4800000, guid: 77be39382b429554c8d1ff13ab30d54c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3de07258ab9e4314383ae1d6dd51c3c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMap:
-        m_Texture: {fileID: 2800000, guid: e1e907aead3e265498e4b97f0b24a654, type: 3}
+        m_Texture: {fileID: 2800000, guid: 01c0380ec81dfb44087cf80a45c0f86a, type: 3}
         m_Scale: {x: 20, y: 20}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvLightMatcap:
-        m_Texture: {fileID: 2800000, guid: 3c6e8006e3f6ba54a836c7c85b38edca, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10e5cd87b33b78d488ba3ed23d22a556, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HighLightMatcap:
-        m_Texture: {fileID: 2800000, guid: d5f5a39b712e1ad48a2c564e68304402, type: 3}
+        m_Texture: {fileID: 2800000, guid: a793b27be7e329f4091d531dc158924a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -118,11 +118,11 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailAOControl: 0.375
+    - _DetailAOControl: 0.96
     - _DetailAlbedoMapScale: 1
-    - _DetailEnvControl: 0.036
+    - _DetailEnvControl: 0.019
     - _DetailNormalMapScale: 1
-    - _DetailSpecControl: 0.086
+    - _DetailSpecControl: 0.014
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -130,13 +130,13 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _MetallicMultiplier: 0.082
-    - _NormalScale: 0.047
+    - _MetallicMultiplier: 0.013
+    - _NormalScale: 0.01
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RoughnessMultiplier: 1.227
+    - _RoughnessMultiplier: 1.659
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -160,11 +160,11 @@ Material:
     - _DetailsControl: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EnvLightColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
-    - _HighLightColor: {r: 4.319702, g: 4.319702, b: 4.319702, a: 1}
+    - _EnvLightColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+    - _HighLightColor: {r: 9.734289, g: 9.734289, b: 9.734289, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &5637758713616061821
+--- !u!114 &3288872969160183905
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -20,16 +20,26 @@
          
         //Surface
         _AlbedoMap("Albedo Map", 2D) = "white" {}
-        _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
+        [HDR] _AlbedoColor("Albedo Color", Color) = (1, 1, 1, 1)
         
         _EnvMap("环境贴图", Cube) = "grey" {}
         _EnvColor("环境光颜色", Color) = (1, 1, 1, 1)
         
         _NormalMap("Normal Map", 2D) = "bump" {}
+        _NormalScale("Normal Scale", Range(0, 1)) = 1
         _MaterialParamsMap("Material Params Map", 2D) = "white" {}
+        
         
         _MetallicMultiplier("Metallic Multiplier", Range(0, 2)) = 0
         _RoughnessMultiplier("Roughness Multiplier", Range(-1, 1)) = 0
+        
+         [Header(Detail)]
+        _DetailMap("Detail Map(RG/Normal, B/AO)", 2D) = "white" {}
+        //_DetailsControl
+        _DetailsControl("Detail Control Map", Vector) = (1, 1, 1, 1)
+        _DetailAOControl("Detail AO Control", Range(0, 1)) = 1
+        _DetailSpecControl("Detail Spec Control", Range(-0.5, 0.5)) = 0
+        _DetailEnvControl("Detail Env Control", Range(-0.5, 0.5)) = 0
         
         
 
