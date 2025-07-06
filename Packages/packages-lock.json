@@ -8,10 +8,11 @@
       "hash": "f213ff497e4ff462a77319cf677cf20cc0860ca9"
     },
     "com.jasonma.lwgui": {
-      "version": "file:C:/Users/ioo/Desktop/LWGUI-1.x",
+      "version": "https://github.com/JasonMa0012/LWGUI.git",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "f3021f8db4dc74349dae04f1ef0513ca3a5a4423"
     },
     "com.unity.burst": {
       "version": "1.8.8",
